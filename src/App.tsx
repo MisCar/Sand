@@ -43,7 +43,7 @@ const App = () => {
       withGlobalStyles
       withNormalizeCSS
     >
-      <Grid grow>
+      <Grid>
         <Grid.Col span={2}>
           <Sidebar
             colorScheme={colorScheme}
