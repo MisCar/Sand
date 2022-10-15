@@ -21,7 +21,7 @@ const App = () => {
   const [colorScheme, setColorScheme] = useState<ColorScheme>("dark")
   const [mode, setMode] = useState<Mode>(Mode.Play)
   const [schema, setSchema] = useState<Schema>(
-    JSON.parse(localStorage.getItem("Schema") ?? "{ tabs: [] }")
+    JSON.parse(localStorage.getItem("Schema") ?? '{ "tabs": [] }')
   )
   const [selectedWidget, setSelectedWidget] = useState<WidgetSelector>()
   const [accordionState, setAccordionState] = useState<string[]>([])
