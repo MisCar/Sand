@@ -1,10 +1,9 @@
 import { Switch } from "@mantine/core"
-import React from "react"
-import Widget from "../models/Widget"
 import { useNTKey } from "../hooks"
+import Widget from "../models/Widget"
 
 const ToggleSwitch: Widget = ({ source, props }) => {
-  const [checked, setChecked, isUpToDate] = useNTKey<boolean>(source, false)
+  const [checked, setChecked] = useNTKey<boolean>(source, false)
 
   return (
     <Switch

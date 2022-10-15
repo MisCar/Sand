@@ -32,7 +32,7 @@ export const useNTKey = <T>(
         key,
         (key: string, value: T, isNew: boolean) => {
           // @ts-ignore
-          if (value !== undefined && value != []) {
+          if (value !== undefined && value.length !== 0) {
             setValue(value)
           }
         },
@@ -44,7 +44,7 @@ export const useNTKey = <T>(
             connected &&
             NetworkTables.getValue(key) === undefined &&
             // @ts-ignore
-            value?.length !== 0
+            value.length !== 0
           ) {
             NetworkTables.putValue(key, value)
           }

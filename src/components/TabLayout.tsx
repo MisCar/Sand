@@ -9,7 +9,6 @@ import Schema, {
   setTitle,
   updateWidgetInfo,
   updateWidgetInfoUsingCurrent,
-  WidgetInfo,
   WidgetSelector,
 } from "../models/Schema"
 import { useNTGlobalListener, useNTKey } from "../hooks"
@@ -35,7 +34,7 @@ const TabLayout: React.FC<Props> = ({
   selectedWidget,
   isModifying,
 }) => {
-  const [activeTab, setActiveTab] = useNTKey<string>("/Sand/ActiveTab", "")
+  const [activeTab, setActiveTab] = useNTKey<string>("/Sand/ActiveTab", "0")
   const [robotSetTabs] = useNTKey<string[]>("/Shuffleboard/.metadata/Tabs", [])
   const [robotSetTabName] = useNTKey<string>(
     "/Shuffleboard/.metadata/Selected",
@@ -91,7 +90,10 @@ const TabLayout: React.FC<Props> = ({
   })
 
   useEffect(() => {
-    setActiveTab(robotSetTabName)
+    const index = schema.tabs.findIndex((tab) => tab.name === robotSetTabName)
+    if (index !== -1) {
+      setActiveTab(index.toString())
+    }
   }, [robotSetTabName])
 
   useEffect(() => {
@@ -115,7 +117,7 @@ const TabLayout: React.FC<Props> = ({
     >
       <Tabs.List>
         {schema.tabs.map((tab, tabIndex) => (
-          <Tabs.Tab key={tabIndex} value={tab.name}>
+          <Tabs.Tab key={tabIndex} value={tabIndex.toString()}>
             <p
               style={{
                 display: "inline",
@@ -137,7 +139,7 @@ const TabLayout: React.FC<Props> = ({
         ))}
       </Tabs.List>
       {schema.tabs.map((tab, tabIndex) => (
-        <Tabs.Panel value={tab.name} key={tabIndex}>
+        <Tabs.Panel value={tabIndex.toString()} key={tabIndex}>
           <GridLayout
             compactType={null}
             preventCollision={true}

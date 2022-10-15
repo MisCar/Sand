@@ -12,6 +12,7 @@ import "react-grid-layout/css/styles.css"
 import "react-resizable/css/styles.css"
 import "@fortawesome/fontawesome-free/css/all.css"
 import Schema, { addTab, WidgetSelector } from "./models/Schema"
+import { DEFAULT_FILE, restoreFile } from "./listeners"
 
 // @ts-ignore
 NetworkTables.connectToWs("localhost:8888")
@@ -19,9 +20,9 @@ NetworkTables.connectToWs("localhost:8888")
 const App = () => {
   const [colorScheme, setColorScheme] = useState<ColorScheme>("dark")
   const [mode, setMode] = useState<Mode>(Mode.Play)
-  const [schema, setSchema] = useState<Schema>({
-    tabs: [],
-  })
+  const [schema, setSchema] = useState<Schema>(
+    JSON.parse(localStorage.getItem("Schema") ?? "{ tabs: [] }")
+  )
   const [selectedWidget, setSelectedWidget] = useState<WidgetSelector>()
   const [accordionState, setAccordionState] = useState<string[]>([])
 
@@ -30,7 +31,9 @@ const App = () => {
     window.setSchema = (schema: string) => setSchema(JSON.parse(schema))
     // @ts-ignore
     window.getSchema = () => JSON.stringify(schema, null, 2)
-  })
+
+    restoreFile(DEFAULT_FILE)
+  }, [])
 
   const isModifying = mode === Mode.Edit && accordionState !== undefined
 

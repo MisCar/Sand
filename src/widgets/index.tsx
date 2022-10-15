@@ -5,10 +5,11 @@ import Graph from "./Graph"
 import Field from "./Field"
 
 import Widget from "../models/Widget"
+import BooleanBox from "./BooleanBox"
 
 const widgets: {
   [key: string]: Widget
-} = { ToggleSwitch, Label, ComboBoxChooser, Graph, Field }
+} = { ToggleSwitch, BooleanBox, Label, ComboBoxChooser, Graph, Field }
 
 export default widgets
 

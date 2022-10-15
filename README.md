@@ -11,15 +11,16 @@ The next-generation FRC dashboard.
 
 ## Roadmap
 
-- [ ] Components
-  - [ ] Boolean Box
-  - [ ] Toggle Switch
-  - [ ] Label
-  - [ ] Combo-Box Chooser
-  - [ ] Graph
-  - [ ] Field
-- [ ] Robot-side control
-- [ ] Keyboard shortcuts
+- [x] Components
+  - [x] Boolean Box
+  - [x] Toggle Switch
+  - [x] Label
+  - [x] Combo-Box Chooser
+  - [x] Graph
+  - [x] Field
+  - [ ] Camera
+- [x] Robot-side control
+- [x] Keyboard shortcuts
 - [ ] Extensions
 - [ ] Update for NT4
 

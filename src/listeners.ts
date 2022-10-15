@@ -2,7 +2,15 @@
 import { listen } from "@tauri-apps/api/event"
 import { open, save } from "@tauri-apps/api/dialog"
 import { fs } from "@tauri-apps/api"
-import { cacheDir, join } from "@tauri-apps/api/path"
+import { configDir, join } from "@tauri-apps/api/path"
+
+export const DEFAULT_FILE = "current.json"
+
+export const restoreFile = async (file: string) => {
+  const text = await fs.readTextFile(file)
+  // @ts-ignore
+  window.setSchema(text)
+}
 
 listen("open", async (event) => {
   const file = (await open({
@@ -15,15 +23,14 @@ listen("open", async (event) => {
     ],
   })) as string
 
-  const text = await fs.readTextFile(file)
-  // @ts-ignore
-  window.setSchema(text)
+  if (file) {
+    await restoreFile(file)
+  }
 })
 
-listen("save", async () => {
-  const currentFile = await join(await cacheDir(), "Sand", "current.json")
+listen("save", () => {
   // @ts-ignore
-  fs.writeTextFile(currentFile, window.getSchema())
+  localStorage.setItem("Schema", window.getSchema())
 })
 
 listen("saveas", async () => {

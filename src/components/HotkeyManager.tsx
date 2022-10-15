@@ -1,5 +1,5 @@
 import { Kbd, Table, TextInput } from "@mantine/core"
-import React, { useEffect, useState } from "react"
+import { useState } from "react"
 import { Shortcut, Shortcuts } from "shortcuts"
 
 const shortcuts = new Shortcuts()

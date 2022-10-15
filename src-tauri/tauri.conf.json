@@ -18,7 +18,8 @@
       },
       "fs": {
         "readFile": true,
-        "writeFile": true
+        "writeFile": true,
+        "scope": ["**"]
       },
       "path": {
         "all": true
