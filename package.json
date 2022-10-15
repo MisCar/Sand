@@ -1,0 +1,36 @@
+{
+  "name": "sand",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.2.0",
+    "@mantine/core": "^5.5.5",
+    "@react-hook/size": "^2.1.2",
+    "@tauri-apps/api": "^1.1.0",
+    "react": "^18.2.0",
+    "react-chartjs-2": "^4.3.1",
+    "react-dom": "^18.2.0",
+    "react-grid-layout": "^1.3.4",
+    "shortcuts": "^1.8.1"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^1.1.1",
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "@types/react-grid-layout": "^1.3.2",
+    "@vitejs/plugin-react": "^2.1.0",
+    "typescript": "^4.6.4",
+    "vite": "^3.1.0"
+  },
+  "prettier": {
+    "semi": false,
+    "tabWidth": 2
+  }
+}
