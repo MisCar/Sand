@@ -1,4 +1,4 @@
-import { Box, Menu, Portal } from "@mantine/core"
+import { Box, Button, Menu, Portal } from "@mantine/core"
 import React from "react"
 import Mode from "../models/Mode"
 
@@ -61,6 +61,17 @@ const WidgetCell: React.FC<Props> = ({
           height: 40,
         })}
       >
+        {mode === Mode.Edit && (
+          <>
+            <i
+              onClick={remove}
+              style={{ cursor: "pointer" }}
+              className="fa-solid fa-trash"
+            />
+
+            <div style={{ flexGrow: 1 }} />
+          </>
+        )}
         <h5
           style={{
             outline: 0,
@@ -82,30 +93,11 @@ const WidgetCell: React.FC<Props> = ({
         {mode === Mode.Edit && (
           <>
             <div style={{ flexGrow: 1 }} />
-            <Menu>
-              <Menu.Target>
-                <i
-                  className="fa-solid fa-bars"
-                  style={{ cursor: "pointer" }}
-                ></i>
-              </Menu.Target>
-              <Portal>
-                <Menu.Dropdown>
-                  <Menu.Item
-                    onClick={() => modify()}
-                    icon={<i className="fa-solid fa-pen"></i>}
-                  >
-                    Modify
-                  </Menu.Item>
-                  <Menu.Item
-                    onClick={remove}
-                    icon={<i className="fa-solid fa-trash"></i>}
-                  >
-                    Remove
-                  </Menu.Item>
-                </Menu.Dropdown>
-              </Portal>
-            </Menu>
+            <i
+              onClick={modify}
+              style={{ cursor: "pointer" }}
+              className="fa-solid fa-pen"
+            ></i>
           </>
         )}
       </Box>
