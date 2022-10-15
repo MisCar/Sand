@@ -128,7 +128,6 @@ const TabLayout: React.FC<Props> = ({
               }}
               onBlur={(event) => {
                 setTabName(setSchema, tabIndex, event.currentTarget.textContent)
-                setActiveTab(event.currentTarget.textContent)
               }}
               contentEditable={mode === Mode.Edit}
               suppressContentEditableWarning

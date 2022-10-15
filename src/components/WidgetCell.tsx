@@ -65,15 +65,17 @@ const WidgetCell: React.FC<Props> = ({
           style={{
             outline: 0,
             width: "100%",
-            cursor: mode === Mode.Edit ? "text" : undefined,
+            cursor: mode === Mode.Edit ? "text" : "default",
+            userSelect: mode === Mode.Edit ? "text" : undefined,
+            WebkitUserSelect: mode === Mode.Edit ? "text" : undefined,
           }}
           contentEditable={mode === Mode.Edit}
+          suppressContentEditableWarning
           onBlur={
             setTitle
               ? (event) => setTitle(event.currentTarget.textContent)
               : undefined
           }
-          suppressContentEditableWarning
         >
           {title}
         </h5>
