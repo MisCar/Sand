@@ -78,35 +78,41 @@ let types: { [key: string]: string } = {}
 export const useAllNTKeys = (
   callback: (keysAndTypes: KeysAndTypes) => void
 ) => {
-  const unsubcsribe = NetworkTables.addGlobalListener(
-    (key: string, value: any, isNew: boolean) => {
-      if (isNew && types[key] === undefined) {
-        keys = Array.from(NetworkTables.getKeys())
+  const keyUpdater = (key: string, value: any, isNew: boolean) => {
+    if (isNew && types[key] === undefined) {
+      keys = Array.from(NetworkTables.getKeys())
 
-        let type: string = typeof value
-        if (type === "object") {
-          type = typeof value[0] + "[]"
-        }
-
-        if (key.endsWith("/.type")) {
-          const parentKey = key.substring(0, key.length - 6)
-          types[key] = type
-          types[parentKey] = value
-        } else {
-          types[key] = type
-        }
-
-        callback([keys, types])
+      let type: string = typeof value
+      if (type === "object") {
+        type = typeof value[0] + "[]"
       }
-    }
-  )
 
-  useEffect(
-    () => () => {
-      unsubcsribe()
-    },
-    []
-  )
+      types[key] = type
+
+      if (key.endsWith("/.type")) {
+        const parentKey = key.substring(0, key.length - 6)
+        types[parentKey] = value
+      }
+
+      if (key.startsWith("/CameraPublisher")) {
+        const parentKey = key.substring(0, key.lastIndexOf("/"))
+        types[parentKey] = "Camera"
+      }
+
+      callback([keys, types])
+    }
+  }
+
+  const unsubscribe: () => void = NetworkTables.addGlobalListener(keyUpdater)
+
+  useEffect(() => {
+    keys = Array.from(NetworkTables.getKeys())
+    for (const key of keys) {
+      keyUpdater(key, NetworkTables.getValue(key), true)
+    }
+    callback([keys, types])
+    return unsubscribe
+  }, [])
 
   return [keys, types]
 }

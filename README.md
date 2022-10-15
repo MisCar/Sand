@@ -21,6 +21,7 @@ The next-generation FRC dashboard.
   - [ ] Camera
 - [x] Robot-side control
 - [x] Keyboard shortcuts
+- [ ] Edit props in-app with a nice GUI
 - [ ] Extensions
 - [ ] Update for NT4
 

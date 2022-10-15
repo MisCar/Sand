@@ -2,6 +2,7 @@ import {
   Accordion,
   Alert,
   Autocomplete,
+  Badge,
   Button,
   ColorScheme,
   SegmentedControl,
@@ -205,6 +206,14 @@ const Sidebar: React.FC<Props> = ({
                     }}
                     limit={Number.POSITIVE_INFINITY}
                   />
+                  {ntTypes[selectedWidgetSource] !== undefined && (
+                    <p>
+                      <span style={{ marginRight: 5 }}>Type:</span>
+                      <Badge style={{ marginTop: 10 }}>
+                        {ntTypes[selectedWidgetSource]}
+                      </Badge>
+                    </p>
+                  )}
                   {ntTypes[selectedWidgetSource] === undefined ||
                     supportedWidgetTypes.includes(
                       ntTypes[selectedWidgetSource]
