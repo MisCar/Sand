@@ -16,7 +16,7 @@ import WidgetDisplay from "./WidgetDisplay"
 import Schema, { WidgetSelector } from "../models/Schema"
 import widgets, { typeToTitle } from "../widgets"
 import IconAndText from "./IconAndText"
-import HotkeyManager from "./HotkeyManager"
+import ShortcutManager from "./ShortcutManager"
 
 interface Props {
   colorScheme: ColorScheme
@@ -231,10 +231,10 @@ const Sidebar: React.FC<Props> = ({
                 </div>
               </Accordion.Panel>
             </Accordion.Item>
-            <Accordion.Item value="hotkeys">
-              <Accordion.Control>Hotkeys</Accordion.Control>
+            <Accordion.Item value="keyboard shortcuts">
+              <Accordion.Control>Keyboard Shortcuts</Accordion.Control>
               <Accordion.Panel>
-                <HotkeyManager />
+                <ShortcutManager />
               </Accordion.Panel>
             </Accordion.Item>
           </Accordion>

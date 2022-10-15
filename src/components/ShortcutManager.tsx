@@ -2,38 +2,38 @@ import { Kbd, Table, TextInput } from "@mantine/core"
 import { useState } from "react"
 import { Shortcut, Shortcuts } from "shortcuts"
 
-const shortcuts = new Shortcuts()
+const shortcutController = new Shortcuts()
 
 let disposer: () => void
 
-const HotkeyManager = () => {
-  const [hotkeys, setHotkeys] = useState<[string, string][]>([
+const ShortcutManager = () => {
+  const [shortcuts, setShortcuts] = useState<[string, string][]>([
     ["CmdOrCtrl+A", "/MisCar/Align"],
   ])
   const [selected, setSelected] = useState<number>()
 
   const resetShortcuts = () => {
-    shortcuts.reset()
-    shortcuts.add(
-      hotkeys.map(([keys, ntKey]) => ({
+    shortcutController.reset()
+    shortcutController.add(
+      shortcuts.map(([keys, ntKey]) => ({
         shortcut: keys,
         handler: () => NetworkTables.setValue(ntKey, true),
       }))
     )
-    hotkeys.forEach(([keys, ntKey]) => NetworkTables.setValue(ntKey, false))
+    shortcuts.forEach(([keys, ntKey]) => NetworkTables.setValue(ntKey, false))
   }
 
   const recordFor = (index: number) => {
     setSelected(index)
-    disposer = shortcuts.record((shortcut) => {
+    disposer = shortcutController.record((shortcut) => {
       const split = shortcut.split(" ")
-      hotkeys[index] = [
+      shortcuts[index] = [
         split[split.length - 1]
           .replace("Ctrl", "CmdOrCtrl")
           .replace("Cmd", "CmdOrCtrl"),
-        hotkeys[index][1],
+        shortcuts[index][1],
       ]
-      setHotkeys([...hotkeys])
+      setShortcuts([...shortcuts])
       disposer()
       setSelected(undefined)
       resetShortcuts()
@@ -44,12 +44,12 @@ const HotkeyManager = () => {
     <Table style={{ width: "100%" }}>
       <thead>
         <tr>
-          <th>Hotkey</th>
+          <th>Shortcut</th>
           <th>NT Key</th>
         </tr>
       </thead>
       <tbody>
-        {hotkeys.map(([keys, ntKey], index) => (
+        {shortcuts.map(([keys, ntKey], index) => (
           <tr key={index}>
             <td style={{ width: "50%" }}>
               <Kbd
@@ -66,12 +66,12 @@ const HotkeyManager = () => {
             </td>
             <td>
               <TextInput
-                value={hotkeys[index][1]}
+                value={shortcuts[index][1]}
                 onChange={(event) => {
                   const value = event.currentTarget.value
-                  setHotkeys((hotkeys) => {
-                    hotkeys[index][1] = value
-                    return [...hotkeys]
+                  setShortcuts((s) => {
+                    s[index][1] = value
+                    return [...s]
                   })
                 }}
                 onBlur={resetShortcuts}
@@ -84,4 +84,4 @@ const HotkeyManager = () => {
   )
 }
 
-export default HotkeyManager
+export default ShortcutManager
