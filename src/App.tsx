@@ -43,10 +43,9 @@ const App = () => {
       withGlobalStyles
       withNormalizeCSS
     >
-      <Grid grow>
-        <Grid.Col
-          span={mode === Mode.Play ? "content" : 2}
-          style={{ padding: mode === Mode.Play ? 10 : undefined }}
+      <div style={{ display: "flex", width: "100%", height: "100%" }}>
+        <div
+          style={{ flex: "none", padding: mode === Mode.Play ? 10 : undefined }}
         >
           <Sidebar
             colorScheme={colorScheme}
@@ -59,8 +58,8 @@ const App = () => {
             accordionState={accordionState}
             setAccordionState={setAccordionState}
           />
-        </Grid.Col>
-        <Grid.Col span={10}>
+        </div>
+        <div style={{ flexGrow: 1 }}>
           <TabLayout
             mode={mode}
             schema={schema}
@@ -72,8 +71,8 @@ const App = () => {
             }}
             isModifying={isModifying}
           />
-        </Grid.Col>
-      </Grid>
+        </div>
+      </div>
     </MantineProvider>
   )
 }

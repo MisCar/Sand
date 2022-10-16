@@ -1,5 +1,5 @@
 import { Switch } from "@mantine/core"
-import { appWindow, LogicalPosition } from "@tauri-apps/api/window"
+import { appWindow, LogicalPosition, LogicalSize } from "@tauri-apps/api/window"
 import { useState } from "react"
 
 const WindowLock = () => {
@@ -11,9 +11,12 @@ const WindowLock = () => {
       await appWindow.setResizable(false)
       await appWindow.setDecorations(false)
       await appWindow.setPosition(new LogicalPosition(0, 0))
+      await appWindow.setSize(new LogicalSize(1920, 820))
+      await appWindow.setAlwaysOnTop(true)
     } else {
       await appWindow.setResizable(true)
       await appWindow.setDecorations(true)
+      await appWindow.setAlwaysOnTop(false)
     }
   }
 
