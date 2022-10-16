@@ -49,10 +49,15 @@ const Sidebar: React.FC<Props> = ({
         userSelect: "none",
       }}
     >
-      <div style={{ flex: "none", textAlign: "center" }}>
+      <div
+        style={{
+          flex: "none",
+          textAlign: "center",
+        }}
+      >
         <h1>Sand</h1>
         <SegmentedControl
-          style={{ marginBottom: 10 }}
+          style={{ marginBottom: 5 }}
           value={mode}
           onChange={setMode}
           data={[
@@ -78,7 +83,6 @@ const Sidebar: React.FC<Props> = ({
             },
           ]}
         />
-        <WindowLock />
       </div>
       <div
         style={{
@@ -141,7 +145,15 @@ const Sidebar: React.FC<Props> = ({
           </Accordion>
         )}
       </div>
-      <div style={{ flex: "none", textAlign: "center" }}>
+      <div
+        style={{
+          flex: "none",
+          textAlign: "center",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <SegmentedControl
           value={colorScheme}
           onChange={setColorScheme}
@@ -169,6 +181,7 @@ const Sidebar: React.FC<Props> = ({
           ]}
         />
         <ConnectionIndicator connected={connected} />
+        <WindowLock />
       </div>
     </div>
   )

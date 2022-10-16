@@ -122,6 +122,7 @@ const TabLayout: React.FC<Props> = ({
       }}
       style={{ height: "100%", padding: 5 }}
       styles={{ panel: { height: "100%" } }}
+      ref={parent}
     >
       <Tabs.List>
         {schema.tabs.map((tab, tabIndex) => (
@@ -174,7 +175,7 @@ const TabLayout: React.FC<Props> = ({
         )}
       </Tabs.List>
       {schema.tabs.map((tab, tabIndex) => (
-        <Tabs.Panel value={tabIndex.toString()} key={tabIndex} ref={parent}>
+        <Tabs.Panel value={tabIndex.toString()} key={tabIndex}>
           <GridLayout
             compactType={null}
             preventCollision={true}

@@ -1,12 +1,17 @@
 import React from "react"
+import IconAndText from "./IconAndText"
 
 const ConnectionIndicator: React.FC<{ connected: boolean }> = ({
   connected,
 }) => {
   if (connected) {
-    return <p style={{ color: "green" }}>Connected</p>
+    return (
+      <IconAndText icon="fa-solid fa-check" text="Connected" color="green" />
+    )
   }
-  return <p style={{ color: "red" }}>Disconnected</p>
+  return (
+    <IconAndText icon="fa-solid fa-remove" text="Disconnected" color="red" />
+  )
 }
 
 export default ConnectionIndicator

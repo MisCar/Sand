@@ -5,15 +5,15 @@ import { useState } from "react"
 const WindowLock = () => {
   const [checked, setChecked] = useState(false)
 
-  const handler = (lock: boolean) => {
+  const handler = async (lock: boolean) => {
     setChecked(lock)
     if (lock) {
-      appWindow.setPosition(new LogicalPosition(0, 0))
-      appWindow.setResizable(false)
-      appWindow.setDecorations(false)
+      await appWindow.setResizable(false)
+      await appWindow.setDecorations(false)
+      await appWindow.setPosition(new LogicalPosition(0, 0))
     } else {
-      appWindow.setResizable(true)
-      appWindow.setDecorations(true)
+      await appWindow.setResizable(true)
+      await appWindow.setDecorations(true)
     }
   }
 
@@ -29,7 +29,6 @@ const WindowLock = () => {
         )
       }
       onChange={(event) => handler(event.currentTarget.checked)}
-      label="Window Lock"
     />
   )
 }
