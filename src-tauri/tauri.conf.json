@@ -19,9 +19,7 @@
       "fs": {
         "readFile": true,
         "writeFile": true,
-        "scope": [
-          "**"
-        ]
+        "scope": ["**"]
       },
       "path": {
         "all": true
@@ -30,7 +28,8 @@
         "setDecorations": true,
         "setPosition": true,
         "setResizable": true,
-        "setSize": true
+        "setSize": true,
+        "setAlwaysOnTop": true
       }
     },
     "bundle": {
@@ -48,7 +47,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "org.miscar.sand",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
