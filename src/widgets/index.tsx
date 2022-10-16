@@ -9,6 +9,7 @@ import BooleanBox from "./BooleanBox"
 import Camera from "./Camera"
 import TextView from "./TextView"
 import NumberSlider from "./NumberSlider"
+import TableView from "./TableView"
 
 const widgets: {
   [key: string]: Widget
@@ -22,6 +23,7 @@ const widgets: {
   Camera,
   TextView,
   NumberSlider,
+  TableView,
 }
 
 export default widgets

@@ -118,6 +118,7 @@ const WidgetCell: React.FC<Props> = ({
           justifyContent: "center",
           flexGrow: 1,
           position: "relative",
+          overflow: "scroll",
         })}
       >
         {children}

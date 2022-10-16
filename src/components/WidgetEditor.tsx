@@ -35,9 +35,10 @@ const WidgetEditor: React.FC<Props> = ({
         ]?.source
       : undefined
 
-  const supportedWidgetTypes = (selectedWidgetType !== undefined
-    ? widgets[selectedWidgetType]?.supportedTypes
-    : ["undefined"]) ?? ["undefined"]
+  const supportedWidgetTypes =
+    (selectedWidgetType !== undefined
+      ? widgets[selectedWidgetType]?.supportedTypes
+      : []) ?? []
 
   return (
     <div
@@ -66,7 +67,8 @@ const WidgetEditor: React.FC<Props> = ({
               ntTypes[selectedWidgetSource] === undefined ||
               widgets[widgetType].supportedTypes?.includes(
                 ntTypes[selectedWidgetSource]
-              )
+              ) ||
+              widgets[widgetType].supportedTypes?.includes("all")
                 ? "Suitable Types"
                 : "Unsuitable Types",
           }))
@@ -87,6 +89,7 @@ const WidgetEditor: React.FC<Props> = ({
         data={Object.keys(ntTypes).filter(
           (key) =>
             supportedWidgetTypes === undefined ||
+            supportedWidgetTypes.includes("all") ||
             (supportedWidgetTypes.includes(ntTypes[key]) && !key.includes("/."))
         )}
         style={{ marginTop: 10, width: "100%" }}
@@ -112,8 +115,9 @@ const WidgetEditor: React.FC<Props> = ({
       {ntTypes[selectedWidgetSource] !== undefined && (
         <Badge style={{ marginTop: 10 }}>{ntTypes[selectedWidgetSource]}</Badge>
       )}
-      {ntTypes[selectedWidgetSource] === undefined ||
-        supportedWidgetTypes.includes(ntTypes[selectedWidgetSource]) || (
+      {!supportedWidgetTypes.includes("all") &&
+        ntTypes[selectedWidgetSource] !== undefined &&
+        !supportedWidgetTypes.includes(ntTypes[selectedWidgetSource]) && (
           <Alert
             title="Unsuitable Widget Selected"
             color="yellow"

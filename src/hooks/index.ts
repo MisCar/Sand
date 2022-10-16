@@ -77,8 +77,13 @@ let keys: string[] = []
 let types: { [key: string]: string } = {}
 
 export const useAllNTKeys = (
-  callback: (keysAndTypes: KeysAndTypes) => void
-) => {
+  callback?: (keysAndTypes: KeysAndTypes) => void
+): [
+  string[],
+  {
+    [key: string]: string
+  }
+] => {
   const keyUpdater = (key: string, value: any, isNew: boolean) => {
     if (isNew && types[key] === undefined) {
       keys = Array.from(NetworkTables.getKeys())
@@ -100,7 +105,9 @@ export const useAllNTKeys = (
         types[parentKey] = "Camera"
       }
 
-      callback([keys, types])
+      if (callback !== undefined) {
+        callback([keys, types])
+      }
     }
   }
 
@@ -111,7 +118,9 @@ export const useAllNTKeys = (
     for (const key of keys) {
       keyUpdater(key, NetworkTables.getValue(key), true)
     }
-    callback([keys, types])
+    if (callback !== undefined) {
+      callback([keys, types])
+    }
     return unsubscribe
   }, [])
 
