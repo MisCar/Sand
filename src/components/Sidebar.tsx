@@ -1,22 +1,13 @@
-import {
-  Accordion,
-  Alert,
-  Autocomplete,
-  Badge,
-  Button,
-  ColorScheme,
-  SegmentedControl,
-  Select,
-} from "@mantine/core"
-import React, { useState } from "react"
+import { Accordion, ColorScheme, SegmentedControl } from "@mantine/core"
+import React from "react"
+import { useNTConnected } from "../hooks"
 import Mode from "../models/Mode"
-import { KeysAndTypes, useAllNTKeys, useNTConnected } from "../hooks"
-import ConnectionIndicator from "./ConnectionIndicator"
-import WidgetDisplay from "./WidgetDisplay"
 import Schema, { WidgetSelector } from "../models/Schema"
-import widgets, { typeToTitle } from "../widgets"
+import ConnectionIndicator from "./ConnectionIndicator"
 import IconAndText from "./IconAndText"
 import ShortcutManager from "./ShortcutManager"
+import WidgetDisplay from "./WidgetDisplay"
+import WidgetEditor from "./WidgetEditor"
 
 interface Props {
   colorScheme: ColorScheme
@@ -42,28 +33,6 @@ const Sidebar: React.FC<Props> = ({
   setAccordionState,
 }) => {
   const connected = useNTConnected()
-  const [[ntKeys, ntTypes], setNtKeysAndTypes] = useState<KeysAndTypes>([
-    [],
-    {},
-  ])
-  useAllNTKeys(setNtKeysAndTypes)
-
-  const selectedWidgetType =
-    selectedWidget !== undefined
-      ? schema.tabs[selectedWidget.tabIndex]?.widgets[
-          selectedWidget.widgetIndex
-        ]?.type
-      : undefined
-  const selectedWidgetSource =
-    selectedWidget !== undefined
-      ? schema.tabs[selectedWidget.tabIndex]?.widgets[
-          selectedWidget.widgetIndex
-        ]?.source
-      : undefined
-
-  const supportedWidgetTypes = (selectedWidgetType !== undefined
-    ? widgets[selectedWidgetType]?.supportedTypes
-    : ["undefined"]) ?? ["undefined"]
 
   return (
     <div
@@ -145,96 +114,11 @@ const Sidebar: React.FC<Props> = ({
                 <IconAndText icon="fa-solid fa-pen" text="Modify" />
               </Accordion.Control>
               <Accordion.Panel>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Select
-                    label="Type"
-                    style={{ width: "100%" }}
-                    value={selectedWidgetType}
-                    disabled={
-                      selectedWidget === undefined ||
-                      selectedWidget.tabIndex >= schema.tabs.length ||
-                      selectedWidget.widgetIndex >=
-                        schema.tabs[selectedWidget.tabIndex].widgets.length
-                    }
-                    data={Object.keys(widgets)
-                      .map((widgetType) => ({
-                        label: typeToTitle(widgetType),
-                        value: widgetType,
-                        group:
-                          ntTypes[selectedWidgetSource] === undefined ||
-                          widgets[widgetType].supportedTypes?.includes(
-                            ntTypes[selectedWidgetSource]
-                          )
-                            ? "Suitable Types"
-                            : "Unsuitable Types",
-                      }))
-                      .sort((a, b) => a.group.localeCompare(b.group))}
-                    onChange={(newType) => {
-                      if (newType !== null && selectedWidget !== undefined) {
-                        setSchema((schema) => {
-                          schema.tabs[selectedWidget.tabIndex].widgets[
-                            selectedWidget.widgetIndex
-                          ].type = newType
-                          return { ...schema }
-                        })
-                      }
-                    }}
-                  />
-                  <Autocomplete
-                    label="Source"
-                    data={Object.keys(ntTypes).filter(
-                      (key) =>
-                        supportedWidgetTypes === undefined ||
-                        (supportedWidgetTypes.includes(ntTypes[key]) &&
-                          !key.includes("/."))
-                    )}
-                    style={{ marginTop: 10, width: "100%" }}
-                    value={selectedWidgetSource}
-                    disabled={
-                      selectedWidget === undefined ||
-                      selectedWidget.tabIndex >= schema.tabs.length ||
-                      selectedWidget.widgetIndex >=
-                        schema.tabs[selectedWidget.tabIndex].widgets.length
-                    }
-                    onChange={(newSource) => {
-                      if (selectedWidget) {
-                        setSchema((schema) => {
-                          schema.tabs[selectedWidget.tabIndex].widgets[
-                            selectedWidget.widgetIndex
-                          ].source = newSource
-                          return { ...schema }
-                        })
-                      }
-                    }}
-                    limit={Number.POSITIVE_INFINITY}
-                  />
-                  {ntTypes[selectedWidgetSource] !== undefined && (
-                    <Badge style={{ marginTop: 10 }}>
-                      {ntTypes[selectedWidgetSource]}
-                    </Badge>
-                  )}
-                  {ntTypes[selectedWidgetSource] === undefined ||
-                    supportedWidgetTypes.includes(
-                      ntTypes[selectedWidgetSource]
-                    ) || (
-                      <Alert
-                        title="Unsuitable Widget Selected"
-                        color="yellow"
-                        style={{ marginTop: 20 }}
-                      >
-                        Widget '{typeToTitle(selectedWidgetType)}' is unsuitable
-                        for type '{ntTypes[selectedWidgetSource]}'. This may
-                        cause weird issues
-                      </Alert>
-                    )}
-                </div>
+                <WidgetEditor
+                  selectedWidget={selectedWidget}
+                  schema={schema}
+                  setSchema={setSchema}
+                />
               </Accordion.Panel>
             </Accordion.Item>
             <Accordion.Item value="keyboard shortcuts">
