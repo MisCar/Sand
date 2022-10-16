@@ -1,8 +1,9 @@
 import { Alert, Autocomplete, Badge, Select } from "@mantine/core"
 import React, { useState } from "react"
 import { KeysAndTypes, useAllNTKeys } from "../hooks"
-import Schema, { WidgetSelector } from "../models/Schema"
+import Schema, { updateWidgetProps, WidgetSelector } from "../models/Schema"
 import widgets, { typeToTitle } from "../widgets"
+import PropEditor from "./PropEditor"
 
 interface Props {
   selectedWidget: WidgetSelector
@@ -119,9 +120,22 @@ const WidgetEditor: React.FC<Props> = ({
             style={{ marginTop: 20 }}
           >
             Widget '{typeToTitle(selectedWidgetType)}' is unsuitable for type '
-            {ntTypes[selectedWidgetSource]}'. This may cause weird issues
+            {ntTypes[selectedWidgetSource]}'. This may cause weird issues.
           </Alert>
         )}
+
+      <hr style={{ width: "100%" }} />
+      <PropEditor
+        widget={widgets[selectedWidgetType]}
+        currentProps={
+          schema.tabs[selectedWidget.tabIndex]?.widgets[
+            selectedWidget.widgetIndex
+          ].props
+        }
+        setProp={(key, value) =>
+          updateWidgetProps(setSchema, selectedWidget, key, value)
+        }
+      />
     </div>
   )
 }

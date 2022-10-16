@@ -9,6 +9,9 @@ interface WidgetProps {
 
 interface Widget extends React.FC<WidgetProps> {
   supportedTypes?: string[]
+  propsInfo?: {
+    [key: string]: "string" | "int"
+  }
 }
 
 export default Widget

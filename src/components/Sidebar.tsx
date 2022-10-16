@@ -114,11 +114,14 @@ const Sidebar: React.FC<Props> = ({
                 <IconAndText icon="fa-solid fa-pen" text="Modify" />
               </Accordion.Control>
               <Accordion.Panel>
-                <WidgetEditor
-                  selectedWidget={selectedWidget}
-                  schema={schema}
-                  setSchema={setSchema}
-                />
+                {selectedWidget !== undefined && (
+                  <WidgetEditor
+                    selectedWidget={selectedWidget}
+                    schema={schema}
+                    setSchema={setSchema}
+                  />
+                )}
+                {selectedWidget !== undefined || <p>No widget selected.</p>}
               </Accordion.Panel>
             </Accordion.Item>
             <Accordion.Item value="keyboard shortcuts">

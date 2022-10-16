@@ -9,7 +9,13 @@ const ToggleSwitch: Widget = ({ source, props }) => {
     <Switch
       {...props}
       size="xl"
-      styles={{ input: { cursor: "pointer" } }}
+      styles={{
+        input: { cursor: "pointer" },
+        track: {
+          backgroundColor: checked ? props?.color + " !important" : undefined,
+          borderColor: checked ? "transparent !important" : undefined,
+        },
+      }}
       checked={checked}
       onChange={(event) => setChecked(event.currentTarget.checked)}
     />
@@ -17,5 +23,10 @@ const ToggleSwitch: Widget = ({ source, props }) => {
 }
 
 ToggleSwitch.supportedTypes = ["boolean"]
+ToggleSwitch.propsInfo = {
+  onLabel: "string",
+  offLabel: "string",
+  color: "string",
+}
 
 export default ToggleSwitch

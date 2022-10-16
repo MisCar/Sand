@@ -26,4 +26,9 @@ Label.supportedTypes = [
   "string[]",
 ]
 
+Label.propsInfo = {
+  fontSize: "int",
+  fontWeight: "string",
+}
+
 export default Label

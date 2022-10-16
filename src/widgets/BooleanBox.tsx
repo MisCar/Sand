@@ -21,5 +21,9 @@ const BooleanBox: Widget = ({ source, props }) => {
 }
 
 BooleanBox.supportedTypes = ["boolean"]
+BooleanBox.propsInfo = {
+  trueColor: "string",
+  falseColor: "string",
+}
 
 export default BooleanBox

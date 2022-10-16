@@ -222,3 +222,19 @@ export const updateWidgetInfoUsingCurrent = (
     return { ...schema }
   })
 }
+
+export const updateWidgetProps = (
+  setSchema: React.Dispatch<React.SetStateAction<Schema>>,
+  widget: WidgetSelector,
+  key: string,
+  value: any
+) => {
+  setSchema((schema) => {
+    schema.tabs[widget.tabIndex].widgets[widget.widgetIndex].props = {
+      ...schema.tabs[widget.tabIndex].widgets[widget.widgetIndex].props,
+      [key]: value,
+    }
+
+    return { ...schema }
+  })
+}

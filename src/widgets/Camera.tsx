@@ -19,5 +19,8 @@ const Camera: Widget = ({ source, props }) => {
 }
 
 Camera.supportedTypes = ["Camera"]
+Camera.propsInfo = {
+  stream: "string",
+}
 
 export default Camera
