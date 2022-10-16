@@ -6,6 +6,7 @@ export const useNTConnected = () => {
 
   useEffect(() => {
     NetworkTables.addRobotConnectionListener(setConnected)
+    setConnected(NetworkTables.isRobotConnected())
   }, [])
 
   return connected

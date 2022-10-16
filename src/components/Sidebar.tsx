@@ -55,13 +55,13 @@ const Sidebar: React.FC<Props> = ({
       ? schema.tabs[selectedWidget.tabIndex]?.widgets[
           selectedWidget.widgetIndex
         ]?.type
-      : "undefined"
+      : undefined
   const selectedWidgetSource =
     selectedWidget !== undefined
       ? schema.tabs[selectedWidget.tabIndex]?.widgets[
           selectedWidget.widgetIndex
         ]?.source
-      : "undefined"
+      : undefined
 
   const supportedWidgetTypes = (selectedWidgetType !== undefined
     ? widgets[selectedWidgetType]?.supportedTypes
