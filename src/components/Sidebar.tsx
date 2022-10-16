@@ -86,11 +86,23 @@ const Sidebar: React.FC<Props> = ({
           onChange={setMode}
           data={[
             {
-              label: <IconAndText icon="fa-solid fa-play" text="Play" />,
+              label: (
+                <IconAndText
+                  icon="fa-solid fa-play"
+                  text="Play"
+                  hideText={mode === Mode.Play}
+                />
+              ),
               value: Mode.Play,
             },
             {
-              label: <IconAndText icon="fa-solid fa-brush" text="Edit" />,
+              label: (
+                <IconAndText
+                  icon="fa-solid fa-brush"
+                  text="Edit"
+                  hideText={mode === Mode.Play}
+                />
+              ),
               value: Mode.Edit,
             },
           ]}
@@ -245,11 +257,23 @@ const Sidebar: React.FC<Props> = ({
           onChange={setColorScheme}
           data={[
             {
-              label: <IconAndText icon="fa-solid fa-sun" text="Light" />,
+              label: (
+                <IconAndText
+                  icon="fa-solid fa-sun"
+                  text="Light"
+                  hideText={mode === Mode.Play}
+                />
+              ),
               value: "light",
             },
             {
-              label: <IconAndText icon="fa-solid fa-moon" text="Dark" />,
+              label: (
+                <IconAndText
+                  icon="fa-solid fa-moon"
+                  text="Dark"
+                  hideText={mode === Mode.Play}
+                />
+              ),
               value: "dark",
             },
           ]}

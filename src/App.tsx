@@ -44,7 +44,10 @@ const App = () => {
       withNormalizeCSS
     >
       <Grid>
-        <Grid.Col span={2}>
+        <Grid.Col
+          span={mode === Mode.Play ? "content" : 2}
+          style={{ padding: mode === Mode.Play ? 10 : undefined }}
+        >
           <Sidebar
             colorScheme={colorScheme}
             setColorScheme={setColorScheme}

@@ -3,13 +3,14 @@ import React from "react"
 interface Props {
   icon: string
   text: string
+  hideText?: boolean
 }
 
-const IconAndText: React.FC<Props> = ({ icon, text }) => {
+const IconAndText: React.FC<Props> = ({ icon, text, hideText }) => {
   return (
     <>
-      <i className={icon} style={{ marginRight: 10 }}></i>
-      <span>{text}</span>
+      <i className={icon}></i>
+      {hideText || <span style={{ marginLeft: 10 }}>{text}</span>}
     </>
   )
 }
