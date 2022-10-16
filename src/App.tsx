@@ -43,7 +43,7 @@ const App = () => {
       withGlobalStyles
       withNormalizeCSS
     >
-      <Grid>
+      <Grid grow>
         <Grid.Col
           span={mode === Mode.Play ? "content" : 2}
           style={{ padding: mode === Mode.Play ? 10 : undefined }}

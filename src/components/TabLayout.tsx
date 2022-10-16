@@ -1,5 +1,5 @@
 import { Button, Tabs } from "@mantine/core"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import Schema, {
   addTab,
   addWidget,
@@ -17,6 +17,7 @@ import GridLayout from "react-grid-layout"
 import Mode from "../models/Mode"
 import WidgetCell from "./WidgetCell"
 import widgets, { typeToTitle } from "../widgets"
+import useSize from "@react-hook/size"
 
 interface Props {
   mode: Mode
@@ -41,6 +42,8 @@ const TabLayout: React.FC<Props> = ({
     "/Shuffleboard/.metadata/Selected",
     ""
   )
+  const parent = useRef()
+  const [width, height] = useSize(parent)
 
   useNTGlobalListener((key, value, isNew) => {
     if (isNew && key.startsWith("/Shuffleboard") && !key.includes("/.")) {
@@ -171,7 +174,7 @@ const TabLayout: React.FC<Props> = ({
         )}
       </Tabs.List>
       {schema.tabs.map((tab, tabIndex) => (
-        <Tabs.Panel value={tabIndex.toString()} key={tabIndex}>
+        <Tabs.Panel value={tabIndex.toString()} key={tabIndex} ref={parent}>
           <GridLayout
             compactType={null}
             preventCollision={true}
@@ -179,9 +182,9 @@ const TabLayout: React.FC<Props> = ({
             isDraggable={mode === Mode.Edit}
             isDroppable={true}
             cols={tab.columns}
-            rowHeight={124}
-            maxRows={6}
-            width={1750}
+            rowHeight={width / tab.columns}
+            maxRows={Math.floor(height / (width / tab.columns))}
+            width={width}
             style={{ height: "100%" }}
             onLayoutChange={(layouts) =>
               setLayouts(setSchema, tabIndex, layouts)

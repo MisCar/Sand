@@ -8,6 +8,7 @@ import IconAndText from "./IconAndText"
 import ShortcutManager from "./ShortcutManager"
 import WidgetDisplay from "./WidgetDisplay"
 import WidgetEditor from "./WidgetEditor"
+import WindowLock from "./WindowLock"
 
 interface Props {
   colorScheme: ColorScheme
@@ -51,6 +52,7 @@ const Sidebar: React.FC<Props> = ({
       <div style={{ flex: "none", textAlign: "center" }}>
         <h1>Sand</h1>
         <SegmentedControl
+          style={{ marginBottom: 10 }}
           value={mode}
           onChange={setMode}
           data={[
@@ -76,6 +78,7 @@ const Sidebar: React.FC<Props> = ({
             },
           ]}
         />
+        <WindowLock />
       </div>
       <div
         style={{
