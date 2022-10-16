@@ -7,10 +7,20 @@ import Field from "./Field"
 import Widget from "../models/Widget"
 import BooleanBox from "./BooleanBox"
 import Camera from "./Camera"
+import TextView from "./TextView"
 
 const widgets: {
   [key: string]: Widget
-} = { ToggleSwitch, BooleanBox, Label, ComboBoxChooser, Graph, Field, Camera }
+} = {
+  ToggleSwitch,
+  BooleanBox,
+  Label,
+  ComboBoxChooser,
+  Graph,
+  Field,
+  Camera,
+  TextView,
+}
 
 export default widgets
 

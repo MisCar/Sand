@@ -1,20 +1,11 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
+import { useNTKey } from "../hooks"
 import Widget from "../models/Widget"
 
 const Label: Widget = ({ source, props }) => {
-  const [text, setText] = useState(NetworkTables.getValue(source))
+  const [value] = useNTKey(source)
 
-  useEffect(() => {
-    NetworkTables.addKeyListener(
-      source,
-      (key: string, value: any, isNew: boolean) => {
-        setText(value.toString())
-      },
-      true
-    )
-  }, [source])
-
-  return <p style={props}>{text}</p>
+  return <p style={props}>{value === undefined ? "" : value.toString()}</p>
 }
 
 Label.supportedTypes = [

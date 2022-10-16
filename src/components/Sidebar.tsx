@@ -47,6 +47,7 @@ const Sidebar: React.FC<Props> = ({
         borderRightWidth: 3,
         borderRightColor: "white",
         userSelect: "none",
+        maxWidth: 300,
       }}
     >
       <div

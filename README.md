@@ -14,6 +14,7 @@ The next-generation FRC dashboard.
 - [x] Components
   - [x] Boolean Box
   - [x] Toggle Switch
+  - [x] Text View
   - [x] Label
   - [x] Combo-Box Chooser
   - [x] Graph

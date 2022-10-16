@@ -14,7 +14,7 @@ export const useNTConnected = () => {
 
 export const useNTKey = <T>(
   key: string | undefined,
-  defaultValue: T
+  defaultValue?: T
 ): [T, (value: T) => void, boolean] => {
   const isLegalKey =
     key !== undefined &&
