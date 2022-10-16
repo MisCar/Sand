@@ -31,7 +31,7 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
               spellCheck={false}
               label={camelToTitle(key)}
               style={{ margin: 5 }}
-              value={currentProps[key]}
+              value={currentProps[key] ?? ""}
               onChange={(event) =>
                 setProp(
                   key,
@@ -57,7 +57,7 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
               type="number"
               label={camelToTitle(key)}
               style={{ margin: 5 }}
-              value={currentProps[key]}
+              value={currentProps[key] ?? ""}
               onChange={(event) =>
                 setProp(
                   key,
