@@ -8,6 +8,7 @@ import Widget from "../models/Widget"
 import BooleanBox from "./BooleanBox"
 import Camera from "./Camera"
 import TextView from "./TextView"
+import NumberSlider from "./NumberSlider"
 
 const widgets: {
   [key: string]: Widget
@@ -20,6 +21,7 @@ const widgets: {
   Field,
   Camera,
   TextView,
+  NumberSlider,
 }
 
 export default widgets

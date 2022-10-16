@@ -1,6 +1,5 @@
 import { NumberInput, TextInput } from "@mantine/core"
 import React from "react"
-import widgets from "../widgets"
 import Widget from "../models/Widget"
 
 interface Props {
@@ -50,6 +49,23 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
               style={{ margin: 5 }}
               value={currentProps[key]}
               onChange={(value) => setProp(key, value)}
+            />
+          )
+        } else if (widget.propsInfo[key] === "double") {
+          return (
+            <TextInput
+              type="number"
+              label={camelToTitle(key)}
+              style={{ margin: 5 }}
+              value={currentProps[key]}
+              onChange={(event) =>
+                setProp(
+                  key,
+                  event.currentTarget.value === ""
+                    ? undefined
+                    : parseFloat(event.currentTarget.value)
+                )
+              }
             />
           )
         } else {
