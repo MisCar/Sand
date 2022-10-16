@@ -11,7 +11,7 @@ import "./index.css"
 import "react-grid-layout/css/styles.css"
 import "react-resizable/css/styles.css"
 import "@fortawesome/fontawesome-free/css/all.css"
-import Schema, { addTab, WidgetSelector } from "./models/Schema"
+import Schema, { WidgetSelector } from "./models/Schema"
 import { DEFAULT_FILE, restoreFile } from "./listeners"
 
 // @ts-ignore
@@ -50,7 +50,6 @@ const App = () => {
             setColorScheme={setColorScheme}
             mode={mode}
             setMode={setMode}
-            addTab={() => addTab(setSchema)}
             selectedWidget={selectedWidget}
             schema={schema}
             setSchema={setSchema}

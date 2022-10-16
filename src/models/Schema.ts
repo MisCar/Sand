@@ -121,6 +121,16 @@ export const addTab = (
   })
 }
 
+export const removeTab = (
+  setSchema: React.Dispatch<React.SetStateAction<Schema>>,
+  tabIndex: number
+) => {
+  setSchema((schema) => {
+    schema.tabs.splice(tabIndex, 1)
+    return { ...schema }
+  })
+}
+
 export interface PartialWidgetInfo extends Partial<WidgetInfo> {
   source: string
 }

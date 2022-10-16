@@ -23,7 +23,6 @@ interface Props {
   setColorScheme: (scheme: ColorScheme) => void
   mode: Mode
   setMode: (mode: Mode) => void
-  addTab: () => void
   selectedWidget: WidgetSelector | undefined
   schema: Schema
   setSchema: React.Dispatch<React.SetStateAction<Schema>>
@@ -36,7 +35,6 @@ const Sidebar: React.FC<Props> = ({
   setColorScheme,
   mode,
   setMode,
-  addTab,
   selectedWidget,
   schema,
   setSchema,
@@ -98,11 +96,6 @@ const Sidebar: React.FC<Props> = ({
           ]}
         />
       </div>
-      {mode === Mode.Edit && (
-        <Button style={{ flex: "none", marginTop: 10 }} onClick={addTab}>
-          Add Tab
-        </Button>
-      )}
       <div
         style={{
           flexGrow: 1,
@@ -119,7 +112,9 @@ const Sidebar: React.FC<Props> = ({
             onChange={setAccordionState}
           >
             <Accordion.Item value="widgets">
-              <Accordion.Control>Widgets</Accordion.Control>
+              <Accordion.Control>
+                <IconAndText icon="fa-solid fa-gauge-high" text="Widgets" />
+              </Accordion.Control>
               <Accordion.Panel>
                 <div
                   style={{
@@ -134,7 +129,9 @@ const Sidebar: React.FC<Props> = ({
               </Accordion.Panel>
             </Accordion.Item>
             <Accordion.Item value="modify">
-              <Accordion.Control>Modify</Accordion.Control>
+              <Accordion.Control>
+                <IconAndText icon="fa-solid fa-pen" text="Modify" />
+              </Accordion.Control>
               <Accordion.Panel>
                 <div
                   style={{
@@ -229,7 +226,12 @@ const Sidebar: React.FC<Props> = ({
               </Accordion.Panel>
             </Accordion.Item>
             <Accordion.Item value="keyboard shortcuts">
-              <Accordion.Control>Keyboard Shortcuts</Accordion.Control>
+              <Accordion.Control>
+                <IconAndText
+                  icon="fa-solid fa-keyboard"
+                  text="Keyboard Shortcuts"
+                />
+              </Accordion.Control>
               <Accordion.Panel>
                 <ShortcutManager />
               </Accordion.Panel>

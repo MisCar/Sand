@@ -1,8 +1,9 @@
-import { Tabs } from "@mantine/core"
+import { Button, Tabs } from "@mantine/core"
 import React, { useEffect, useState } from "react"
 import Schema, {
   addTab,
   addWidget,
+  removeTab,
   removeWidget,
   setLayouts,
   setTabName,
@@ -104,15 +105,19 @@ const TabLayout: React.FC<Props> = ({
     }
   }, [robotSetTabs])
 
-  if (schema.tabs.length === 0) {
+  if (schema.tabs.length === 0 && mode !== Mode.Edit) {
     return <></>
   }
 
   return (
     <Tabs
       value={activeTab}
-      onTabChange={setActiveTab}
-      style={{ height: "100%" }}
+      onTabChange={(tab) => {
+        if (tab !== "new-tab") {
+          setActiveTab(tab)
+        }
+      }}
+      style={{ height: "100%", padding: 5 }}
       styles={{ panel: { height: "100%" } }}
     >
       <Tabs.List>
@@ -134,8 +139,36 @@ const TabLayout: React.FC<Props> = ({
             >
               {tab.name}
             </p>
+            {mode === Mode.Edit && (
+              <i
+                className="fa-solid fa-trash"
+                style={{ marginLeft: 10 }}
+                onClick={() => removeTab(setSchema, tabIndex)}
+              />
+            )}
           </Tabs.Tab>
         ))}
+        {mode === Mode.Edit && (
+          <Tabs.Tab
+            value="new-tab"
+            style={{
+              padding: 0,
+              marginLeft: 5,
+              marginTop: -5,
+              borderBottomWidth: 0,
+              backgroundColor: "transparent",
+              cursor: "default",
+            }}
+          >
+            <Button
+              onClick={() => addTab(setSchema, "Untitled")}
+              size="xs"
+              leftIcon={<i className="fa-solid fa-plus" />}
+            >
+              New Tab
+            </Button>
+          </Tabs.Tab>
+        )}
       </Tabs.List>
       {schema.tabs.map((tab, tabIndex) => (
         <Tabs.Panel value={tabIndex.toString()} key={tabIndex}>
