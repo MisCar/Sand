@@ -1,6 +1,7 @@
 import { Box, Button, Menu, Portal } from "@mantine/core"
 import React from "react"
 import Mode from "../models/Mode"
+import tinycolor from "tinycolor2"
 
 interface Props {
   children: React.ReactNode
@@ -52,7 +53,12 @@ const WidgetCell: React.FC<Props> = ({
             theme.primaryColor === "brand"
               ? theme.colors.brand[0]
               : theme.colors.cyan[7],
-          color: "white",
+          color:
+            theme.primaryColor !== "brand"
+              ? undefined
+              : tinycolor(theme.colors.brand[0]).getLuminance() > 0.179
+              ? "black"
+              : "white",
           padding: 10,
           borderTopLeftRadius: 10,
           borderTopRightRadius: 10,

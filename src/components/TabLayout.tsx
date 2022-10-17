@@ -121,7 +121,6 @@ const TabLayout: React.FC<Props> = ({
       }}
       style={{ height: "100%", width: "100%", padding: 5 }}
       styles={{ panel: { height: "100%" }, tabsList: { minHeight: 36 } }}
-      ref={ref}
     >
       <Tabs.List>
         {schema.tabs.map((tab, tabIndex) => (
@@ -174,7 +173,7 @@ const TabLayout: React.FC<Props> = ({
         )}
       </Tabs.List>
       {schema.tabs.map((tab, tabIndex) => (
-        <Tabs.Panel value={tabIndex.toString()} key={tabIndex}>
+        <Tabs.Panel value={tabIndex.toString()} key={tabIndex} ref={ref}>
           <GridLayout
             compactType={null}
             preventCollision={true}
@@ -183,7 +182,10 @@ const TabLayout: React.FC<Props> = ({
             isDroppable={true}
             cols={tab.columns}
             rowHeight={width / tab.columns}
-            maxRows={Math.max(Math.floor(height / (width / tab.columns)), 1)}
+            maxRows={Math.max(
+              Math.floor(height / (width / tab.columns)) - 1,
+              1
+            )}
             width={width}
             style={{ height: "100%" }}
             onLayoutChange={(layouts) =>
