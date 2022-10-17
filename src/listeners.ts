@@ -45,9 +45,7 @@ listen("save", async () => {
   localStorage.setItem("Schema", window.getSchema())
 
   const configDir = await getConfigDir()
-  if (!exists('"' + configDir + '""')) {
-    await createDir('"' + configDir + '"', { recursive: true })
-  }
+  await createDir(configDir, { recursive: true })
   const defaultFile = await getDefaultFile()
   // @ts-ignore
   await writeTextFile(defaultFile, window.getSchema())

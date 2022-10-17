@@ -19,8 +19,10 @@
       "fs": {
         "readFile": true,
         "writeFile": true,
-        "exists": true,
-        "scope": ["**"]
+        "createDir": true,
+        "scope": [
+          "**"
+        ]
       },
       "path": {
         "all": true
