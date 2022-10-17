@@ -3,14 +3,17 @@
     windows_subsystem = "windows"
 )]
 
-use std::process::{Child, Command};
-
+use std::process::{Command};
+use std::os::windows::process::CommandExt;
 use tauri::{CustomMenuItem, Menu, RunEvent, Submenu};
 
 fn main() {
-    let mut command: Option<Child> = Command::new("pynetworktables2js")
-        // .arg(format!("--team={}", s))
-        .arg("--dashboard")
+    let mut command = Command::new("pynetworktables2js");
+    command.arg("--dashboard");
+    if cfg!(windows) {
+        command.creation_flags(0x08000000);
+    }
+    let mut command = command
         .spawn()
         .ok();
 
