@@ -1,4 +1,4 @@
-import { ColorScheme, Grid, MantineProvider } from "@mantine/core"
+import { ColorScheme, Grid, MantineProvider, Tuple } from "@mantine/core"
 import React, { useEffect, useState } from "react"
 import { createRoot } from "react-dom/client"
 import Sidebar from "./components/Sidebar"
@@ -12,7 +12,7 @@ import "react-grid-layout/css/styles.css"
 import "react-resizable/css/styles.css"
 import "@fortawesome/fontawesome-free/css/all.css"
 import Schema, { WidgetSelector } from "./models/Schema"
-import { getDefaultFile, restoreFile } from "./listeners"
+import { getDefaultFile, getSettings, restoreFile, Settings } from "./listeners"
 
 // @ts-ignore
 NetworkTables.connectToWs("localhost:8888")
@@ -23,6 +23,7 @@ const App = () => {
   const [schema, setSchema] = useState<Schema>({ tabs: [] })
   const [selectedWidget, setSelectedWidget] = useState<WidgetSelector>()
   const [accordionState, setAccordionState] = useState<string[]>([])
+  const [settings, setSettings] = useState<Settings>()
 
   useEffect(() => {
     // @ts-ignore
@@ -31,13 +32,25 @@ const App = () => {
     window.getSchema = () => JSON.stringify(schema, null, 2)
 
     getDefaultFile().then((file) => restoreFile(file))
+    getSettings().then(setSettings)
   }, [])
 
   const isModifying = mode === Mode.Edit && accordionState !== undefined
 
   return (
     <MantineProvider
-      theme={{ colorScheme: colorScheme }}
+      theme={{
+        colorScheme: colorScheme,
+        colors: settings?.themeColor
+          ? {
+              brand: new Array<string>(10).fill(settings.themeColor) as Tuple<
+                string,
+                10
+              >,
+            }
+          : undefined,
+        primaryColor: settings?.themeColor ? "brand" : undefined,
+      }}
       withGlobalStyles
       withNormalizeCSS
     >

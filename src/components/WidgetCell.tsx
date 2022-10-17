@@ -49,9 +49,10 @@ const WidgetCell: React.FC<Props> = ({
           justifyContent: "center",
           alignItems: "center",
           backgroundColor:
-            theme.colorScheme === "dark"
-              ? theme.colors.cyan[9]
-              : theme.colors.cyan[3],
+            theme.primaryColor === "brand"
+              ? theme.colors.brand[0]
+              : theme.colors.cyan[7],
+          color: "white",
           padding: 10,
           borderTopLeftRadius: 10,
           borderTopRightRadius: 10,

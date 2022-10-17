@@ -24,7 +24,8 @@ export const getDefaultFile = async () => {
 }
 
 export interface Settings {
-  teamNumber: number
+  teamNumber?: number
+  themeColor?: string
 }
 
 export const getSettings = async (): Promise<Settings | undefined> => {

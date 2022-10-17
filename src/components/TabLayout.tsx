@@ -107,10 +107,7 @@ const TabLayout: React.FC<Props> = ({
     }
   }, [robotSetTabs])
 
-  if (
-    schema?.tabs === undefined ||
-    (schema.tabs.length === 0 && mode !== Mode.Edit)
-  ) {
+  if (schema.tabs.length === 0 && mode !== Mode.Edit) {
     return <></>
   }
 
@@ -186,7 +183,7 @@ const TabLayout: React.FC<Props> = ({
             isDroppable={true}
             cols={tab.columns}
             rowHeight={width / tab.columns}
-            maxRows={Math.floor(height / (width / tab.columns))}
+            maxRows={Math.max(Math.floor(height / (width / tab.columns)), 1)}
             width={width}
             style={{ height: "100%" }}
             onLayoutChange={(layouts) =>

@@ -28,6 +28,20 @@ const AppSettings = () => {
           }
         }}
       />
+      <TextInput
+        label="Theme Color"
+        icon={<i className="fa-solid fa-palette" />}
+        value={settings?.themeColor ?? ""}
+        onChange={(event) => {
+          const value = event.currentTarget.value
+          if (value !== null) {
+            setCurrentSettings((settings) => ({
+              ...settings,
+              themeColor: value,
+            }))
+          }
+        }}
+      />
       <Button
         style={{ margin: 10 }}
         leftIcon={<i className="fa-solid fa-save" />}
