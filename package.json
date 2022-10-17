@@ -12,7 +12,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.2.0",
     "@mantine/core": "^5.5.5",
-    "@react-hook/size": "^2.1.2",
+    "@mantine/hooks": "^5.5.5",
     "@tauri-apps/api": "^1.1.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^4.3.1",

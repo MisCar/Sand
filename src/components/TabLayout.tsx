@@ -1,4 +1,5 @@
 import { Button, Tabs } from "@mantine/core"
+import { useElementSize } from "@mantine/hooks"
 import React, { useEffect, useRef, useState } from "react"
 import Schema, {
   addTab,
@@ -17,7 +18,6 @@ import GridLayout from "react-grid-layout"
 import Mode from "../models/Mode"
 import WidgetCell from "./WidgetCell"
 import widgets, { typeToTitle } from "../widgets"
-import useSize from "@react-hook/size"
 
 interface Props {
   mode: Mode
@@ -42,8 +42,7 @@ const TabLayout: React.FC<Props> = ({
     "/Shuffleboard/.metadata/Selected",
     ""
   )
-  const parent = useRef()
-  const [width, height] = useSize(parent)
+  const { ref, width, height } = useElementSize()
 
   useNTGlobalListener((key, value, isNew) => {
     if (isNew && key.startsWith("/Shuffleboard") && !key.includes("/.")) {
@@ -122,7 +121,7 @@ const TabLayout: React.FC<Props> = ({
       }}
       style={{ height: "100%", width: "100%", padding: 5 }}
       styles={{ panel: { height: "100%" } }}
-      ref={parent}
+      ref={ref}
     >
       <Tabs.List>
         {schema.tabs.map((tab, tabIndex) => (
