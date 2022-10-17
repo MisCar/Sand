@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
+import { useElementSize } from "@mantine/hooks"
 import Widget from "../models/Widget"
 import FieldRobot from "./components/FieldRobot"
-import useSize from "@react-hook/size"
 
 const fieldInfo = {
   game: "Rapid React",
@@ -19,8 +19,7 @@ const fieldInfo = {
 const fieldAspectRatio = fieldInfo["field-size"][0] / fieldInfo["field-size"][1]
 
 const Field: Widget = ({ source, props }) => {
-  const target = useRef()
-  const [width, height] = useSize(target)
+  const { ref, width, height } = useElementSize()
   const [fieldWidth, setFieldWidth] = useState(0)
 
   useEffect(() => {
@@ -48,7 +47,7 @@ const Field: Widget = ({ source, props }) => {
   return (
     <div
       style={{ height: "100%", width: "100%", position: "relative" }}
-      ref={target}
+      ref={ref}
     >
       <img
         style={{
