@@ -8,7 +8,13 @@ const ComboBoxChooser: Widget = ({ source, props }) => {
   const [options] = useNTKey<string[]>(source + "/options", [])
 
   return (
-    <Select {...props} value={active} onChange={setActive} data={options} />
+    <Select
+      style={{ width: "90%" }}
+      {...props}
+      value={active}
+      onChange={setActive}
+      data={options}
+    />
   )
 }
 

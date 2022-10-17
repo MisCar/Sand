@@ -10,8 +10,8 @@ const ToggleSwitch: Widget = ({ source, props }) => {
       {...props}
       size="xl"
       styles={{
-        input: { cursor: "pointer" },
         track: {
+          cursor: "pointer",
           backgroundColor: checked ? props?.color + " !important" : undefined,
           borderColor: checked ? "transparent !important" : undefined,
         },

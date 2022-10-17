@@ -64,9 +64,6 @@ listen("open", async (event) => {
 })
 
 listen("save", async () => {
-  // @ts-ignore
-  localStorage.setItem("Schema", window.getSchema())
-
   const configDir = await getConfigDir()
   await createDir(configDir, { recursive: true })
   const defaultFile = await getDefaultFile()

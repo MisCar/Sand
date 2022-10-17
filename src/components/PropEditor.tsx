@@ -18,7 +18,7 @@ const camelToTitle = (camel: string) => {
 }
 
 const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
-  if (widget.propsInfo === undefined) {
+  if (widget?.propsInfo === undefined) {
     return <></>
   }
 

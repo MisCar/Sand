@@ -28,12 +28,13 @@ const App = () => {
   useEffect(() => {
     // @ts-ignore
     window.setSchema = (schema: string) => setSchema(JSON.parse(schema))
-    // @ts-ignore
-    window.getSchema = () => JSON.stringify(schema, null, 2)
 
     getDefaultFile().then((file) => restoreFile(file))
     getSettings().then(setSettings)
   }, [])
+
+  // @ts-ignore
+  window.getSchema = () => JSON.stringify(schema, null, 2)
 
   const isModifying = mode === Mode.Edit && accordionState !== undefined
 
