@@ -120,7 +120,7 @@ const TabLayout: React.FC<Props> = ({
           setActiveTab(tab)
         }
       }}
-      style={{ height: "100%", padding: 5 }}
+      style={{ height: "100%", width: "100%", padding: 5 }}
       styles={{ panel: { height: "100%" } }}
       ref={parent}
     >
