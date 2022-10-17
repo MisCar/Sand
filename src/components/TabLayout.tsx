@@ -107,7 +107,10 @@ const TabLayout: React.FC<Props> = ({
     }
   }, [robotSetTabs])
 
-  if (schema.tabs.length === 0 && mode !== Mode.Edit) {
+  if (
+    schema?.tabs === undefined ||
+    (schema.tabs.length === 0 && mode !== Mode.Edit)
+  ) {
     return <></>
   }
 
@@ -120,7 +123,7 @@ const TabLayout: React.FC<Props> = ({
         }
       }}
       style={{ height: "100%", width: "100%", padding: 5 }}
-      styles={{ panel: { height: "100%" } }}
+      styles={{ panel: { height: "100%" }, tabsList: { minHeight: 36 } }}
       ref={ref}
     >
       <Tabs.List>

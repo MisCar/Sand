@@ -3,9 +3,17 @@
     windows_subsystem = "windows"
 )]
 
-use tauri::{CustomMenuItem, Menu, Submenu};
+use std::process::{Child, Command};
+
+use tauri::{CustomMenuItem, Menu, RunEvent, Submenu};
 
 fn main() {
+    let mut command: Option<Child> = Command::new("pynetworktables2js")
+        // .arg(format!("--team={}", s))
+        .arg("--dashboard")
+        .spawn()
+        .ok();
+
     tauri::Builder::default()
         .menu(
             Menu::new().add_submenu(Submenu::new(
@@ -25,6 +33,17 @@ fn main() {
                 _ => {}
             };
         })
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .build(tauri::generate_context!())
+        .expect("error while running tauri application")
+        .run(move |_, event| match event {
+            RunEvent::ExitRequested { api: _, .. } => {
+                if let Some(child) = &mut command {
+                    child
+                        .kill()
+                        .expect("Failed to shutdown pynetworktables2js.");
+                    println!("pynetworktables2js gracefully shutdown.");
+                }
+            }
+            _ => {}
+        })
 }

@@ -3,6 +3,7 @@ import React from "react"
 import { useNTConnected } from "../hooks"
 import Mode from "../models/Mode"
 import Schema, { WidgetSelector } from "../models/Schema"
+import AppSettings from "./AppSettings"
 import ConnectionIndicator from "./ConnectionIndicator"
 import IconAndText from "./IconAndText"
 import ShortcutManager from "./ShortcutManager"
@@ -141,6 +142,14 @@ const Sidebar: React.FC<Props> = ({
               </Accordion.Control>
               <Accordion.Panel>
                 <ShortcutManager />
+              </Accordion.Panel>
+            </Accordion.Item>
+            <Accordion.Item value="settings">
+              <Accordion.Control>
+                <IconAndText icon="fa-solid fa-gear" text="App Settings" />
+              </Accordion.Control>
+              <Accordion.Panel>
+                <AppSettings />
               </Accordion.Panel>
             </Accordion.Item>
           </Accordion>

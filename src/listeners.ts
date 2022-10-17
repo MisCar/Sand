@@ -3,7 +3,12 @@ import { listen } from "@tauri-apps/api/event"
 import { open, save } from "@tauri-apps/api/dialog"
 import { fs } from "@tauri-apps/api"
 import { cacheDir, join } from "@tauri-apps/api/path"
-import { createDir, exists, writeTextFile } from "@tauri-apps/api/fs"
+import {
+  createDir,
+  exists,
+  readTextFile,
+  writeTextFile,
+} from "@tauri-apps/api/fs"
 
 export const getConfigDir = async () => {
   // Config dir has spaces on macOS which causes issues
@@ -16,6 +21,23 @@ export const getDefaultFile = async () => {
   const configDir = await getConfigDir()
   const result = await join(configDir, "current.json")
   return result
+}
+
+export interface Settings {
+  teamNumber: number
+}
+
+export const getSettings = async (): Promise<Settings | undefined> => {
+  const configDir = await getConfigDir()
+  const settingsFile = await join(configDir, "settings.json")
+  const contents = await readTextFile(settingsFile)
+  return JSON.parse(contents)
+}
+
+export const setSettings = async (settings: Settings) => {
+  const configDir = await getConfigDir()
+  const settingsFile = await join(configDir, "settings.json")
+  await writeTextFile(settingsFile, JSON.stringify(settings))
 }
 
 export const restoreFile = async (file: string) => {
