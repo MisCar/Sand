@@ -3,19 +3,22 @@
     windows_subsystem = "windows"
 )]
 
-use std::process::{Command};
+#[cfg(windows)]
 use std::os::windows::process::CommandExt;
+
+use std::process::Command;
 use tauri::{CustomMenuItem, Menu, RunEvent, Submenu};
 
 fn main() {
     let mut command = Command::new("pynetworktables2js");
     command.arg("--dashboard");
-    if cfg!(windows) {
-        command.creation_flags(0x08000000);
+    #[cfg(windows)]
+    command.creation_flags(0x08000000);
+    let mut command = command.spawn().ok();
+
+    if let None = command {
+        println!("Could not spawn pynetworktables2js");
     }
-    let mut command = command
-        .spawn()
-        .ok();
 
     tauri::Builder::default()
         .menu(
