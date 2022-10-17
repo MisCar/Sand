@@ -24,6 +24,7 @@ const WindowLock = () => {
     <Switch
       size="lg"
       checked={checked}
+      styles={{ track: { cursor: "pointer" } }}
       thumbIcon={
         checked ? (
           <i style={{ color: "black" }} className="fa-solid fa-lock" />

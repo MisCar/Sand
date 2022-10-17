@@ -10,6 +10,8 @@ import Camera from "./Camera"
 import TextView from "./TextView"
 import NumberSlider from "./NumberSlider"
 import TableView from "./TableView"
+import NumberTextView from "./NumberTextView"
+import JsonTextView from "./JsonTextView"
 
 const widgets: {
   [key: string]: Widget
@@ -22,6 +24,8 @@ const widgets: {
   Field,
   Camera,
   TextView,
+  NumberTextView,
+  JsonTextView,
   NumberSlider,
   TableView,
 }
