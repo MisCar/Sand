@@ -1,86 +1,82 @@
-import { Kbd, Table, TextInput } from "@mantine/core"
-import { useState } from "react"
-import { Shortcut, Shortcuts } from "shortcuts"
+import { Button, Kbd, Table, TextInput } from "@mantine/core"
+import { register, unregisterAll } from "@tauri-apps/api/globalShortcut"
+import { useEffect } from "react"
+import Schema, { addShortcut, updateShortcut } from "../models/Schema"
+import NTAutocomplete from "./NTAutocomplete"
 
-const shortcutController = new Shortcuts()
+interface Props {
+  schema: Schema
+  setSchema: React.Dispatch<React.SetStateAction<Schema>>
+}
 
-let disposer: () => void
-
-const ShortcutManager = () => {
-  const [shortcuts, setShortcuts] = useState<[string, string][]>([
-    ["CmdOrCtrl+A", "/MisCar/Align"],
-  ])
-  const [selected, setSelected] = useState<number>()
-
-  const resetShortcuts = () => {
-    shortcutController.reset()
-    shortcutController.add(
-      shortcuts.map(([keys, ntKey]) => ({
-        shortcut: keys,
-        handler: () => NetworkTables.setValue(ntKey, true),
-      }))
-    )
-    shortcuts.forEach(([keys, ntKey]) => NetworkTables.setValue(ntKey, false))
-  }
-
-  const recordFor = (index: number) => {
-    setSelected(index)
-    disposer = shortcutController.record((shortcut) => {
-      const split = shortcut.split(" ")
-      shortcuts[index] = [
-        split[split.length - 1]
-          .replace("Ctrl", "CmdOrCtrl")
-          .replace("Cmd", "CmdOrCtrl"),
-        shortcuts[index][1],
-      ]
-      setShortcuts([...shortcuts])
-      disposer()
-      setSelected(undefined)
-      resetShortcuts()
+const ShortcutManager: React.FC<Props> = ({ schema, setSchema }) => {
+  useEffect(() => {
+    unregisterAll().then(() => {
+      for (const shortcut of schema?.shortcuts ?? []) {
+        if (shortcut.keyboard !== "") {
+          register(
+            shortcut.keyboard,
+            shortcut.mode === "set-true"
+              ? () => {
+                  NetworkTables.setValue(shortcut.ntKey, true)
+                }
+              : () => {
+                  NetworkTables.setValue(
+                    shortcut.ntKey,
+                    !NetworkTables.getValue(shortcut.ntKey, false)
+                  )
+                }
+          )
+        }
+      }
     })
-  }
+  }, [schema])
 
   return (
-    <Table style={{ width: "100%" }}>
-      <thead>
-        <tr>
-          <th>Shortcut</th>
-          <th>NT Key</th>
-        </tr>
-      </thead>
-      <tbody>
-        {shortcuts.map(([keys, ntKey], index) => (
-          <tr key={index}>
-            <td style={{ width: "50%" }}>
-              <Kbd
-                style={{
-                  cursor: "pointer",
-                  fontSize: 18,
-                  backgroundColor: index === selected ? "red" : undefined,
-                  color: index === selected ? "white" : undefined,
-                }}
-                onClick={() => recordFor(index)}
-              >
-                {Shortcut.shortcut2symbols(keys)}
-              </Kbd>
-            </td>
-            <td>
-              <TextInput
-                value={shortcuts[index][1]}
-                onChange={(event) => {
-                  const value = event.currentTarget.value
-                  setShortcuts((s) => {
-                    s[index][1] = value
-                    return [...s]
-                  })
-                }}
-                onBlur={resetShortcuts}
-              />
-            </td>
+    <>
+      <Table style={{ width: "100%" }}>
+        <thead>
+          <tr>
+            <th>Shortcut</th>
+            <th>NT Key</th>
           </tr>
-        ))}
-      </tbody>
-    </Table>
+        </thead>
+        <tbody>
+          {(schema?.shortcuts ?? []).map((shortcut, shortcutIndex) => (
+            <tr>
+              <td>
+                <TextInput
+                  value={shortcut.keyboard}
+                  onChange={(event) =>
+                    updateShortcut(setSchema, shortcutIndex, {
+                      keyboard: event.currentTarget.value,
+                    })
+                  }
+                />
+              </td>
+              <td>
+                <NTAutocomplete
+                  value={shortcut.ntKey}
+                  onChange={(newValue) =>
+                    updateShortcut(setSchema, shortcutIndex, {
+                      ntKey: newValue,
+                    })
+                  }
+                  supportedWidgetTypes={["boolean"]}
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+      <Button
+        leftIcon={<i className="fa-solid fa-plus" />}
+        style={{ width: "100%", marginTop: 10 }}
+        onClick={() => addShortcut(setSchema)}
+      >
+        New Shortcut
+      </Button>
+    </>
   )
 }
 

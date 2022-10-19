@@ -3,6 +3,7 @@ import React, { useState } from "react"
 import { KeysAndTypes, useAllNTKeys } from "../hooks"
 import Schema, { updateWidgetProps, WidgetSelector } from "../models/Schema"
 import widgets, { typeToTitle } from "../widgets"
+import NTAutocomplete from "./NTAutocomplete"
 import PropEditor from "./PropEditor"
 
 interface Props {
@@ -84,22 +85,10 @@ const WidgetEditor: React.FC<Props> = ({
           }
         }}
       />
-      <Autocomplete
+      <NTAutocomplete
         label="Source"
-        data={Object.keys(ntTypes).filter(
-          (key) =>
-            supportedWidgetTypes === undefined ||
-            supportedWidgetTypes.includes("all") ||
-            (supportedWidgetTypes.includes(ntTypes[key]) && !key.includes("/."))
-        )}
-        style={{ marginTop: 10, width: "100%" }}
         value={selectedWidgetSource}
-        disabled={
-          selectedWidget === undefined ||
-          selectedWidget.tabIndex >= schema.tabs.length ||
-          selectedWidget.widgetIndex >=
-            schema.tabs[selectedWidget.tabIndex].widgets.length
-        }
+        style={{ marginTop: 10, width: "100%" }}
         onChange={(newSource) => {
           if (selectedWidget) {
             setSchema((schema) => {
@@ -110,7 +99,13 @@ const WidgetEditor: React.FC<Props> = ({
             })
           }
         }}
-        limit={Number.POSITIVE_INFINITY}
+        disabled={
+          selectedWidget === undefined ||
+          selectedWidget.tabIndex >= schema.tabs.length ||
+          selectedWidget.widgetIndex >=
+            schema.tabs[selectedWidget.tabIndex].widgets.length
+        }
+        supportedWidgetTypes={supportedWidgetTypes}
       />
       {ntTypes[selectedWidgetSource] !== undefined && (
         <Badge style={{ marginTop: 10 }}>{ntTypes[selectedWidgetSource]}</Badge>

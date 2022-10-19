@@ -20,9 +20,7 @@
         "readFile": true,
         "writeFile": true,
         "createDir": true,
-        "scope": [
-          "**"
-        ]
+        "scope": ["**"]
       },
       "path": {
         "all": true
@@ -33,6 +31,9 @@
         "setResizable": true,
         "setSize": true,
         "setAlwaysOnTop": true
+      },
+      "globalShortcut": {
+        "all": true
       }
     },
     "bundle": {

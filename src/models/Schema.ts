@@ -19,8 +19,15 @@ export interface Tab {
   widgets: WidgetInfo[]
 }
 
+export interface Shortcut {
+  keyboard: string
+  ntKey: string
+  mode: "flip" | "set-true"
+}
+
 interface Schema {
   tabs: Tab[]
+  shortcuts?: Shortcut[]
 }
 
 export default Schema
@@ -235,6 +242,36 @@ export const updateWidgetProps = (
       [key]: value,
     }
 
+    return { ...schema }
+  })
+}
+
+export const addShortcut = (
+  setSchema: React.Dispatch<React.SetStateAction<Schema>>
+) => {
+  setSchema((schema) => {
+    if (schema.shortcuts === undefined) {
+      schema.shortcuts = []
+    }
+    schema.shortcuts.push({
+      keyboard: "",
+      ntKey: "",
+      mode: "set-true",
+    })
+    return { ...schema }
+  })
+}
+
+export const updateShortcut = (
+  setSchema: React.Dispatch<React.SetStateAction<Schema>>,
+  shortcutIndex: number,
+  newInfo: Partial<Shortcut>
+) => {
+  setSchema((schema) => {
+    schema.shortcuts[shortcutIndex] = {
+      ...schema.shortcuts[shortcutIndex],
+      ...newInfo,
+    }
     return { ...schema }
   })
 }

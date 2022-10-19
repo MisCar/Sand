@@ -48,7 +48,7 @@ const Sidebar: React.FC<Props> = ({
         borderRightWidth: 3,
         borderRightColor: "white",
         userSelect: "none",
-        maxWidth: 300,
+        maxWidth: 280,
       }}
     >
       <div
@@ -141,7 +141,7 @@ const Sidebar: React.FC<Props> = ({
                 />
               </Accordion.Control>
               <Accordion.Panel>
-                <ShortcutManager />
+                <ShortcutManager schema={schema} setSchema={setSchema} />
               </Accordion.Panel>
             </Accordion.Item>
             <Accordion.Item value="settings">
