@@ -1,6 +1,4 @@
-import { Button, Kbd, Table, TextInput } from "@mantine/core"
-import { register, unregisterAll } from "@tauri-apps/api/globalShortcut"
-import { useEffect } from "react"
+import { Button, Table, TextInput } from "@mantine/core"
 import Schema, { addShortcut, updateShortcut } from "../models/Schema"
 import NTAutocomplete from "./NTAutocomplete"
 
@@ -10,28 +8,6 @@ interface Props {
 }
 
 const ShortcutManager: React.FC<Props> = ({ schema, setSchema }) => {
-  useEffect(() => {
-    unregisterAll().then(() => {
-      for (const shortcut of schema?.shortcuts ?? []) {
-        if (shortcut.keyboard !== "") {
-          register(
-            shortcut.keyboard,
-            shortcut.mode === "set-true"
-              ? () => {
-                  NetworkTables.setValue(shortcut.ntKey, true)
-                }
-              : () => {
-                  NetworkTables.setValue(
-                    shortcut.ntKey,
-                    !NetworkTables.getValue(shortcut.ntKey, false)
-                  )
-                }
-          )
-        }
-      }
-    })
-  }, [schema])
-
   return (
     <>
       <Table style={{ width: "100%" }}>

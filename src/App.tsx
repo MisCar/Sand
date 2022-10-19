@@ -13,6 +13,7 @@ import "react-resizable/css/styles.css"
 import "@fortawesome/fontawesome-free/css/all.css"
 import Schema, { WidgetSelector } from "./models/Schema"
 import { getDefaultFile, getSettings, restoreFile, Settings } from "./listeners"
+import { register, unregisterAll } from "@tauri-apps/api/globalShortcut"
 
 // @ts-ignore
 NetworkTables.connectToWs("localhost:8888")
@@ -32,6 +33,28 @@ const App = () => {
     getDefaultFile().then((file) => restoreFile(file))
     getSettings().then(setSettings)
   }, [])
+
+  useEffect(() => {
+    unregisterAll().then(() => {
+      for (const shortcut of schema?.shortcuts ?? []) {
+        if (shortcut.keyboard !== "") {
+          register(
+            shortcut.keyboard,
+            shortcut.mode === "set-true"
+              ? () => {
+                  NetworkTables.setValue(shortcut.ntKey, true)
+                }
+              : () => {
+                  NetworkTables.setValue(
+                    shortcut.ntKey,
+                    !NetworkTables.getValue(shortcut.ntKey, false)
+                  )
+                }
+          )
+        }
+      }
+    })
+  }, [schema])
 
   // @ts-ignore
   window.getSchema = () => JSON.stringify(schema, null, 2)
