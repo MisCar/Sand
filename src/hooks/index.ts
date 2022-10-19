@@ -5,8 +5,10 @@ export const useNTConnected = () => {
   const [connected, setConnected] = useState(false)
 
   useEffect(() => {
-    NetworkTables.addRobotConnectionListener(setConnected)
     setConnected(NetworkTables.isRobotConnected())
+    const dispose: () => void =
+      NetworkTables.addRobotConnectionListener(setConnected)
+    return dispose
   }, [])
 
   return connected
@@ -111,9 +113,9 @@ export const useAllNTKeys = (
     }
   }
 
-  const unsubscribe: () => void = NetworkTables.addGlobalListener(keyUpdater)
-
   useEffect(() => {
+    const unsubscribe: () => void = NetworkTables.addGlobalListener(keyUpdater)
+
     keys = Array.from(NetworkTables.getKeys())
     for (const key of keys) {
       keyUpdater(key, NetworkTables.getValue(key), true)
@@ -130,11 +132,10 @@ export const useAllNTKeys = (
 export const useNTGlobalListener = (
   listener: (key: string, value: any, isNew: boolean) => void
 ) => {
-  const unsubcsribe = NetworkTables.addGlobalListener(listener)
-
-  useEffect(() => () => {
-    unsubcsribe()
-  })
+  useEffect(() => {
+    const unsubscribe: () => void = NetworkTables.addGlobalListener(listener)
+    return unsubscribe
+  }, [])
 }
 
 export const useLast = <T>(maxLength: number): [T[], (newValue: T) => void] => {
