@@ -1,4 +1,4 @@
-import { ColorScheme, Grid, MantineProvider, Tuple } from "@mantine/core"
+import { ColorScheme, MantineProvider, Tuple } from "@mantine/core"
 import React, { useEffect, useState } from "react"
 import { createRoot } from "react-dom/client"
 import Sidebar from "./components/Sidebar"
@@ -13,10 +13,12 @@ import "react-resizable/css/styles.css"
 import "@fortawesome/fontawesome-free/css/all.css"
 import Schema, { WidgetSelector } from "./models/Schema"
 import { getDefaultFile, getSettings, restoreFile, Settings } from "./listeners"
-import { register, unregisterAll } from "@tauri-apps/api/globalShortcut"
+import { register, unregister } from "@tauri-apps/api/globalShortcut"
 
 // @ts-ignore
 NetworkTables.connectToWs("localhost:8888")
+
+let previousSchema: Schema
 
 const App = () => {
   const [colorScheme, setColorScheme] = useState<ColorScheme>("dark")
@@ -35,7 +37,15 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    unregisterAll().then(() => {
+    ;(async () => {
+      if (previousSchema !== undefined) {
+        for (const shortcut of previousSchema?.shortcuts ?? []) {
+          try {
+            await unregister(shortcut.keyboard)
+          } catch (_) {}
+        }
+      }
+
       for (const shortcut of schema?.shortcuts ?? []) {
         if (shortcut.keyboard !== "") {
           register(
@@ -53,7 +63,9 @@ const App = () => {
           )
         }
       }
-    })
+
+      previousSchema = schema
+    })()
   }, [schema])
 
   // @ts-ignore
