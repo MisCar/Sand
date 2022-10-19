@@ -10,6 +10,7 @@
     "tauri": "tauri"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.4",
     "@fortawesome/fontawesome-free": "^6.2.0",
     "@mantine/core": "^5.5.5",
     "@mantine/hooks": "^5.5.5",
