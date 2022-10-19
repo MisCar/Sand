@@ -23,7 +23,7 @@ const App = () => {
   const [mode, setMode] = useState<Mode>(Mode.Play)
   const [schema, setSchema] = useState<Schema>({ tabs: [] })
   const [selectedWidget, setSelectedWidget] = useState<WidgetSelector>()
-  const [accordionState, setAccordionState] = useState<string[]>([])
+  const [accordionState, setAccordionState] = useState<string>()
   const [settings, setSettings] = useState<Settings>()
 
   useEffect(() => {
@@ -102,7 +102,7 @@ const App = () => {
             selectedWidget={selectedWidget}
             modify={(selector) => {
               setSelectedWidget(selector)
-              setAccordionState(["modify"])
+              setAccordionState("modify")
             }}
             isModifying={isModifying}
           />

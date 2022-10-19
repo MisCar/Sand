@@ -1,5 +1,9 @@
-import { Button, Table, TextInput } from "@mantine/core"
-import Schema, { addShortcut, updateShortcut } from "../models/Schema"
+import { Button, Select, Table, TextInput } from "@mantine/core"
+import Schema, {
+  addShortcut,
+  removeShortcut,
+  updateShortcut,
+} from "../models/Schema"
 import NTAutocomplete from "./NTAutocomplete"
 
 interface Props {
@@ -13,8 +17,10 @@ const ShortcutManager: React.FC<Props> = ({ schema, setSchema }) => {
       <Table style={{ width: "100%" }}>
         <thead>
           <tr>
-            <th>Shortcut</th>
+            <th style={{ width: "22.5%" }}>Shortcut</th>
             <th>NT Key</th>
+            <th style={{ width: "22.5%" }}>Mode</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -22,6 +28,7 @@ const ShortcutManager: React.FC<Props> = ({ schema, setSchema }) => {
             <tr>
               <td>
                 <TextInput
+                  icon={<i className="fa-solid fa-keyboard" />}
                   value={shortcut.keyboard}
                   onChange={(event) =>
                     updateShortcut(setSchema, shortcutIndex, {
@@ -32,6 +39,7 @@ const ShortcutManager: React.FC<Props> = ({ schema, setSchema }) => {
               </td>
               <td>
                 <NTAutocomplete
+                  icon={<i className="fa-solid fa-wifi" />}
                   value={shortcut.ntKey}
                   onChange={(newValue) =>
                     updateShortcut(setSchema, shortcutIndex, {
@@ -39,6 +47,27 @@ const ShortcutManager: React.FC<Props> = ({ schema, setSchema }) => {
                     })
                   }
                   supportedWidgetTypes={["boolean"]}
+                />
+              </td>
+              <td>
+                <Select
+                  value={shortcut.mode}
+                  onChange={(newMode: "flip" | "set-true") =>
+                    updateShortcut(setSchema, shortcutIndex, {
+                      mode: newMode,
+                    })
+                  }
+                  data={[
+                    { label: "Flip", value: "flip" },
+                    { label: "Set True", value: "set-true" },
+                  ]}
+                />
+              </td>
+              <td>
+                <i
+                  className="fa-solid fa-trash"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => removeShortcut(setSchema, shortcutIndex)}
                 />
               </td>
             </tr>

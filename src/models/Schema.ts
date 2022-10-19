@@ -275,3 +275,13 @@ export const updateShortcut = (
     return { ...schema }
   })
 }
+
+export const removeShortcut = (
+  setSchema: React.Dispatch<React.SetStateAction<Schema>>,
+  shortcutIndex: number
+) => {
+  setSchema((schema) => {
+    schema.shortcuts.splice(shortcutIndex, 1)
+    return { ...schema }
+  })
+}

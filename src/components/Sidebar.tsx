@@ -19,8 +19,8 @@ interface Props {
   selectedWidget: WidgetSelector | undefined
   schema: Schema
   setSchema: React.Dispatch<React.SetStateAction<Schema>>
-  accordionState: string[]
-  setAccordionState: React.Dispatch<React.SetStateAction<string[]>>
+  accordionState: string
+  setAccordionState: React.Dispatch<React.SetStateAction<string>>
 }
 
 const Sidebar: React.FC<Props> = ({
@@ -48,7 +48,7 @@ const Sidebar: React.FC<Props> = ({
         borderRightWidth: 3,
         borderRightColor: "white",
         userSelect: "none",
-        maxWidth: 280,
+        maxWidth: accordionState === "keyboard shortcuts" ? 600 : 280,
       }}
     >
       <div
@@ -97,7 +97,6 @@ const Sidebar: React.FC<Props> = ({
         {mode === Mode.Edit && (
           <Accordion
             style={{ width: "100%" }}
-            multiple
             value={accordionState}
             onChange={setAccordionState}
           >

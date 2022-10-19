@@ -9,6 +9,7 @@ interface Props {
   disabled?: boolean
   label?: string
   style?: React.CSSProperties
+  icon?: React.ReactNode
 }
 
 const NTAutocomplete: React.FC<Props> = ({
@@ -18,6 +19,7 @@ const NTAutocomplete: React.FC<Props> = ({
   supportedWidgetTypes,
   disabled,
   label,
+  icon,
 }) => {
   const [[ntKeys, ntTypes], setNtKeysAndTypes] = useState<KeysAndTypes>([
     [],
@@ -28,6 +30,7 @@ const NTAutocomplete: React.FC<Props> = ({
   return (
     <Autocomplete
       label={label}
+      icon={icon}
       data={Object.keys(ntTypes).filter(
         (key) =>
           supportedWidgetTypes === undefined ||
