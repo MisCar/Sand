@@ -1,4 +1,4 @@
-import { NumberInput, TextInput } from "@mantine/core"
+import { NumberInput, Switch, TextInput } from "@mantine/core"
 import React from "react"
 import Widget from "../models/Widget"
 
@@ -66,6 +66,15 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
                     : parseFloat(event.currentTarget.value)
                 )
               }
+            />
+          )
+        } else if (widget.propsInfo[key] === "boolean") {
+          return (
+            <Switch
+              style={{ margin: 5 }}
+              label={camelToTitle(key)}
+              value={currentProps[key]}
+              onChange={(value) => setProp(key, value)}
             />
           )
         } else {

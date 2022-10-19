@@ -10,10 +10,14 @@ const ToggleSwitch: Widget = ({ source, props }) => {
       {...props}
       size="xl"
       styles={{
+        root: {
+          width: props?.expandWidth ? "90%" : undefined,
+        },
         track: {
           cursor: "pointer",
           backgroundColor: checked ? props?.color + " !important" : undefined,
           borderColor: checked ? "transparent !important" : undefined,
+          width: props?.expandWidth ? "100%" : undefined,
         },
       }}
       checked={checked}
@@ -27,6 +31,7 @@ ToggleSwitch.propsInfo = {
   onLabel: "string",
   offLabel: "string",
   color: "string",
+  expandWidth: "boolean",
 }
 
 export default ToggleSwitch

@@ -10,7 +10,7 @@ interface WidgetProps {
 interface Widget extends React.FC<WidgetProps> {
   supportedTypes?: string[]
   propsInfo?: {
-    [key: string]: "string" | "int" | "double"
+    [key: string]: "string" | "int" | "double" | "boolean"
   }
 }
 
