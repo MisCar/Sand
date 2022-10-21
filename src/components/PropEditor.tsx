@@ -74,7 +74,7 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
               style={{ margin: 5 }}
               label={camelToTitle(key)}
               value={currentProps[key]}
-              onChange={(value) => setProp(key, value)}
+              onChange={(event) => setProp(key, event.currentTarget.checked)}
             />
           )
         } else {
