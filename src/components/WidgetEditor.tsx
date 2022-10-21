@@ -51,6 +51,7 @@ const WidgetEditor: React.FC<Props> = ({
       }}
     >
       <Select
+        icon={<i className="fa-solid fa-cube" />}
         label="Type"
         style={{ width: "100%" }}
         value={selectedWidgetType}
@@ -87,6 +88,7 @@ const WidgetEditor: React.FC<Props> = ({
       />
       <NTAutocomplete
         label="Source"
+        icon={<i className="fa-solid fa-wifi" />}
         value={selectedWidgetSource}
         style={{ marginTop: 10, width: "100%" }}
         onChange={(newSource) => {
