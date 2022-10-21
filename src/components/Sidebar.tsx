@@ -47,7 +47,6 @@ const Sidebar: React.FC<Props> = ({
         flex: "none",
         borderRightWidth: 3,
         borderRightColor: "white",
-        userSelect: "none",
         maxWidth: accordionState === "keyboard shortcuts" ? 600 : 280,
       }}
     >

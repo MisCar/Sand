@@ -22,6 +22,8 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
     return <></>
   }
 
+  currentProps = currentProps ?? {}
+
   return (
     <>
       {Object.keys(widget.propsInfo).map((key) => {

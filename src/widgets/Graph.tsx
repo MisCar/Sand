@@ -15,7 +15,7 @@ import { useMantineTheme } from "@mantine/core"
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title)
 
 const Graph: Widget = ({ source, props }) => {
-  const [values, addValue] = useLast<number>(250)
+  const [values, addValue] = useLast<number>(props?.valueCount ?? 250)
   const theme = useMantineTheme()
 
   useEffect(() => {
@@ -44,6 +44,7 @@ const Graph: Widget = ({ source, props }) => {
       options={{
         scales: {
           xAxis: { display: false },
+          yAxis: { min: props?.minValue, max: props?.maxValue },
         },
         animation: false,
       }}
@@ -52,5 +53,10 @@ const Graph: Widget = ({ source, props }) => {
 }
 
 Graph.supportedTypes = ["number"]
+Graph.propsInfo = {
+  valueCount: "int",
+  minValue: "double",
+  maxValue: "double",
+}
 
 export default Graph
