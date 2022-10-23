@@ -1,7 +1,12 @@
-import { Alert, Autocomplete, Badge, Select } from "@mantine/core"
+import { Alert, Autocomplete, Badge, Select, TextInput } from "@mantine/core"
 import React, { useState } from "react"
 import { KeysAndTypes, useAllNTKeys } from "../hooks"
-import Schema, { updateWidgetProps, WidgetSelector } from "../models/Schema"
+import Schema, {
+  setTitle,
+  updateWidgetInfo,
+  updateWidgetProps,
+  WidgetSelector,
+} from "../models/Schema"
 import widgets, { typeToTitle } from "../widgets"
 import NTAutocomplete from "./NTAutocomplete"
 import PropEditor from "./PropEditor"
@@ -35,6 +40,12 @@ const WidgetEditor: React.FC<Props> = ({
           selectedWidget.widgetIndex
         ]?.source
       : undefined
+  const selectedWidgetTitle =
+    selectedWidget !== undefined
+      ? schema.tabs[selectedWidget.tabIndex]?.widgets[
+          selectedWidget.widgetIndex
+        ]?.title
+      : undefined
 
   const supportedWidgetTypes =
     (selectedWidgetType !== undefined
@@ -50,10 +61,23 @@ const WidgetEditor: React.FC<Props> = ({
         alignItems: "center",
       }}
     >
+      <TextInput
+        label="Title"
+        icon={<i className="fa-solid fa-heading" />}
+        value={selectedWidgetTitle}
+        onChange={(event) =>
+          setTitle(
+            setSchema,
+            selectedWidget.tabIndex,
+            selectedWidget.widgetIndex,
+            event.currentTarget.value
+          )
+        }
+      />
       <Select
         icon={<i className="fa-solid fa-cube" />}
         label="Type"
-        style={{ width: "100%" }}
+        style={{ marginTop: 10, width: "100%" }}
         value={selectedWidgetType}
         disabled={
           selectedWidget === undefined ||
