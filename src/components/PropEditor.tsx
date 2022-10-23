@@ -17,6 +17,12 @@ const camelToTitle = (camel: string) => {
   )
 }
 
+const STYLES: React.CSSProperties = {
+  marginTop: 5,
+  marginBottom: 5,
+  width: "100%",
+}
+
 const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
   if (widget?.propsInfo === undefined) {
     return <></>
@@ -32,7 +38,7 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
             <TextInput
               spellCheck={false}
               label={camelToTitle(key)}
-              style={{ margin: 5 }}
+              style={STYLES}
               value={currentProps[key] ?? ""}
               onChange={(event) =>
                 setProp(
@@ -48,7 +54,7 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
           return (
             <NumberInput
               label={camelToTitle(key)}
-              style={{ margin: 5 }}
+              style={STYLES}
               value={currentProps[key]}
               onChange={(value) => setProp(key, value)}
             />
@@ -58,7 +64,7 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
             <TextInput
               type="number"
               label={camelToTitle(key)}
-              style={{ margin: 5 }}
+              style={STYLES}
               value={currentProps[key] ?? ""}
               onChange={(event) =>
                 setProp(
@@ -73,7 +79,7 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
         } else if (widget.propsInfo[key] === "boolean") {
           return (
             <Switch
-              style={{ margin: 5 }}
+              style={STYLES}
               label={camelToTitle(key)}
               value={currentProps[key]}
               onChange={(event) => setProp(key, event.currentTarget.checked)}
