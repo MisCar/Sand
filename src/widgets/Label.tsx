@@ -5,7 +5,17 @@ import Widget from "../models/Widget"
 const Label: Widget = ({ source, props }) => {
   const [value] = useNTKey(source)
 
-  return <p style={props}>{value === undefined ? "" : value.toString()}</p>
+  let string = value === undefined ? "" : value.toString()
+  if (props?.precision !== undefined) {
+    const precision = Math.min(100, Math.max(1, props.precision))
+    if (typeof value === "number") {
+      string = value.toPrecision(precision)
+    } else if (Array.isArray(value) && typeof value[0] === "number") {
+      string = value.map((f) => f.toPrecision(precision)).join(", ")
+    }
+  }
+
+  return <p style={props}>{string}</p>
 }
 
 Label.supportedTypes = [
@@ -20,6 +30,7 @@ Label.supportedTypes = [
 Label.propsInfo = {
   fontSize: "int",
   fontWeight: "string",
+  precision: "int",
 }
 
 export default Label
