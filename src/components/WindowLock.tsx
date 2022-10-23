@@ -7,7 +7,7 @@ import {
 } from "@tauri-apps/api/window"
 import { useState } from "react"
 
-const DRIVERSTATION_HEIGHT = 200
+const DRIVERSTATION_HEIGHT = 268
 
 const WindowLock = () => {
   const [checked, setChecked] = useState(false)
