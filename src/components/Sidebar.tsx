@@ -7,6 +7,7 @@ import AppSettings from "./AppSettings"
 import ConnectionIndicator from "./ConnectionIndicator"
 import IconAndText from "./IconAndText"
 import ShortcutManager from "./ShortcutManager"
+import TabEditor from "./TabEditor"
 import WidgetDisplay from "./WidgetDisplay"
 import WidgetEditor from "./WidgetEditor"
 import WindowLock from "./WindowLock"
@@ -21,6 +22,7 @@ interface Props {
   setSchema: React.Dispatch<React.SetStateAction<Schema>>
   accordionState: string
   setAccordionState: React.Dispatch<React.SetStateAction<string>>
+  activeTab: string
 }
 
 const Sidebar: React.FC<Props> = ({
@@ -33,6 +35,7 @@ const Sidebar: React.FC<Props> = ({
   setSchema,
   accordionState,
   setAccordionState,
+  activeTab,
 }) => {
   const connected = useNTConnected()
 
@@ -129,6 +132,18 @@ const Sidebar: React.FC<Props> = ({
                   />
                 )}
                 {selectedWidget !== undefined || <p>No widget selected.</p>}
+              </Accordion.Panel>
+            </Accordion.Item>
+            <Accordion.Item value="tab">
+              <Accordion.Control>
+                <IconAndText icon="fa-solid fa-table-cells" text="Tab" />
+              </Accordion.Control>
+              <Accordion.Panel>
+                <TabEditor
+                  schema={schema}
+                  setSchema={setSchema}
+                  activeTab={activeTab}
+                />
               </Accordion.Panel>
             </Accordion.Item>
             <Accordion.Item value="keyboard shortcuts">

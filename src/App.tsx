@@ -15,6 +15,7 @@ import Schema, { WidgetSelector } from "./models/Schema"
 import { getDefaultFile, getSettings, restoreFile, Settings } from "./listeners"
 import { register, unregister } from "@tauri-apps/api/globalShortcut"
 import { NotificationsProvider, showNotification } from "@mantine/notifications"
+import { useNTKey } from "./hooks"
 
 // @ts-ignore
 NetworkTables.connectToWs("localhost:8888")
@@ -22,6 +23,7 @@ NetworkTables.connectToWs("localhost:8888")
 let previousSchema: Schema
 
 const App = () => {
+  const [activeTab, setActiveTab] = useNTKey<string>("/Sand/ActiveTab", "0")
   const [colorScheme, setColorScheme] = useState<ColorScheme>("dark")
   const [mode, setMode] = useState<Mode>(Mode.Play)
   const [schema, setSchema] = useState<Schema>({ tabs: [] })
@@ -125,6 +127,7 @@ const App = () => {
               setSchema={setSchema}
               accordionState={accordionState}
               setAccordionState={setAccordionState}
+              activeTab={activeTab}
             />
           </div>
           <div style={{ flexGrow: 1 }}>
@@ -138,6 +141,8 @@ const App = () => {
                 setAccordionState("modify")
               }}
               isModifying={isModifying}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
             />
           </div>
         </div>

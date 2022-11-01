@@ -16,6 +16,7 @@ export interface WidgetInfo {
 export interface Tab {
   name: string
   columns: number
+  gridSize?: number
   widgets: WidgetInfo[]
 }
 

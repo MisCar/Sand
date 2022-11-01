@@ -20,6 +20,8 @@ import widgets, { typeToTitle } from "../widgets"
 import WidgetCell from "./WidgetCell"
 
 interface Props {
+  activeTab: string
+  setActiveTab: React.Dispatch<React.SetStateAction<string>>
   mode: Mode
   schema: Schema
   setSchema: React.Dispatch<React.SetStateAction<Schema>>
@@ -35,8 +37,9 @@ const TabLayout: React.FC<Props> = ({
   modify,
   selectedWidget,
   isModifying,
+  activeTab,
+  setActiveTab,
 }) => {
-  const [activeTab, setActiveTab] = useNTKey<string>("/Sand/ActiveTab", "0")
   const [robotSetTabs] = useNTKey<string[]>("/Shuffleboard/.metadata/Tabs", [])
   const [robotSetTabName] = useNTKey<string>(
     "/Shuffleboard/.metadata/Selected",
@@ -173,12 +176,12 @@ const TabLayout: React.FC<Props> = ({
             isDraggable={mode === Mode.Edit}
             isDroppable={true}
             cols={tab.columns}
-            rowHeight={width / tab.columns}
+            rowHeight={tab.gridSize ?? width / tab.columns}
             maxRows={Math.max(
               Math.floor(height / (width / tab.columns)) - 1,
               1
             )}
-            width={width}
+            width={tab.gridSize ? tab.gridSize * tab.columns : width}
             style={{ height: "100%" }}
             onLayoutChange={(layouts) =>
               setLayouts(setSchema, tabIndex, layouts)
