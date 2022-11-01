@@ -156,7 +156,7 @@ const WidgetEditor: React.FC<Props> = ({
         currentProps={
           schema.tabs[selectedWidget.tabIndex]?.widgets[
             selectedWidget.widgetIndex
-          ].props
+          ]?.props
         }
         setProp={(key, value) =>
           updateWidgetProps(setSchema, selectedWidget, key, value)
