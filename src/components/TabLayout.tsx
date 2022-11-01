@@ -138,6 +138,12 @@ const TabLayout: React.FC<Props> = ({
                 setTabName(setSchema, tabIndex, event.currentTarget.textContent)
               }}
               contentEditable={mode === Mode.Edit}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  event.preventDefault()
+                  event.currentTarget.blur()
+                }
+              }}
               suppressContentEditableWarning
             >
               {tab.name}

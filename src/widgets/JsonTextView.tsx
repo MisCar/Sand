@@ -25,7 +25,6 @@ const JsonTextView: Widget = ({ source, props }) => {
         value={value}
         onChange={(event) => setValue(event.currentTarget.value)}
         onBlur={(event) => {
-          console.log(event.currentTarget.value)
           const value = JSON.parse(
             event.currentTarget.value
               .replace(/״/g, '"')
