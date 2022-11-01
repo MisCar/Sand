@@ -14,6 +14,9 @@ const Gauge: Widget = ({ source, props }) => {
     if (!gaugeRef.current) {
       if (!gaugeEl.current) return
       const options: GaugeOptions = {
+        min: props?.min,
+        max: props?.max,
+        showValue: props?.showValue,
         color: (value) => (value < 30 ? "green" : "red"),
       }
       gaugeRef.current = SvgGauge(gaugeEl.current, options)
@@ -35,6 +38,7 @@ const Gauge: Widget = ({ source, props }) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        overflow: "hidden"
       }}
     >
       <div
@@ -50,6 +54,10 @@ const Gauge: Widget = ({ source, props }) => {
 }
 
 Gauge.supportedTypes = ["number"]
-Gauge.propsInfo = {}
+Gauge.propsInfo = {
+  min: "double",
+  max: "double",
+  showValue: "boolean",
+}
 
 export default Gauge
