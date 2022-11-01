@@ -6,7 +6,9 @@ const AppSettings = () => {
   const [settings, setCurrentSettings] = useState<Settings>()
 
   useEffect(() => {
-    getSettings().then(setCurrentSettings)
+    getSettings()
+      .then(setCurrentSettings)
+      .catch(() => console.log("Couldn't load settings"))
   }, [])
 
   return (

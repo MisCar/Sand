@@ -45,8 +45,12 @@ const App = () => {
       setSchema(parsed)
     }
 
-    getDefaultFile().then((file) => restoreFile(file))
-    getSettings().then(setSettings)
+    getDefaultFile()
+      .then((file) => restoreFile(file))
+      .catch(() => console.log("Couldn't load default schema"))
+    getSettings()
+      .then(setSettings)
+      .catch(() => console.log("Couldn't load settings"))
   }, [])
 
   useEffect(() => {

@@ -1,6 +1,9 @@
 import { Button, Tabs } from "@mantine/core"
 import { useElementSize } from "@mantine/hooks"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect } from "react"
+import GridLayout from "react-grid-layout"
+import { useNTGlobalListener, useNTKey } from "../hooks"
+import Mode from "../models/Mode"
 import Schema, {
   addTab,
   addWidget,
@@ -13,11 +16,8 @@ import Schema, {
   updateWidgetInfoUsingCurrent,
   WidgetSelector,
 } from "../models/Schema"
-import { useNTGlobalListener, useNTKey } from "../hooks"
-import GridLayout from "react-grid-layout"
-import Mode from "../models/Mode"
-import WidgetCell from "./WidgetCell"
 import widgets, { typeToTitle } from "../widgets"
+import WidgetCell from "./WidgetCell"
 
 interface Props {
   mode: Mode
@@ -114,11 +114,7 @@ const TabLayout: React.FC<Props> = ({
   return (
     <Tabs
       value={activeTab}
-      onTabChange={(tab) => {
-        if (tab !== "new-tab") {
-          setActiveTab(tab)
-        }
-      }}
+      onTabChange={setActiveTab}
       style={{ height: "100%", width: "100%", padding: 5 }}
       styles={{ panel: { height: "100%" }, tabsList: { minHeight: 36 } }}
       ref={ref}
@@ -158,25 +154,14 @@ const TabLayout: React.FC<Props> = ({
           </Tabs.Tab>
         ))}
         {mode === Mode.Edit && (
-          <Tabs.Tab
-            value="new-tab"
-            style={{
-              padding: 0,
-              marginLeft: 5,
-              marginTop: -5,
-              borderBottomWidth: 0,
-              backgroundColor: "transparent",
-              cursor: "default",
-            }}
+          <Button
+            style={{ marginLeft: 10 }}
+            onClick={() => addTab(setSchema, "Untitled")}
+            size="xs"
+            leftIcon={<i className="fa-solid fa-plus" />}
           >
-            <Button
-              onClick={() => addTab(setSchema, "Untitled")}
-              size="xs"
-              leftIcon={<i className="fa-solid fa-plus" />}
-            >
-              New Tab
-            </Button>
-          </Tabs.Tab>
+            New Tab
+          </Button>
         )}
       </Tabs.List>
       {schema.tabs.map((tab, tabIndex) => (
