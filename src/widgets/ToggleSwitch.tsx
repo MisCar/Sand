@@ -12,6 +12,7 @@ const ToggleSwitch: Widget = ({ source, props }) => {
       styles={{
         root: {
           width: props?.expandWidth ? "90%" : undefined,
+          display: "contents",
         },
         track: {
           cursor: "pointer",
