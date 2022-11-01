@@ -12,6 +12,7 @@ import NumberSlider from "./NumberSlider"
 import TableView from "./TableView"
 import NumberTextView from "./NumberTextView"
 import JsonTextView from "./JsonTextView"
+import Gauge from "./Gauge"
 
 const widgets: {
   [key: string]: Widget
@@ -28,6 +29,7 @@ const widgets: {
   JsonTextView,
   NumberSlider,
   TableView,
+  Gauge,
 }
 
 export default widgets
