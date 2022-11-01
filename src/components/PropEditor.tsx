@@ -36,6 +36,7 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
         if (widget.propsInfo[key] === "string") {
           return (
             <TextInput
+              key={key}
               spellCheck={false}
               label={camelToTitle(key)}
               style={STYLES}
@@ -53,6 +54,7 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
         } else if (widget.propsInfo[key] === "int") {
           return (
             <NumberInput
+              key={key}
               label={camelToTitle(key)}
               style={STYLES}
               value={currentProps[key]}
@@ -62,6 +64,7 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
         } else if (widget.propsInfo[key] === "double") {
           return (
             <TextInput
+              key={key}
               type="number"
               label={camelToTitle(key)}
               style={STYLES}
@@ -79,6 +82,7 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
         } else if (widget.propsInfo[key] === "boolean") {
           return (
             <Switch
+              key={key}
               style={STYLES}
               label={camelToTitle(key)}
               value={currentProps[key]}
