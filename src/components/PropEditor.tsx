@@ -18,8 +18,7 @@ const camelToTitle = (camel: string) => {
 }
 
 const STYLES: React.CSSProperties = {
-  marginTop: 5,
-  marginBottom: 5,
+  marginTop: 10,
   width: "100%",
 }
 

@@ -149,8 +149,6 @@ const WidgetEditor: React.FC<Props> = ({
           </Alert>
         )}
 
-      {Object.keys(widgets[selectedWidgetType]?.propsInfo ?? {}).length !==
-        0 && <hr style={{ width: "100%" }} />}
       <PropEditor
         widget={widgets[selectedWidgetType]}
         currentProps={
