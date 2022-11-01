@@ -25,7 +25,7 @@ const ShortcutManager: React.FC<Props> = ({ schema, setSchema }) => {
         </thead>
         <tbody>
           {(schema?.shortcuts ?? []).map((shortcut, shortcutIndex) => (
-            <tr>
+            <tr key={shortcutIndex}>
               <td>
                 <TextInput
                   icon={<i className="fa-solid fa-keyboard" />}
