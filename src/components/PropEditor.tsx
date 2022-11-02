@@ -42,6 +42,11 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
             <TextInput
               key={key}
               spellCheck={false}
+              icon={
+                widget.propsInfo[key].type === "color" ? (
+                  <i className="fa-solid fa-palette" />
+                ) : undefined
+              }
               label={camelToTitle(key)}
               style={STYLES}
               value={color}
