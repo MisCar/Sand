@@ -1,11 +1,11 @@
 import { useNTKey } from "../hooks"
-import Widget from "../models/Widget"
+import Widget, { getOrDefault } from "../models/Widget"
 
 const BooleanBox: Widget = ({ source, props }) => {
   const [checked] = useNTKey<boolean>(source, false)
 
-  const trueColor = props?.trueColor ?? "#83f28f"
-  const falseColor = props?.falseColor ?? "#ff5c5c"
+  const trueColor = getOrDefault(props, BooleanBox, "trueColor")
+  const falseColor = getOrDefault(props, BooleanBox, "falseColor")
 
   return (
     <div
@@ -22,8 +22,14 @@ const BooleanBox: Widget = ({ source, props }) => {
 
 BooleanBox.supportedTypes = ["boolean"]
 BooleanBox.propsInfo = {
-  trueColor: "string",
-  falseColor: "string",
+  trueColor: {
+    type: "color",
+    default: "#83f28f",
+  },
+  falseColor: {
+    type: "color",
+    default: "#ff5c5c",
+  },
 }
 
 export default BooleanBox

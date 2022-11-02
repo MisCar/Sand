@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react"
 import { useNTKey } from "../hooks"
-import Widget from "../models/Widget"
+import Widget, { getOrDefault } from "../models/Widget"
 import SvgGauge, { GaugeInstance, GaugeOptions } from "svg-gauge"
 import { useElementSize } from "@mantine/hooks"
 
@@ -14,9 +14,9 @@ const Gauge: Widget = ({ source, props }) => {
     if (!gaugeRef.current) {
       if (!gaugeEl.current) return
       const options: GaugeOptions = {
-        min: props?.min ?? 0,
-        max: props?.max ?? 100,
-        showValue: props?.showValue ?? true,
+        min: getOrDefault(props, Gauge, "min"),
+        max: getOrDefault(props, Gauge, "max"),
+        showValue: getOrDefault(props, Gauge, "showValue"),
         color: (value) => (value < 30 ? "green" : "red"),
       }
       gaugeRef.current = SvgGauge(gaugeEl.current, options)
@@ -55,9 +55,18 @@ const Gauge: Widget = ({ source, props }) => {
 
 Gauge.supportedTypes = ["number"]
 Gauge.propsInfo = {
-  min: "double",
-  max: "double",
-  showValue: "boolean",
+  min: {
+    type: "double",
+    default: 0,
+  },
+  max: {
+    type: "double",
+    default: 100,
+  },
+  showValue: {
+    type: "boolean",
+    default: true,
+  },
 }
 
 export default Gauge

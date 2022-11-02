@@ -32,14 +32,19 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
   return (
     <>
       {Object.keys(widget.propsInfo).map((key) => {
-        if (widget.propsInfo[key] === "string") {
+        if (
+          widget.propsInfo[key].type === "string" ||
+          widget.propsInfo[key].type === "color"
+        ) {
+          const color: string =
+            currentProps[key] ?? widget.propsInfo[key].default ?? ""
           return (
             <TextInput
               key={key}
               spellCheck={false}
               label={camelToTitle(key)}
               style={STYLES}
-              value={currentProps[key] ?? ""}
+              value={color}
               onChange={(event) =>
                 setProp(
                   key,
@@ -48,26 +53,38 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
                     : event.currentTarget.value
                 )
               }
+              rightSection={
+                widget.propsInfo[key].type === "color" ? (
+                  <div
+                    style={{
+                      backgroundColor: color,
+                      width: "50%",
+                      height: "50%",
+                      borderRadius: "100%",
+                    }}
+                  />
+                ) : undefined
+              }
             />
           )
-        } else if (widget.propsInfo[key] === "int") {
+        } else if (widget.propsInfo[key].type === "int") {
           return (
             <NumberInput
               key={key}
               label={camelToTitle(key)}
               style={STYLES}
-              value={currentProps[key]}
+              value={currentProps[key] ?? widget.propsInfo[key].default}
               onChange={(value) => setProp(key, value)}
             />
           )
-        } else if (widget.propsInfo[key] === "double") {
+        } else if (widget.propsInfo[key].type === "double") {
           return (
             <TextInput
               key={key}
               type="number"
               label={camelToTitle(key)}
               style={STYLES}
-              value={currentProps[key] ?? ""}
+              value={currentProps[key] ?? widget.propsInfo[key].default ?? ""}
               onChange={(event) =>
                 setProp(
                   key,
@@ -78,13 +95,14 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
               }
             />
           )
-        } else if (widget.propsInfo[key] === "boolean") {
+        } else if (widget.propsInfo[key].type === "boolean") {
           return (
             <Switch
               key={key}
               style={STYLES}
+              styles={{ track: { cursor: "pointer" } }}
               label={camelToTitle(key)}
-              value={currentProps[key]}
+              checked={currentProps[key] ?? widget.propsInfo[key].default}
               onChange={(event) => setProp(key, event.currentTarget.checked)}
             />
           )

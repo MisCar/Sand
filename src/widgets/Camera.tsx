@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNTKey } from "../hooks"
-import Widget from "../models/Widget"
+import Widget, { getOrDefault } from "../models/Widget"
 
 const Camera: Widget = ({ source, props }) => {
   const [streams] = useNTKey<string[]>(source + "/streams", [])
@@ -8,7 +8,7 @@ const Camera: Widget = ({ source, props }) => {
   const rerender = () => setR(!r)
 
   useEffect(() => {
-    setTimeout(rerender, props?.reloadRate ?? 1000)
+    setTimeout(rerender, getOrDefault(props, Camera, "reloadRate"))
   }, [r])
 
   let stream: string | undefined = props?.stream
@@ -32,8 +32,13 @@ const Camera: Widget = ({ source, props }) => {
 
 Camera.supportedTypes = ["Camera"]
 Camera.propsInfo = {
-  stream: "string",
-  reloadRate: "int",
+  stream: {
+    type: "string",
+  },
+  reloadRate: {
+    type: "int",
+    default: 1000,
+  },
 }
 
 export default Camera

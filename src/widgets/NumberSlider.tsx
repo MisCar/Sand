@@ -1,10 +1,10 @@
 import { Slider } from "@mantine/core"
 import { useNTKey } from "../hooks"
-import Widget from "../models/Widget"
+import Widget, { getOrDefault } from "../models/Widget"
 
 const NumberSlider: Widget = ({ source, props }) => {
   const [value, setValue] = useNTKey(source, 0)
-  const step: number = props?.step ?? 0.001
+  const step: number = getOrDefault(props, NumberSlider, "step")
 
   const split = step.toString().split(".")
   const stepPrecision = split.length === 1 ? 0 : split[1].length
@@ -26,9 +26,16 @@ const NumberSlider: Widget = ({ source, props }) => {
 
 NumberSlider.supportedTypes = ["number"]
 NumberSlider.propsInfo = {
-  min: "double",
-  max: "double",
-  step: "double",
+  min: {
+    type: "double",
+  },
+  max: {
+    type: "double",
+  },
+  step: {
+    type: "double",
+    default: 0.001,
+  },
 }
 
 export default NumberSlider

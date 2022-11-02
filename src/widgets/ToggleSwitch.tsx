@@ -29,10 +29,18 @@ const ToggleSwitch: Widget = ({ source, props }) => {
 
 ToggleSwitch.supportedTypes = ["boolean"]
 ToggleSwitch.propsInfo = {
-  onLabel: "string",
-  offLabel: "string",
-  color: "string",
-  expandWidth: "boolean",
+  onLabel: {
+    type: "string",
+  },
+  offLabel: {
+    type: "string",
+  },
+  color: {
+    type: "color",
+  },
+  expandWidth: {
+    type: "boolean",
+  },
 }
 
 export default ToggleSwitch

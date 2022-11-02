@@ -8,14 +8,16 @@ import {
   PointElement,
   Title,
 } from "chart.js"
-import Widget from "../models/Widget"
+import Widget, { getOrDefault } from "../models/Widget"
 import { useLast } from "../hooks"
 import { useMantineTheme } from "@mantine/core"
 
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title)
 
 const Graph: Widget = ({ source, props }) => {
-  const [values, addValue] = useLast<number>(props?.valueCount ?? 250)
+  const [values, addValue] = useLast<number>(
+    getOrDefault(props, Graph, "valueCount")
+  )
   const theme = useMantineTheme()
 
   useEffect(() => {
@@ -54,9 +56,16 @@ const Graph: Widget = ({ source, props }) => {
 
 Graph.supportedTypes = ["number"]
 Graph.propsInfo = {
-  valueCount: "int",
-  minValue: "double",
-  maxValue: "double",
+  valueCount: {
+    type: "int",
+    default: 250,
+  },
+  minValue: {
+    type: "double",
+  },
+  maxValue: {
+    type: "double",
+  },
 }
 
 export default Graph

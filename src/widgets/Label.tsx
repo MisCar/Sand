@@ -28,9 +28,15 @@ Label.supportedTypes = [
 ]
 
 Label.propsInfo = {
-  fontSize: "int",
-  fontWeight: "string",
-  precision: "int",
+  fontSize: {
+    type: "int",
+  },
+  fontWeight: {
+    type: "string",
+  },
+  precision: {
+    type: "int",
+  },
 }
 
 export default Label

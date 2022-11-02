@@ -10,8 +10,23 @@ interface WidgetProps {
 interface Widget extends React.FC<WidgetProps> {
   supportedTypes?: string[]
   propsInfo?: {
-    [key: string]: "string" | "int" | "double" | "boolean"
+    [key: string]: {
+      type: "string" | "int" | "double" | "boolean" | "color"
+      default?: string | number | boolean
+    }
   }
+}
+
+export const getOrDefault = (
+  props: { [key: string]: any },
+  widget: Widget,
+  key: string
+) => {
+  if (props === undefined || props[key] === undefined) {
+    return widget.propsInfo[key].default
+  }
+
+  return props[key]
 }
 
 export default Widget
