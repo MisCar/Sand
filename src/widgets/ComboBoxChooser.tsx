@@ -9,6 +9,7 @@ const ComboBoxChooser: Widget = ({ source, props }) => {
 
   return (
     <Select
+      withinPortal
       style={{ width: "90%" }}
       {...props}
       value={active}
