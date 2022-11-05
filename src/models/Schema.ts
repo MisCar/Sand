@@ -163,6 +163,10 @@ export interface PartialWidgetInfo extends Partial<WidgetInfo> {
   source: string
 }
 
+const DEFAULTS_FOR_TYPE: { [key: string]: any } = {
+  "String Chooser": "ComboBox Chooser",
+}
+
 const fill = (partial: PartialWidgetInfo): WidgetInfo => {
   return {
     title: "",
@@ -170,7 +174,7 @@ const fill = (partial: PartialWidgetInfo): WidgetInfo => {
     y: 0,
     w: 1,
     h: 1,
-    type: "Label",
+    type: DEFAULTS_FOR_TYPE[partial.source] ?? "Label",
     props: {},
     ...partial,
   }
