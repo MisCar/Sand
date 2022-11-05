@@ -120,6 +120,26 @@ export const addTab = (
   title?: string
 ) => {
   setSchema((schema) => {
+    if (title === undefined) {
+      let searching = true
+      let i = 1
+      while (searching) {
+        let found = false
+        for (const tab of schema.tabs) {
+          if (tab.name === "Untitled " + i) {
+            found = true
+            break
+          }
+        }
+        if (found) {
+          i++
+        } else {
+          searching = false
+        }
+      }
+      title = "Untitled " + i
+    }
+
     schema.tabs.push({
       name: title ?? "Untitled",
       widgets: [],

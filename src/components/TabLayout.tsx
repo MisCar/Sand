@@ -30,6 +30,12 @@ interface Props {
   isModifying: boolean
 }
 
+/** This is some magic number which looks good.
+ * It's probably around the tab list height, as the height given by useElementSize includes that.
+ * If you wish to modify this, you'll probably decrease the app's height until it limits the tab's grid size.
+ */
+const GRID_PADDING = 75
+
 const TabLayout: React.FC<Props> = ({
   mode,
   schema,
@@ -159,7 +165,7 @@ const TabLayout: React.FC<Props> = ({
         {mode === Mode.Edit && (
           <Button
             style={{ marginLeft: 10 }}
-            onClick={() => addTab(setSchema, "Untitled")}
+            onClick={() => addTab(setSchema)}
             size="xs"
             leftIcon={<i className="fa-solid fa-plus" />}
           >
@@ -167,88 +173,108 @@ const TabLayout: React.FC<Props> = ({
           </Button>
         )}
       </Tabs.List>
-      {schema.tabs.map((tab, tabIndex) => (
-        <Tabs.Panel value={tabIndex.toString()} key={tabIndex}>
-          <GridLayout
-            compactType={null}
-            preventCollision={true}
-            isResizable={mode === Mode.Edit}
-            isDraggable={mode === Mode.Edit}
-            isDroppable={true}
-            cols={tab.columns}
-            rowHeight={tab.gridSize ?? width / tab.columns}
-            maxRows={Math.max(
-              Math.floor(height / (width / tab.columns)) - 1,
-              1
-            )}
-            width={tab.gridSize ? tab.gridSize * tab.columns : width}
-            style={{ height: "100%" }}
-            onLayoutChange={(layouts) =>
-              setLayouts(setSchema, tabIndex, layouts)
-            }
-            onDrop={(layout, item, event) => {
-              addWidget(setSchema, tabIndex, {
-                x: item.x,
-                y: item.y,
-                w: 1,
-                h: 1,
-                title: typeToTitle(localStorage.getItem("WidgetType")),
-                type: localStorage.getItem("WidgetType"),
-                source: "",
-                props: {},
-              })
-            }}
-            layout={tab.widgets.map((widget, widgetIndex) => ({
-              i: widgetIndex.toString(),
-              x: widget.x,
-              y: widget.y,
-              w: widget.w,
-              h: widget.h,
-            }))}
-          >
-            {tab.widgets.map((widget, widgetIndex) => {
-              const WidgetComponent = widgets[widget.type]
+      {schema.tabs.map((tab, tabIndex) => {
+        let maxRow =
+          tab.widgets?.length === 0
+            ? 9999999
+            : tab.widgets[0].y + tab.widgets[0].h
+        for (let i = 1; i < tab.widgets.length; i++) {
+          maxRow = Math.max(maxRow, tab.widgets[i].y + tab.widgets[i].h)
+        }
 
-              return (
-                <div
-                  key={widgetIndex}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    transitionDuration: "0s",
-                  }}
-                >
-                  <WidgetCell
-                    expand
-                    mode={mode}
-                    title={widget.title}
-                    remove={() =>
-                      removeWidget(setSchema, tabIndex, widgetIndex)
-                    }
-                    highlighted={
-                      isModifying &&
-                      selectedWidget !== undefined &&
-                      selectedWidget.tabIndex === tabIndex &&
-                      selectedWidget.widgetIndex === widgetIndex
-                    }
-                    modify={() => modify({ tabIndex, widgetIndex })}
-                    setTitle={(title) =>
-                      setTitle(setSchema, tabIndex, widgetIndex, title)
-                    }
+        return (
+          <Tabs.Panel value={tabIndex.toString()} key={tabIndex}>
+            <GridLayout
+              compactType={null}
+              preventCollision={true}
+              isResizable={mode === Mode.Edit}
+              isDraggable={mode === Mode.Edit}
+              isDroppable={true}
+              cols={tab.columns}
+              rowHeight={
+                tab.gridSize ??
+                Math.min(width / tab.columns, (height - GRID_PADDING) / maxRow)
+              }
+              maxRows={Math.max(
+                Math.floor(height / (width / tab.columns)) - 1,
+                1
+              )}
+              width={
+                tab.gridSize
+                  ? tab.gridSize * tab.columns
+                  : Math.min(
+                      width,
+                      ((height - GRID_PADDING) / maxRow) * tab.columns
+                    )
+              }
+              style={{ height: "100%" }}
+              onLayoutChange={(layouts) =>
+                setLayouts(setSchema, tabIndex, layouts)
+              }
+              onDrop={(layout, item, event) => {
+                addWidget(setSchema, tabIndex, {
+                  x: item.x,
+                  y: item.y,
+                  w: 1,
+                  h: 1,
+                  title: typeToTitle(localStorage.getItem("WidgetType")),
+                  type: localStorage.getItem("WidgetType"),
+                  source: "",
+                  props: {},
+                })
+              }}
+              layout={tab.widgets.map((widget, widgetIndex) => ({
+                i: widgetIndex.toString(),
+                x: widget.x,
+                y: widget.y,
+                w: widget.w,
+                h: widget.h,
+              }))}
+            >
+              {tab.widgets.map((widget, widgetIndex) => {
+                const WidgetComponent = widgets[widget.type]
+
+                return (
+                  <div
+                    key={widgetIndex}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      transitionDuration: "0s",
+                    }}
                   >
-                    {WidgetComponent !== undefined && (
-                      <WidgetComponent
-                        source={widget.source}
-                        props={widget.props}
-                      />
-                    )}
-                  </WidgetCell>
-                </div>
-              )
-            })}
-          </GridLayout>
-        </Tabs.Panel>
-      ))}
+                    <WidgetCell
+                      expand
+                      mode={mode}
+                      title={widget.title}
+                      remove={() =>
+                        removeWidget(setSchema, tabIndex, widgetIndex)
+                      }
+                      highlighted={
+                        isModifying &&
+                        selectedWidget !== undefined &&
+                        selectedWidget.tabIndex === tabIndex &&
+                        selectedWidget.widgetIndex === widgetIndex
+                      }
+                      modify={() => modify({ tabIndex, widgetIndex })}
+                      setTitle={(title) =>
+                        setTitle(setSchema, tabIndex, widgetIndex, title)
+                      }
+                    >
+                      {WidgetComponent !== undefined && (
+                        <WidgetComponent
+                          source={widget.source}
+                          props={widget.props}
+                        />
+                      )}
+                    </WidgetCell>
+                  </div>
+                )
+              })}
+            </GridLayout>
+          </Tabs.Panel>
+        )
+      })}
     </Tabs>
   )
 }
