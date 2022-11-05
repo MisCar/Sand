@@ -13,26 +13,28 @@ const TableView: Widget = ({ source, props }) => {
       : source + "/"
 
   return (
-    <Table>
-      <thead>
-        <tr>
-          <th>Key</th>
-          <th>Value</th>
-        </tr>
-      </thead>
-      <tbody>
-        {keys
-          .filter((key) => key.startsWith(sourceWithSlash))
-          .map((key) => {
-            return (
-              <tr key={key}>
-                <td>{key}</td>
-                <td>{JSON.stringify(NetworkTables.getValue(key))}</td>
-              </tr>
-            )
-          })}
-      </tbody>
-    </Table>
+    <div style={{ width: "100%", height: "100%" }}>
+      <Table>
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          {keys
+            .filter((key) => key.startsWith(sourceWithSlash))
+            .map((key) => {
+              return (
+                <tr key={key}>
+                  <td>{key}</td>
+                  <td>{JSON.stringify(NetworkTables.getValue(key))}</td>
+                </tr>
+              )
+            })}
+        </tbody>
+      </Table>
+    </div>
   )
 }
 
