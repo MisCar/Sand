@@ -50,6 +50,7 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
               label={camelToTitle(key)}
               style={STYLES}
               value={color}
+              placeholder={widget.propsInfo[key]?.placeholder}
               onChange={(event) =>
                 setProp(
                   key,

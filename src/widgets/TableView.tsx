@@ -1,6 +1,6 @@
 import { Table } from "@mantine/core"
 import { useAllNTKeys } from "../hooks"
-import Widget from "../models/Widget"
+import Widget, { getOrDefault } from "../models/Widget"
 
 const TableView: Widget = ({ source, props }) => {
   const [keys] = useAllNTKeys()
@@ -23,7 +23,12 @@ const TableView: Widget = ({ source, props }) => {
         </thead>
         <tbody>
           {keys
-            .filter((key) => key.startsWith(sourceWithSlash))
+            .filter(
+              (key) =>
+                key.startsWith(sourceWithSlash) &&
+                (getOrDefault(props, TableView, "showHidden") ||
+                  !key.includes("/."))
+            )
             .map((key) => {
               return (
                 <tr key={key}>
@@ -39,5 +44,12 @@ const TableView: Widget = ({ source, props }) => {
 }
 
 TableView.supportedTypes = ["all"]
+
+TableView.propsInfo = {
+  showHidden: {
+    type: "boolean",
+    default: true,
+  },
+}
 
 export default TableView

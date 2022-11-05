@@ -13,6 +13,7 @@ interface Widget extends React.FC<WidgetProps> {
     [key: string]: {
       type: "string" | "int" | "double" | "boolean" | "color"
       default?: string | number | boolean
+      placeholder?: string
     }
   }
 }

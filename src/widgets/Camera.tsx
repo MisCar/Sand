@@ -34,6 +34,7 @@ Camera.supportedTypes = ["Camera"]
 Camera.propsInfo = {
   stream: {
     type: "string",
+    placeholder: "Optional, overrides source",
   },
   reloadRate: {
     type: "int",
