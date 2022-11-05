@@ -1,4 +1,5 @@
 import { Layout } from "react-grid-layout"
+import { DEFAULTS_FOR_TYPE } from "../widgets"
 
 export interface WidgetInfo {
   title: string
@@ -161,10 +162,6 @@ export const removeTab = (
 
 export interface PartialWidgetInfo extends Partial<WidgetInfo> {
   source: string
-}
-
-const DEFAULTS_FOR_TYPE: { [key: string]: any } = {
-  "String Chooser": "ComboBox Chooser",
 }
 
 const fill = (partial: PartialWidgetInfo): WidgetInfo => {

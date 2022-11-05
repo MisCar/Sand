@@ -46,6 +46,7 @@ export const useNTKey = <T>(
           if (
             connected &&
             NetworkTables.getValue(key) === undefined &&
+            value !== undefined &&
             // @ts-ignore
             value.length !== 0
           ) {

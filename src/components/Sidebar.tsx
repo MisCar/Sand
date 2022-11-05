@@ -6,6 +6,7 @@ import Schema, { WidgetSelector } from "../models/Schema"
 import AppSettings from "./AppSettings"
 import ConnectionIndicator from "./ConnectionIndicator"
 import IconAndText from "./IconAndText"
+import NTTree from "./NTTree"
 import ShortcutManager from "./ShortcutManager"
 import TabEditor from "./TabEditor"
 import WidgetDisplay from "./WidgetDisplay"
@@ -50,7 +51,11 @@ const Sidebar: React.FC<Props> = ({
         flex: "none",
         borderRightWidth: 3,
         borderRightColor: "white",
-        maxWidth: accordionState === "keyboard shortcuts" ? 600 : 280,
+        maxWidth:
+          accordionState === "keyboard shortcuts" || accordionState === "tree"
+            ? 600
+            : 280,
+        overflow: "hidden",
       }}
     >
       <div
@@ -117,6 +122,14 @@ const Sidebar: React.FC<Props> = ({
                 >
                   <WidgetDisplay />
                 </div>
+              </Accordion.Panel>
+            </Accordion.Item>
+            <Accordion.Item value="tree">
+              <Accordion.Control>
+                <IconAndText icon="fa-solid fa-wifi" text="NetworkTables" />
+              </Accordion.Control>
+              <Accordion.Panel>
+                <NTTree />
               </Accordion.Panel>
             </Accordion.Item>
             <Accordion.Item value="modify">

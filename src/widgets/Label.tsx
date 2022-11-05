@@ -15,7 +15,7 @@ const Label: Widget = ({ source, props }) => {
     }
   }
 
-  return <p style={props}>{string}</p>
+  return <p style={{ display: "inline", ...props }}>{string}</p>
 }
 
 Label.supportedTypes = [

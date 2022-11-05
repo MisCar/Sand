@@ -217,9 +217,9 @@ const TabLayout: React.FC<Props> = ({
                   y: item.y,
                   w: 1,
                   h: 1,
-                  title: typeToTitle(localStorage.getItem("WidgetType")),
+                  title: localStorage.getItem("WidgetTitle"),
                   type: localStorage.getItem("WidgetType"),
-                  source: "",
+                  source: localStorage.getItem("WidgetSource"),
                   props: {},
                 })
               }}

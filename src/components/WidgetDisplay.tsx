@@ -13,7 +13,11 @@ const WidgetDisplay = () => {
           <div
             style={{ cursor: "grab" }}
             key={widgetType}
-            onDragStart={() => localStorage.setItem("WidgetType", widgetType)}
+            onDragStart={() => {
+              localStorage.setItem("WidgetType", widgetType)
+              localStorage.setItem("WidgetTitle", typeToTitle(widgetType))
+              localStorage.setItem("WidgetSource", "")
+            }}
             draggable
           >
             <WidgetCell title={typeToTitle(widgetType)} mode={Mode.Play}>

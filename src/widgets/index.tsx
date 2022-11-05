@@ -14,6 +14,18 @@ import NumberTextView from "./NumberTextView"
 import JsonTextView from "./JsonTextView"
 import Gauge from "./Gauge"
 
+export const DEFAULTS_FOR_TYPE: { [key: string]: any } = {
+  boolean: "ToggleSwitch",
+  number: "NumberTextView",
+  string: "TextView",
+  "boolean[]": "Label",
+  "number[]": "Label",
+  "string[]": "Label",
+  "String Chooser": "ComboBoxChooser",
+  Field2d: "Field",
+  Camera: "Camera",
+}
+
 const widgets: {
   [key: string]: Widget
 } = {
