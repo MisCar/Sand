@@ -38,6 +38,7 @@ const NTAutocomplete: React.FC<Props> = ({
           (supportedWidgetTypes.includes(ntTypes[key]) && !key.includes("/."))
       )}
       style={style}
+      styles={{ itemsWrapper: { maxHeight: 300 } }}
       value={value}
       disabled={disabled}
       onChange={onChange}
