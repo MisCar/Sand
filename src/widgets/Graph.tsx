@@ -23,8 +23,11 @@ const Graph: Widget = ({ source, props }) => {
 
   useEffect(() => {
     const interval = window.setInterval(() => {
-      const newValue = NetworkTables.getValue(source, 0)
-      addValue(newValue)
+      const newValue: number = NetworkTables.getValue(source, 0)
+      // This could probably be smarter
+      addValue(
+        parseFloat(newValue.toFixed(getOrDefault(props, Graph, "precision")))
+      )
     }, 20)
     return () => window.clearInterval(interval)
   }, [source])
@@ -66,6 +69,10 @@ Graph.propsInfo = {
   },
   maxValue: {
     type: "double",
+  },
+  precision: {
+    type: "int",
+    default: 6,
   },
 }
 
