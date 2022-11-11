@@ -11,6 +11,7 @@ import {
 import Widget, { getOrDefault } from "../models/Widget"
 import { useLast } from "../hooks"
 import { useMantineTheme } from "@mantine/core"
+import NetworkTables from "../thirdparty/networktables"
 
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title)
 

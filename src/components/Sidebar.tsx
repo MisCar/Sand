@@ -1,5 +1,5 @@
 import { Accordion, ColorScheme, SegmentedControl } from "@mantine/core"
-import React from "react"
+import React, { useEffect } from "react"
 import { useNTConnected } from "../hooks"
 import Mode from "../models/Mode"
 import Schema, { WidgetSelector } from "../models/Schema"

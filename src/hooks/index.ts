@@ -1,4 +1,4 @@
-import "../thirdparty/networktables"
+import NetworkTables from "../thirdparty/networktables"
 import { useState, useEffect } from "react"
 
 export const useNTConnected = () => {
@@ -6,8 +6,9 @@ export const useNTConnected = () => {
 
   useEffect(() => {
     setConnected(NetworkTables.isRobotConnected())
-    const dispose: () => void =
-      NetworkTables.addRobotConnectionListener(setConnected)
+    const dispose: () => void = NetworkTables.addRobotConnectionListener((c) =>
+      setConnected(c)
+    )
     return dispose
   }, [])
 
@@ -33,13 +34,12 @@ export const useNTKey = <T>(
     if (isLegalKey) {
       const unsubscribeValue = NetworkTables.addKeyListener(
         key,
-        (key: string, value: T, isNew: boolean) => {
+        (value: T, isNew: boolean) => {
           // @ts-ignore
           if (value !== undefined && value.length !== 0) {
             setValue(value)
           }
-        },
-        true
+        }
       )
       const unsubscribeRobotConnection =
         NetworkTables.addRobotConnectionListener((connected: boolean) => {
@@ -128,6 +128,30 @@ export const useAllNTKeys = (
   }, [])
 
   return [keys, types]
+}
+
+export const useAllNTSubkeys = (prefix: string) => {
+  const [keys, setKeys] = useState<string[]>([])
+
+  useNTGlobalListener((key, _, isNew) => {
+    if (isNew && key.startsWith(prefix)) {
+      setKeys((keys) => [key, ...keys])
+    }
+  })
+
+  return keys
+}
+
+export const useAllNTSubkeysAndValues = (prefix: string, except?: string) => {
+  const [keys, setKeys] = useState<Record<string, any>[]>([])
+
+  useNTGlobalListener((key, value, _) => {
+    if (key.startsWith(prefix) && key !== prefix + "/" + except) {
+      setKeys((keys) => ({ [key]: value, ...keys }))
+    }
+  })
+
+  return keys
 }
 
 export const useNTGlobalListener = (

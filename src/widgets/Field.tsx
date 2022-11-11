@@ -2,8 +2,20 @@ import React, { useEffect, useState } from "react"
 import { useElementSize } from "@mantine/hooks"
 import Widget from "../models/Widget"
 import FieldRobot from "./components/FieldRobot"
+import FieldCanvas from "./components/FieldCanvas"
 
-const fieldInfo = {
+export interface FieldInfo {
+  game: string
+  "field-image": string
+  "field-corners": {
+    "top-left": [number, number]
+    "bottom-right": [number, number]
+  }
+  "image-size": [number, number]
+  "field-size": [number, number]
+}
+
+const fieldInfo: FieldInfo = {
   game: "Rapid React",
   "field-image":
     "https://rawcdn.githack.com/wpilibsuite/PathWeaver/ea9469371f7126941c6a91c215a674a2f2a4b4d6/src/main/resources/edu/wpi/first/pathweaver/2022-field.png",
@@ -65,14 +77,13 @@ const Field: Widget = ({ source, props }) => {
         pixelsPerMeter={pixelsPerMeter}
         source={source + "/Robot"}
       />
-      <canvas
-        style={{
-          position: "absolute",
-          bottom: bottomMargin,
-          left: leftMargin,
-          width: pixelsPerMeter * fieldInfo["field-size"][0],
-          height: pixelsPerMeter * fieldInfo["field-size"][1],
-        }}
+      <FieldCanvas
+        source={source}
+        pixelsPerMeter={pixelsPerMeter}
+        fieldInfo={fieldInfo}
+        bottomMargin={bottomMargin}
+        leftMargin={leftMargin}
+        colors={props?.colors}
       />
     </div>
   )

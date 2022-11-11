@@ -17,16 +17,17 @@ The next-generation FRC dashboard.
   - [x] Text View
   - [x] Label
   - [x] Combo-Box Chooser
+  - [x] Gauge
   - [x] Graph
-  - [ ] Field
+  - [x] Field
     - [x] Robot
-    - [ ] Trajectories
+    - [x] Trajectories
   - [x] Camera
 - [x] Robot-side control
 - [x] Keyboard shortcuts
 - [x] Edit props in-app with a nice GUI
 - [ ] Extensions
-- [ ] Update for NT4
+- [x] Update for NT4
 
 ## Acknowledgements
 

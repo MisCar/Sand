@@ -5,7 +5,7 @@ import Sidebar from "./components/Sidebar"
 import TabLayout from "./components/TabLayout"
 import Mode from "./models/Mode"
 
-import "./thirdparty/networktables"
+import NetworkTables from "./thirdparty/networktables"
 
 import "./index.css"
 import "react-grid-layout/css/styles.css"
@@ -16,9 +16,6 @@ import { getDefaultFile, getSettings, restoreFile, Settings } from "./listeners"
 import { register, unregister } from "@tauri-apps/api/globalShortcut"
 import { NotificationsProvider, showNotification } from "@mantine/notifications"
 import { useNTKey } from "./hooks"
-
-// @ts-ignore
-NetworkTables.connectToWs("localhost:8888")
 
 let previousSchema: Schema
 

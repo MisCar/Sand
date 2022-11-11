@@ -16,16 +16,15 @@ const AppSettings = () => {
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
       <TextInput
-        type="number"
-        label="Team Number"
+        label="Robot Address"
         icon={<i className="fa-solid fa-people-group" />}
-        value={settings?.teamNumber ?? ""}
+        value={settings?.robotAddress ?? ""}
         onChange={(event) => {
           const value = event.currentTarget.value
           if (value !== null) {
             setCurrentSettings((settings) => ({
               ...settings,
-              teamNumber: parseInt(value, 10),
+              robotAddress: value,
             }))
           }
         }}

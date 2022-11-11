@@ -33,7 +33,7 @@ const FieldRobot: React.FC<Props> = ({
         left: leftMargin - robotWidthPixels / 2 + x * pixelsPerMeter,
         height: robotLengthPixels,
         width: robotWidthPixels,
-        transform: "rotate(-" + rotation + "rad)",
+        transform: "rotate(-" + rotation + "deg)",
       }}
       src="https://raw.githubusercontent.com/wpilibsuite/shuffleboard/main/plugins/base/src/main/resources/edu/wpi/first/shuffleboard/plugin/base/widget/field/robot.png"
     />

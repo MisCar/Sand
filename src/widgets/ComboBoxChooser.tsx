@@ -1,10 +1,11 @@
 import React from "react"
 import Widget from "../models/Widget"
 import { useNTKey } from "../hooks"
-import { Select } from "@mantine/core"
+import { Indicator, Select } from "@mantine/core"
 
 const ComboBoxChooser: Widget = ({ source, props }) => {
-  const [active, setActive] = useNTKey<string>(source + "/active", undefined)
+  const [active] = useNTKey<string>(source + "/active", undefined)
+  const [selected, setSelected] = useNTKey<string>(source + "/selected", active)
   const [options] = useNTKey<string[]>(source + "/options", [])
 
   return (
@@ -13,7 +14,7 @@ const ComboBoxChooser: Widget = ({ source, props }) => {
       style={{ width: "90%" }}
       {...props}
       value={active}
-      onChange={setActive}
+      onChange={setSelected}
       data={options}
     />
   )

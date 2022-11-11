@@ -39,7 +39,7 @@ const NTNode: React.FC<NodeProps> = ({ tree, depth, prefix, types }) => {
           const leaf = Object.keys(tree[entry]).length === 0
 
           return (
-            <Accordion.Item value={entry}>
+            <Accordion.Item value={entry} key={entry}>
               <Accordion.Control
                 style={{
                   paddingLeft: depth * 15 + 5,

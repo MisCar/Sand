@@ -1,6 +1,7 @@
 import { Table } from "@mantine/core"
 import { useAllNTKeys } from "../hooks"
 import Widget, { getOrDefault } from "../models/Widget"
+import NetworkTables from "../thirdparty/networktables"
 
 const TableView: Widget = ({ source, props }) => {
   const [keys] = useAllNTKeys()
