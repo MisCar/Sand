@@ -1,14 +1,10 @@
 /** Code to interact with Tauri events */
-import { listen } from "@tauri-apps/api/event"
-import { open, save } from "@tauri-apps/api/dialog"
 import { fs } from "@tauri-apps/api"
+import { open, save } from "@tauri-apps/api/dialog"
+import { listen } from "@tauri-apps/api/event"
+import { createDir, readTextFile, writeTextFile } from "@tauri-apps/api/fs"
 import { cacheDir, join } from "@tauri-apps/api/path"
-import {
-  createDir,
-  exists,
-  readTextFile,
-  writeTextFile,
-} from "@tauri-apps/api/fs"
+import Schema from "./models/Schema"
 
 export const getConfigDir = async () => {
   // Config dir has spaces on macOS which causes issues
@@ -47,7 +43,7 @@ export const restoreFile = async (file: string) => {
   window.setSchema(text)
 }
 
-listen("open", async (event) => {
+listen("open", async () => {
   const file = (await open({
     multiple: false,
     filters: [
@@ -60,6 +56,46 @@ listen("open", async (event) => {
 
   if (file) {
     await restoreFile(file)
+  }
+})
+
+listen("import", async () => {
+  const file = (await open({
+    multiple: false,
+    filters: [
+      {
+        name: "JSON",
+        extensions: ["json"],
+      },
+    ],
+  })) as string
+
+  if (file) {
+    const text = await readTextFile(file)
+    const json = JSON.parse(text)
+    console.log(json)
+    const schema: Schema = {
+      tabs: json.tabPane.map((tab: any) => ({
+        name: tab.title,
+        columns: 13,
+        gridSize: tab.gridSize,
+        widgets: Object.keys(tab.widgetPane.tiles).map((position: string) => {
+          const [x, y] = position.split(",")
+          const tile = tab.widgetPane.tiles[position]
+          return {
+            title: tile.content._title,
+            type: tile.content._type.replace(/ /g, ""),
+            source: tile.content._source0.split("://")[1],
+            x: parseInt(x, 10),
+            y: parseInt(y, 10),
+            w: tile.size[0],
+            h: tile.size[1],
+          }
+        }),
+      })),
+    }
+    // @ts-ignore
+    window.setSchema(JSON.stringify(schema))
   }
 })
 

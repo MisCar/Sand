@@ -14,6 +14,9 @@ fn main() {
         "File",
         Menu::new()
             .add_item(CustomMenuItem::new("open", "Open").accelerator("cmdOrControl+O"))
+            .add_item(
+                CustomMenuItem::new("import", "Import Shuffleboard").accelerator("cmdOrControl+I"),
+            )
             .add_item(CustomMenuItem::new("save", "Save").accelerator("cmdOrControl+S"))
             .add_item(CustomMenuItem::new("saveas", "Save As").accelerator("cmdOrControl+shift+S")),
     ));
