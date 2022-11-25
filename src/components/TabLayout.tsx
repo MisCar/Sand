@@ -34,7 +34,7 @@ interface Props {
  * It's probably around the tab list height, as the height given by useElementSize includes that.
  * If you wish to modify this, you'll probably decrease the app's height until it limits the tab's grid size.
  */
-const GRID_PADDING = 75
+const GRID_PADDING = 135
 
 const TabLayout: React.FC<Props> = ({
   mode,
