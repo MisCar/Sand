@@ -1,5 +1,5 @@
 import { getSettings } from "../listeners"
-import { NT4_Client, NT4_Topic } from "./networktabels4"
+import { NT4_Client } from "./networktabels4"
 
 let values: any = {}
 let connected = false
@@ -34,7 +34,7 @@ const client = new NT4_Client(
   (topic, timestamp, value) => onNewTopicData(topic.name, value),
   () => {
     connected = true
-    client.subscribeAll(["/"], true)
+    client.subscribe(["/"], true)
     for (const listener of robotConnectionListeners) {
       listener(true)
     }
@@ -49,7 +49,6 @@ const client = new NT4_Client(
 )
 
 const setValue = (key: string, value: any) => {
-  let topic: string | NT4_Topic = key
   if (!announcedKeys.has(key)) {
     let type: string = typeof value
     if (type === "number") {
@@ -61,10 +60,10 @@ const setValue = (key: string, value: any) => {
     if (type === "number[]") {
       type = "double[]"
     }
-    topic = client.publishTopic(key, type)
+    client.publishTopic(key, type)
     announcedKeys.add(key)
   }
-  client.addSample(topic, value)
+  client.addSample(key, value)
   onNewTopicData(key, value)
 }
 
