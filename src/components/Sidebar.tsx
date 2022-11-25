@@ -1,11 +1,12 @@
 import { Accordion, ColorScheme, SegmentedControl } from "@mantine/core"
-import React, { useEffect } from "react"
+import React from "react"
 import { useNTConnected } from "../hooks"
 import Mode from "../models/Mode"
 import Schema, { WidgetSelector } from "../models/Schema"
 import AppSettings from "./AppSettings"
 import ConnectionIndicator from "./ConnectionIndicator"
 import IconAndText from "./IconAndText"
+import LazyAccordionPanel from "./LazyAccordionPanel"
 import NTTree from "./NTTree"
 import ShortcutManager from "./ShortcutManager"
 import TabEditor from "./TabEditor"
@@ -111,7 +112,7 @@ const Sidebar: React.FC<Props> = ({
               <Accordion.Control>
                 <IconAndText icon="fa-solid fa-gauge-high" text="Widgets" />
               </Accordion.Control>
-              <Accordion.Panel>
+              <LazyAccordionPanel accordionState={accordionState} tab="widgets">
                 <div
                   style={{
                     display: "flex",
@@ -122,21 +123,21 @@ const Sidebar: React.FC<Props> = ({
                 >
                   <WidgetDisplay />
                 </div>
-              </Accordion.Panel>
+              </LazyAccordionPanel>
             </Accordion.Item>
             <Accordion.Item value="tree">
               <Accordion.Control>
                 <IconAndText icon="fa-solid fa-wifi" text="NetworkTables" />
               </Accordion.Control>
-              <Accordion.Panel>
+              <LazyAccordionPanel accordionState={accordionState} tab="tree">
                 <NTTree />
-              </Accordion.Panel>
+              </LazyAccordionPanel>
             </Accordion.Item>
             <Accordion.Item value="modify">
               <Accordion.Control>
                 <IconAndText icon="fa-solid fa-pen" text="Modify" />
               </Accordion.Control>
-              <Accordion.Panel>
+              <LazyAccordionPanel accordionState={accordionState} tab="modify">
                 {selectedWidget !== undefined && (
                   <WidgetEditor
                     selectedWidget={selectedWidget}
@@ -145,19 +146,19 @@ const Sidebar: React.FC<Props> = ({
                   />
                 )}
                 {selectedWidget !== undefined || <p>No widget selected.</p>}
-              </Accordion.Panel>
+              </LazyAccordionPanel>
             </Accordion.Item>
             <Accordion.Item value="tab">
               <Accordion.Control>
                 <IconAndText icon="fa-solid fa-table-cells" text="Tab" />
               </Accordion.Control>
-              <Accordion.Panel>
+              <LazyAccordionPanel accordionState={accordionState} tab="tab">
                 <TabEditor
                   schema={schema}
                   setSchema={setSchema}
                   activeTab={activeTab}
                 />
-              </Accordion.Panel>
+              </LazyAccordionPanel>
             </Accordion.Item>
             <Accordion.Item value="keyboard shortcuts">
               <Accordion.Control>
@@ -166,17 +167,23 @@ const Sidebar: React.FC<Props> = ({
                   text="Keyboard Shortcuts"
                 />
               </Accordion.Control>
-              <Accordion.Panel>
+              <LazyAccordionPanel
+                accordionState={accordionState}
+                tab="keyboard shortcuts"
+              >
                 <ShortcutManager schema={schema} setSchema={setSchema} />
-              </Accordion.Panel>
+              </LazyAccordionPanel>
             </Accordion.Item>
             <Accordion.Item value="settings">
               <Accordion.Control>
                 <IconAndText icon="fa-solid fa-gear" text="App Settings" />
               </Accordion.Control>
-              <Accordion.Panel>
+              <LazyAccordionPanel
+                accordionState={accordionState}
+                tab="settings"
+              >
                 <AppSettings />
-              </Accordion.Panel>
+              </LazyAccordionPanel>
             </Accordion.Item>
           </Accordion>
         )}

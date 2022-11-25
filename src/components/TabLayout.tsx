@@ -16,7 +16,7 @@ import Schema, {
   updateWidgetInfoUsingCurrent,
   WidgetSelector,
 } from "../models/Schema"
-import widgets, { typeToTitle } from "../widgets"
+import widgets from "../widgets"
 import WidgetCell from "./WidgetCell"
 
 interface Props {
@@ -174,6 +174,10 @@ const TabLayout: React.FC<Props> = ({
         )}
       </Tabs.List>
       {schema.tabs.map((tab, tabIndex) => {
+        if (tabIndex.toString() !== activeTab) {
+          return <></>
+        }
+
         let maxRow =
           tab.widgets?.length === 0
             ? 9999999
