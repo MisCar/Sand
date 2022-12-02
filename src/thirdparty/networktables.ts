@@ -93,5 +93,9 @@ export default {
   putValue: setValue,
 }
 
-const settings = await getSettings()
-client.connect(settings?.robotAddress ?? "localhost")
+const initialize = async () => {
+  const settings = await getSettings()
+  client.connect(settings?.robotAddress ?? "localhost")
+}
+
+initialize()
