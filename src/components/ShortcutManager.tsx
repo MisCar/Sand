@@ -1,4 +1,5 @@
 import { Button, Select, Table, TextInput } from "@mantine/core"
+import React from "react"
 import Schema, {
   addShortcut,
   removeShortcut,

@@ -1,9 +1,8 @@
-import { Alert, Autocomplete, Badge, Select, TextInput } from "@mantine/core"
+import { Alert, Badge, Select, TextInput } from "@mantine/core"
 import React, { useState } from "react"
 import { KeysAndTypes, useAllNTKeys } from "../hooks"
 import Schema, {
   setTitle,
-  updateWidgetInfo,
   updateWidgetProps,
   WidgetSelector,
 } from "../models/Schema"

@@ -1,7 +1,7 @@
-import { Box, Button, Menu, Portal } from "@mantine/core"
+import { Box } from "@mantine/core"
 import React from "react"
-import Mode from "../models/Mode"
 import tinycolor from "tinycolor2"
+import Mode from "../models/Mode"
 
 interface Props {
   children: React.ReactNode

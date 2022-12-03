@@ -1,4 +1,5 @@
 import { Slider } from "@mantine/core"
+import React from "react"
 import { useNTKey } from "../hooks"
 import Widget, { getOrDefault } from "../models/Widget"
 

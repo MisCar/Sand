@@ -1,5 +1,5 @@
 import { TextInput } from "@mantine/core"
-import { useEffect, useState } from "react"
+import React from "react"
 import { useNTKey } from "../hooks"
 import Widget from "../models/Widget"
 

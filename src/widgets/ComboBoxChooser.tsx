@@ -1,7 +1,7 @@
+import { Select } from "@mantine/core"
 import React from "react"
-import Widget from "../models/Widget"
 import { useNTKey } from "../hooks"
-import { Indicator, Select } from "@mantine/core"
+import Widget from "../models/Widget"
 
 const ComboBoxChooser: Widget = ({ source, props }) => {
   const [active] = useNTKey<string>(source + "/active", undefined)

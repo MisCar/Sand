@@ -1,18 +1,18 @@
-import ToggleSwitch from "./ToggleSwitch"
-import Label from "./Label"
 import ComboBoxChooser from "./ComboBoxChooser"
-import Graph from "./Graph"
 import Field from "./Field"
+import Graph from "./Graph"
+import Label from "./Label"
+import ToggleSwitch from "./ToggleSwitch"
 
 import Widget from "../models/Widget"
 import BooleanBox from "./BooleanBox"
 import Camera from "./Camera"
-import TextView from "./TextView"
-import NumberSlider from "./NumberSlider"
-import TableView from "./TableView"
-import NumberTextView from "./NumberTextView"
-import JsonTextView from "./JsonTextView"
 import Gauge from "./Gauge"
+import JsonTextView from "./JsonTextView"
+import NumberSlider from "./NumberSlider"
+import NumberTextView from "./NumberTextView"
+import TableView from "./TableView"
+import TextView from "./TextView"
 
 export const DEFAULTS_FOR_TYPE: { [key: string]: any } = {
   boolean: "ToggleSwitch",

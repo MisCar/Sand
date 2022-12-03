@@ -1,8 +1,8 @@
 import { Accordion, Badge } from "@mantine/core"
 import React, { useState } from "react"
-import Label from "../widgets/Label"
 import { useAllNTKeys } from "../hooks"
 import { DEFAULTS_FOR_TYPE } from "../widgets"
+import Label from "../widgets/Label"
 
 interface NodeProps {
   tree: any

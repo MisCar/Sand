@@ -1,8 +1,8 @@
-import { useEffect, useRef } from "react"
+import { useElementSize } from "@mantine/hooks"
+import React, { useEffect, useRef } from "react"
+import SvgGauge, { GaugeInstance, GaugeOptions } from "svg-gauge"
 import { useNTKey } from "../hooks"
 import Widget, { getOrDefault } from "../models/Widget"
-import SvgGauge, { GaugeInstance, GaugeOptions } from "svg-gauge"
-import { useElementSize } from "@mantine/hooks"
 
 const Gauge: Widget = ({ source, props }) => {
   const [value] = useNTKey<number>(source, 0)

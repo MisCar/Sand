@@ -1,4 +1,5 @@
 import { Table } from "@mantine/core"
+import React from "react"
 import { useAllNTKeys } from "../hooks"
 import Widget, { getOrDefault } from "../models/Widget"
 import NetworkTables from "../thirdparty/networktables"

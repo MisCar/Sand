@@ -5,15 +5,13 @@ import Sidebar from "./components/Sidebar"
 import TabLayout from "./components/TabLayout"
 import Mode from "./models/Mode"
 
-import NetworkTables from "./thirdparty/networktables"
-
-import "./index.css"
+import "@fortawesome/fontawesome-free/css/all.css"
 import "react-grid-layout/css/styles.css"
 import "react-resizable/css/styles.css"
-import "@fortawesome/fontawesome-free/css/all.css"
-import Schema, { WidgetSelector } from "./models/Schema"
+import "./index.css"
 import { getDefaultFile, getSettings, restoreFile, Settings } from "./listeners"
-import { register, unregister } from "@tauri-apps/api/globalShortcut"
+import Schema, { WidgetSelector } from "./models/Schema"
+// import { register, unregister } from "@tauri-apps/api/globalShortcut"
 import { NotificationsProvider, showNotification } from "@mantine/notifications"
 import { useNTKey } from "./hooks"
 
@@ -44,9 +42,7 @@ const App = () => {
       setSchema(parsed)
     }
 
-    getDefaultFile()
-      .then((file) => restoreFile(file))
-      .catch(() => console.log("Couldn't load default schema"))
+    restoreFile(getDefaultFile())
     getSettings()
       .then(setSettings)
       .catch(() => console.log("Couldn't load settings"))
@@ -57,26 +53,26 @@ const App = () => {
       if (previousSchema !== undefined) {
         for (const shortcut of previousSchema?.shortcuts ?? []) {
           try {
-            await unregister(shortcut.keyboard)
+            // await unregister(shortcut.keyboard)
           } catch (_) {}
         }
       }
 
       for (const shortcut of schema?.shortcuts ?? []) {
         if (shortcut.keyboard !== "") {
-          register(
-            shortcut.keyboard,
-            shortcut.mode === "set-true"
-              ? () => {
-                  NetworkTables.setValue(shortcut.ntKey, true)
-                }
-              : () => {
-                  NetworkTables.setValue(
-                    shortcut.ntKey,
-                    !NetworkTables.getValue(shortcut.ntKey, false)
-                  )
-                }
-          )
+          // register(
+          //   shortcut.keyboard,
+          //   shortcut.mode === "set-true"
+          //     ? () => {
+          //         NetworkTables.setValue(shortcut.ntKey, true)
+          //       }
+          //     : () => {
+          //         NetworkTables.setValue(
+          //           shortcut.ntKey,
+          //           !NetworkTables.getValue(shortcut.ntKey, false)
+          //         )
+          //       }
+          // )
         }
       }
 

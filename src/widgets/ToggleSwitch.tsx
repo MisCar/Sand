@@ -1,4 +1,5 @@
 import { Switch } from "@mantine/core"
+import React from "react"
 import { useNTKey } from "../hooks"
 import Widget from "../models/Widget"
 

@@ -1,5 +1,5 @@
+import { useEffect, useState } from "react"
 import NetworkTables from "../thirdparty/networktables"
-import { useState, useEffect } from "react"
 
 export const useNTConnected = () => {
   const [connected, setConnected] = useState(false)

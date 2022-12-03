@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react"
 import { useElementSize } from "@mantine/hooks"
+import React, { useEffect, useState } from "react"
 import Widget from "../models/Widget"
-import FieldRobot from "./components/FieldRobot"
 import FieldCanvas from "./components/FieldCanvas"
+import FieldRobot from "./components/FieldRobot"
 
 export interface FieldInfo {
   game: string

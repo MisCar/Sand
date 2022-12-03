@@ -1,5 +1,5 @@
 import { NumberInput, TextInput } from "@mantine/core"
-import { useNTKey } from "../hooks"
+import React from "react"
 import Schema from "../models/Schema"
 
 interface Props {

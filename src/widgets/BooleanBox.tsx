@@ -1,3 +1,4 @@
+import React from "react"
 import { useNTKey } from "../hooks"
 import Widget, { getOrDefault } from "../models/Widget"
 

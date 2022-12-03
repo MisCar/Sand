@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react"
-import { Line } from "react-chartjs-2"
+import { useMantineTheme } from "@mantine/core"
 import {
   CategoryScale,
   Chart,
@@ -8,9 +7,10 @@ import {
   PointElement,
   Title,
 } from "chart.js"
-import Widget, { getOrDefault } from "../models/Widget"
+import React, { useEffect } from "react"
+import { Line } from "react-chartjs-2"
 import { useLast } from "../hooks"
-import { useMantineTheme } from "@mantine/core"
+import Widget, { getOrDefault } from "../models/Widget"
 import NetworkTables from "../thirdparty/networktables"
 
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title)
