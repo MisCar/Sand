@@ -5,7 +5,7 @@ on:
       - release
 
 jobs:
-  publish-tauri:
+  publish:
     strategy:
       fail-fast: false
       matrix:
