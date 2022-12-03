@@ -1,7 +1,7 @@
 {
   "name": "sand",
   "productName": "Sand",
-  "version": "1.0.0",
+  "version": "0.1.1",
   "description": "The next-generation FRC dashboard",
   "main": ".webpack/main",
   "scripts": {
