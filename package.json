@@ -3,6 +3,10 @@
   "productName": "Sand",
   "version": "0.1.1",
   "description": "The next-generation FRC dashboard",
+  "author": {
+    "name": "MisCar",
+    "email": "programming@miscar1574.org"
+  },
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",

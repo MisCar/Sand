@@ -9,7 +9,9 @@ import { mainConfig } from "./webpack.main.config"
 import { rendererConfig } from "./webpack.renderer.config"
 
 const config: ForgeConfig = {
-  packagerConfig: {},
+  packagerConfig: {
+    executableName: "sand"
+  },
   rebuildConfig: {},
   makers: [
     new MakerSquirrel({}),
