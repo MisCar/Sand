@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "Sand",
-    "version": "0.1.4"
+    "version": "0.1.5"
   },
   "tauri": {
     "allowlist": {
@@ -84,7 +84,8 @@
         "width": 1920,
         "x": 0,
         "y": 0,
-        "fileDropEnabled": false
+        "fileDropEnabled": false,
+        "additionalBrowserArgs": "--allow-running-insecure-content"
       }
     ]
   }

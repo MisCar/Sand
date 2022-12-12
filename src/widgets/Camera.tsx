@@ -24,7 +24,7 @@ const Camera: Widget = ({ source, props }) => {
 
   return (
     <img
-      src={stream + "?update=" + Date.now()}
+      src={stream + (stream.includes("?") ? "&" : "?") + "update=" + Date.now()}
       style={{ maxWidth: "100%", maxHeight: "100%" }}
     />
   )

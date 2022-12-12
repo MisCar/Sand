@@ -29,6 +29,8 @@ jobs:
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
       - name: install app dependencies and build it
         run: yarn && yarn build
+      - name: install updated tauri-cli
+        run: cargo install --git https://github.com/noamzaks/tauri --branch additional-browser-args tauri-cli
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -38,3 +40,5 @@ jobs:
           releaseBody: "See the assets to download this version and install."
           releaseDraft: true
           prerelease: false
+          includeDebug: true
+          tauriScript: cargo tauri
