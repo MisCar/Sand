@@ -1,4 +1,4 @@
-import { NumberInput, Switch, TextInput } from "@mantine/core"
+import { ColorInput, NumberInput, Switch, TextInput } from "@mantine/core"
 import React from "react"
 import Widget from "../models/Widget"
 
@@ -32,24 +32,14 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
   return (
     <>
       {Object.keys(widget.propsInfo).map((key) => {
-        if (
-          widget.propsInfo[key].type === "string" ||
-          widget.propsInfo[key].type === "color"
-        ) {
-          const color: string =
-            currentProps[key] ?? widget.propsInfo[key].default ?? ""
+        if (widget.propsInfo[key].type === "string") {
           return (
             <TextInput
               key={key}
               spellCheck={false}
-              icon={
-                widget.propsInfo[key].type === "color" ? (
-                  <i className="fa-solid fa-palette" />
-                ) : undefined
-              }
               label={camelToTitle(key)}
               style={STYLES}
-              value={color}
+              value={currentProps[key] ?? widget.propsInfo[key].default ?? ""}
               placeholder={widget.propsInfo[key]?.placeholder}
               onChange={(event) =>
                 setProp(
@@ -59,18 +49,15 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
                     : event.currentTarget.value
                 )
               }
-              rightSection={
-                widget.propsInfo[key].type === "color" ? (
-                  <div
-                    style={{
-                      backgroundColor: color,
-                      width: "50%",
-                      height: "50%",
-                      borderRadius: "100%",
-                    }}
-                  />
-                ) : undefined
-              }
+            />
+          )
+        } else if (widget.propsInfo[key].type === "color") {
+          return (
+            <ColorInput
+              key={key}
+              label={camelToTitle(key)}
+              value={currentProps[key] ?? widget.propsInfo[key].default ?? ""}
+              onChange={(color) => setProp(key, color)}
             />
           )
         } else if (widget.propsInfo[key].type === "int") {
