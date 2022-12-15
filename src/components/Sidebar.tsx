@@ -57,7 +57,8 @@ const Sidebar: React.FC<Props> = ({
             ? 600
             : 280,
         width:
-          accordionState === "keyboard shortcuts" || accordionState === "tree"
+          mode === Mode.Edit &&
+          (accordionState === "keyboard shortcuts" || accordionState === "tree")
             ? 600
             : undefined,
         overflow: "hidden",
