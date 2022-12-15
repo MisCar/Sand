@@ -1,6 +1,5 @@
-import React from "react"
 import { useNTKey } from "../hooks"
-import Widget from "../models/Widget"
+import Widget, { getOrDefault } from "../models/Widget"
 
 const Label: Widget = ({ source, props }) => {
   const [value] = useNTKey(source)
@@ -12,6 +11,13 @@ const Label: Widget = ({ source, props }) => {
       string = value.toPrecision(precision)
     } else if (Array.isArray(value) && typeof value[0] === "number") {
       string = value.map((f) => f.toPrecision(precision)).join(", ")
+    }
+  }
+
+  if (getOrDefault(props, Label, "trim")) {
+    const trimLength = getOrDefault(props, Label, "trimLength")
+    if (string.length > trimLength) {
+      string = string.substring(0, trimLength) + "..."
     }
   }
 
@@ -36,6 +42,14 @@ Label.propsInfo = {
   },
   precision: {
     type: "int",
+  },
+  trim: {
+    type: "boolean",
+    default: false,
+  },
+  trimLength: {
+    type: "int",
+    default: 30,
   },
 }
 

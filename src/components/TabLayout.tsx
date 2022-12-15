@@ -175,7 +175,7 @@ const TabLayout: React.FC<Props> = ({
       </Tabs.List>
       {schema.tabs.map((tab, tabIndex) => {
         if (tabIndex.toString() !== activeTab) {
-          return <></>
+          return <React.Fragment key={tabIndex}></React.Fragment>
         }
 
         let maxRow =

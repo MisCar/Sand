@@ -1,8 +1,8 @@
 import { Accordion, Badge } from "@mantine/core"
 import React, { useState } from "react"
-import Label from "../widgets/Label"
-import { useAllNTKeys } from "../hooks"
+import { useAllNTKeysState } from "../hooks"
 import { DEFAULTS_FOR_TYPE } from "../widgets"
+import Label from "../widgets/Label"
 
 interface NodeProps {
   tree: any
@@ -82,7 +82,10 @@ const NTNode: React.FC<NodeProps> = ({ tree, depth, prefix, types }) => {
                   </span>
                   <span style={{ minWidth: 100, flexGrow: 1 }} />
                   {leaf && (
-                    <Label source={prefix + entry} props={{ maxWidth: 300 }} />
+                    <Label
+                      source={prefix + entry}
+                      props={{ maxWidth: 300, trim: true }}
+                    />
                   )}
                   {!leaf && types[prefix + entry] !== undefined && (
                     <Badge>{types[prefix + entry]}</Badge>
@@ -105,7 +108,7 @@ const NTNode: React.FC<NodeProps> = ({ tree, depth, prefix, types }) => {
 }
 
 const NTTree = () => {
-  const [ntKeys, ntTypes] = useAllNTKeys()
+  const [ntKeys, ntTypes] = useAllNTKeysState()
 
   const tree: any = {}
   for (const key of ntKeys) {
@@ -122,7 +125,7 @@ const NTTree = () => {
   }
 
   return (
-    <div style={{ width: 560 }}>
+    <div style={{ width: 530 }}>
       <NTNode tree={tree} types={ntTypes} depth={0} prefix="/" />
     </div>
   )

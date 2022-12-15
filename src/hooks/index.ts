@@ -1,5 +1,5 @@
+import { useEffect, useState } from "react"
 import NetworkTables from "../thirdparty/networktables"
-import { useState, useEffect } from "react"
 
 export const useNTConnected = () => {
   const [connected, setConnected] = useState(false)
@@ -125,6 +125,48 @@ export const useAllNTKeys = (
       callback([keys, types])
     }
     return unsubscribe
+  }, [])
+
+  return [keys, types]
+}
+
+export const useAllNTKeysState = (): [
+  string[],
+  {
+    [key: string]: string
+  }
+] => {
+  const [keys, setKeys] = useState<string[]>([])
+  const [types, setTypes] = useState<{
+    [key: string]: string
+  }>({})
+
+  useEffect(() => {
+    return NetworkTables.addGlobalListener((key, value, isNew) => {
+      if (isNew) {
+        setKeys(NetworkTables.getKeys())
+        let type: string = typeof value
+        if (type === "object") {
+          type = typeof value[0] + "[]"
+        }
+
+        types[key] = type
+
+        if (key.endsWith("/.type")) {
+          const parentKey = key.substring(0, key.length - 6)
+          types[parentKey] = value
+        }
+
+        if (key.startsWith("/CameraPublisher")) {
+          const parentKey = key.substring(0, key.lastIndexOf("/"))
+          types[parentKey] = "Camera"
+        }
+
+        if (JSON.stringify(types) != JSON.stringify(types)) {
+          setTypes(types)
+        }
+      }
+    }) as () => void
   }, [])
 
   return [keys, types]
