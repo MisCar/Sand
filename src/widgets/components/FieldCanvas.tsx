@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react"
 import { useAllNTSubkeysAndValues } from "../../hooks"
-import { FieldInfo } from "../Field"
+import { FieldInfo } from "../field/Fields"
 
 interface Props {
   pixelsPerMeter: number
@@ -26,7 +26,7 @@ const FieldCanvas: React.FC<Props> = ({
     const context = ref.current.getContext("2d")
     context.clearRect(0, 0, ref.current.width, ref.current.height)
     context.globalAlpha = 1
-    context.lineWidth = 5
+    context.lineWidth = ref.current.width / 300
     for (const v in values) {
       if (v.includes("/.")) {
         continue
@@ -34,7 +34,6 @@ const FieldCanvas: React.FC<Props> = ({
       context.strokeStyle = "black"
       if (colors !== undefined) {
         const parts = v.split("/")
-        console.log(parts[parts.length - 1], colors[parts[parts.length - 1]])
         context.strokeStyle = colors[parts[parts.length - 1]] ?? "black"
       }
       for (let i = 0; i < values[v].length - 4; i += 3) {

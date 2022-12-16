@@ -1,4 +1,10 @@
-import { ColorInput, NumberInput, Switch, TextInput } from "@mantine/core"
+import {
+  ColorInput,
+  NumberInput,
+  Select,
+  Switch,
+  TextInput,
+} from "@mantine/core"
 import React from "react"
 import Widget from "../models/Widget"
 
@@ -56,6 +62,7 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
             <ColorInput
               key={key}
               label={camelToTitle(key)}
+              style={STYLES}
               value={currentProps[key] ?? widget.propsInfo[key].default ?? ""}
               onChange={(color) => setProp(key, color)}
             />
@@ -97,6 +104,17 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
               label={camelToTitle(key)}
               checked={currentProps[key] ?? widget.propsInfo[key].default}
               onChange={(event) => setProp(key, event.currentTarget.checked)}
+            />
+          )
+        } else if (widget.propsInfo[key].type === "select") {
+          return (
+            <Select
+              key={key}
+              style={STYLES}
+              label={camelToTitle(key)}
+              value={currentProps[key] ?? widget.propsInfo[key].default}
+              data={widget.propsInfo[key].choices}
+              onChange={(value) => setProp(key, value)}
             />
           )
         } else {

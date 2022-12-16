@@ -1,21 +1,23 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { useNTKey } from "../../hooks"
+import Robot from "../field/robot"
 
 interface Props {
   bottomMargin: number
   leftMargin: number
   pixelsPerMeter: number
   source: string
+  robotWidth: number
+  robotLength: number
 }
-
-const robotWidth = 0.76
-const robotLength = 0.76
 
 const FieldRobot: React.FC<Props> = ({
   bottomMargin,
   leftMargin,
   pixelsPerMeter,
   source,
+  robotWidth,
+  robotLength,
 }) => {
   const [[x, y, rotation]] = useNTKey<[number, number, number]>(
     source,
@@ -35,7 +37,7 @@ const FieldRobot: React.FC<Props> = ({
         width: robotWidthPixels,
         transform: "rotate(-" + rotation + "deg)",
       }}
-      src="https://raw.githubusercontent.com/wpilibsuite/shuffleboard/main/plugins/base/src/main/resources/edu/wpi/first/shuffleboard/plugin/base/widget/field/robot.png"
+      src={Robot}
     />
   )
 }

@@ -11,9 +11,10 @@ interface Widget extends React.FC<WidgetProps> {
   supportedTypes?: string[]
   propsInfo?: {
     [key: string]: {
-      type: "string" | "int" | "double" | "boolean" | "color"
+      type: "string" | "int" | "double" | "boolean" | "color" | "select"
       default?: string | number | boolean
       placeholder?: string
+      choices?: string[]
     }
   }
 }
