@@ -58,6 +58,7 @@ const Field: Widget = ({ source, props }) => {
           height: height,
           width: width,
           position: "absolute",
+          overflow: "hidden"
         }}
       >
         <div
