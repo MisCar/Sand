@@ -75,7 +75,7 @@
     "updater": {
       "active": true,
       "endpoints": [
-        "https://gist.githubusercontent.com/noamzaks/bf7b36637119c0ec6617dcd64eefc578/raw/8ff69409f2c32a09eb9f7e65bf0a4d4ed92d5150/latest.json"
+        "https://gist.github.com/noamzaks/bf7b36637119c0ec6617dcd64eefc578/raw"
       ],
       "dialog": true,
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDQ3QkQ0RTE2OUQ5MjQyRTUKUldUbFFwS2RGazY5UnpIb1lXam1YNUh1UFNiV0Z3NzB6QWRCbGRPVktCaExLbmY3cDVuUW56OHkK"
