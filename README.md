@@ -8,7 +8,7 @@
 </h1>
 
 <h4 align="center">
-    The next-generation FRC dashboard built with <a href="https://tauri.app">Tauri</a>, <a href="https://reactjs.org">React</a> and <a href="https://mantien.dev">Mantine</a>
+    The next-generation FRC dashboard built with <a href="https://tauri.app">Tauri</a>, <a href="https://reactjs.org">React</a> and <a href="https://mantine.dev">Mantine</a>
 </h4>
 
 <p align="center">
