@@ -196,6 +196,23 @@ export const useAllNTSubkeysAndValues = (prefix: string, except?: string) => {
   return keys
 }
 
+export const useAllNTSubkeysAndValuesCallback = (
+  prefix: string,
+  callback: (keysAndValues: Record<string, any>) => void,
+  except?: string
+) => {
+  const keys: Record<string, any> = {}
+
+  useNTGlobalListener((key, value, _) => {
+    if (key.startsWith(prefix) && key !== prefix + "/" + except) {
+      keys[key] = value
+      callback(keys)
+    }
+  })
+
+  return keys
+}
+
 export const useNTGlobalListener = (
   listener: (key: string, value: any, isNew: boolean) => void
 ) => {

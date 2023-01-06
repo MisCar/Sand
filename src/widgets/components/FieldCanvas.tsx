@@ -1,5 +1,8 @@
-import React, { useEffect, useRef } from "react"
-import { useAllNTSubkeysAndValues } from "../../hooks"
+import React, { useEffect, useRef, useState } from "react"
+import {
+  useAllNTSubkeysAndValues,
+  useAllNTSubkeysAndValuesCallback,
+} from "../../hooks"
 import { FieldInfo } from "../field/Fields"
 
 interface Props {
@@ -19,10 +22,20 @@ const FieldCanvas: React.FC<Props> = ({
   source,
   colors,
 }) => {
-  const values = useAllNTSubkeysAndValues(source, "Robot")
   const ref = useRef<HTMLCanvasElement>()
+  const [values, setValues] = useState<Record<string, any>>({})
+
+  useAllNTSubkeysAndValuesCallback(
+    source,
+    (values) => setValues({ ...values }),
+    "Robot"
+  )
 
   useEffect(() => {
+    if (!ref.current) {
+      return
+    }
+    console.log("Rerendering")
     const context = ref.current.getContext("2d")
     context.clearRect(0, 0, ref.current.width, ref.current.height)
     context.globalAlpha = 1
