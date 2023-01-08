@@ -9,6 +9,7 @@ interface Props {
   source: string
   robotWidth: number
   robotLength: number
+  robotImage?: string
 }
 
 const FieldRobot: React.FC<Props> = ({
@@ -18,6 +19,7 @@ const FieldRobot: React.FC<Props> = ({
   source,
   robotWidth,
   robotLength,
+  robotImage,
 }) => {
   const [[x, y, rotation]] = useNTKey<[number, number, number]>(
     source,
@@ -37,7 +39,7 @@ const FieldRobot: React.FC<Props> = ({
         width: robotWidthPixels,
         transform: "rotate(-" + rotation + "deg)",
       }}
-      src={Robot}
+      src={robotImage ?? Robot}
     />
   )
 }

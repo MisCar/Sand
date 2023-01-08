@@ -58,7 +58,7 @@ const Field: Widget = ({ source, props }) => {
           height: height,
           width: width,
           position: "absolute",
-          overflow: "hidden"
+          overflow: "hidden",
         }}
       >
         <div
@@ -88,6 +88,7 @@ const Field: Widget = ({ source, props }) => {
             source={source + "/Robot"}
             robotWidth={getOrDefault(props, Field, "robotWidth")}
             robotLength={getOrDefault(props, Field, "robotLength")}
+            robotImage={props?.robotImage}
           />
           <FieldCanvas
             source={source}
@@ -109,6 +110,7 @@ Field.propsInfo = {
   field: {
     type: "select",
     choices: [
+      "Charged Up",
       "Rapid React",
       "Infinite Recharge 2021",
       "Infinite Recharge",
