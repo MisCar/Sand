@@ -10,8 +10,11 @@ const ChargeUpGrid: Widget = ({ source, props }) => {
   const { ref, width, height } = useElementSize()
   const size = Math.min(width / 9, height / 3) * 0.9
 
-  const [unsafeInfos] = useNTKey<number[]>(source)
-  const infos = unsafeInfos ?? []
+  const [unsafeInfos, setInfos] = useNTKey<number[]>(source)
+  const infos = unsafeInfos ?? [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0,
+  ]
 
   const borderColor = theme.colorScheme === "dark" ? "white" : "black"
 
@@ -54,6 +57,11 @@ const ChargeUpGrid: Widget = ({ source, props }) => {
                           ? Cube
                           : undefined
                       }
+                      onClick={() => {
+                        infos[9 * row + column] =
+                          (infos[9 * row + column] + 1) % 3
+                        setInfos(infos)
+                      }}
                       style={{ maxHeight: size, maxWidth: size }}
                     />
                   </td>
