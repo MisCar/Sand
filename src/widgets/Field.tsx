@@ -117,7 +117,7 @@ Field.propsInfo = {
       "Destination: Deep Space",
       "FIRST Power Up",
     ],
-    default: "Rapid React",
+    default: "Charged Up",
   },
   robotWidth: {
     type: "double",
