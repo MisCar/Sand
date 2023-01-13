@@ -1,7 +1,7 @@
 import { Indicator, TextInput } from "@mantine/core"
 import { useEffect, useState } from "react"
 import { useNTKey } from "../hooks"
-import Widget from "../models/Widget"
+import Widget, { getOrDefault } from "../models/Widget"
 
 const NumberTextView: Widget = ({ source, props }) => {
   const [ntValue, setNtValue] = useNTKey<number>(source)
@@ -24,11 +24,20 @@ const NumberTextView: Widget = ({ source, props }) => {
       <TextInput
         type="number"
         value={value}
-        onChange={(event) => setValue(event.currentTarget.value)}
+        onChange={(event) => {
+          setValue(event.currentTarget.value)
+
+          if (getOrDefault(props, NumberTextView, "updateImmediately")) {
+            const v = parseFloat(value)
+            if (!isNaN(v)) {
+              setNtValue(v)
+            }
+          }
+        }}
         onBlur={(event) => {
-          const value = parseFloat(event.currentTarget.value)
-          if (!isNaN(value)) {
-            setNtValue(value)
+          const v = parseFloat(event.currentTarget.value)
+          if (!isNaN(v)) {
+            setNtValue(v)
           } else {
             setValue((ntValue ?? "").toString())
           }
@@ -40,5 +49,12 @@ const NumberTextView: Widget = ({ source, props }) => {
 }
 
 NumberTextView.supportedTypes = ["number"]
+
+NumberTextView.propsInfo = {
+  updateImmediately: {
+    type: "boolean",
+    default: true,
+  },
+}
 
 export default NumberTextView
