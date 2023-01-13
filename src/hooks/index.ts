@@ -225,6 +225,10 @@ export const useNTGlobalListener = (
 export const useLast = <T>(maxLength: number): [T[], (newValue: T) => void] => {
   const [values, setValues] = useState<T[]>(new Array(maxLength).fill(0))
 
+  useEffect(() => {
+    setValues(new Array(maxLength).fill(0))
+  }, [maxLength])
+
   const addValue = (newValue: T) => {
     setValues((currentValues) => {
       const newValues = currentValues.slice(1)
