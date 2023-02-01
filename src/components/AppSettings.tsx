@@ -1,6 +1,7 @@
 import { Button, TextInput } from "@mantine/core"
 import { useEffect, useState } from "react"
 import { getSettings, setSettings, Settings } from "../listeners"
+import NetworkTables from "../thirdparty/networktables"
 
 const AppSettings = () => {
   const [settings, setCurrentSettings] = useState<Settings>()
@@ -26,6 +27,8 @@ const AppSettings = () => {
               ...settings,
               robotAddress: value,
             }))
+
+            NetworkTables.connect(value)
           }
         }}
       />

@@ -91,6 +91,10 @@ export default {
   isRobotConnected: () => connected,
   getKeys: () => Object.keys(values),
   putValue: setValue,
+  connect: (address: string) => {
+    client.disconnect()
+    client.connect(address)
+  },
 }
 
 const initialize = async () => {
