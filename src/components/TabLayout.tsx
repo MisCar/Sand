@@ -1,5 +1,6 @@
 import { Button, Tabs } from "@mantine/core"
 import { useElementSize } from "@mantine/hooks"
+import { confirm } from "@tauri-apps/api/dialog"
 import React, { useEffect } from "react"
 import GridLayout from "react-grid-layout"
 import { useNTGlobalListener, useNTKey } from "../hooks"
@@ -157,7 +158,15 @@ const TabLayout: React.FC<Props> = ({
               <i
                 className="fa-solid fa-trash"
                 style={{ marginLeft: 10 }}
-                onClick={() => removeTab(setSchema, tabIndex)}
+                onClick={async () => {
+                  if (
+                    await confirm(
+                      `Are you sure you want to delete '${tab.name}'?`
+                    )
+                  ) {
+                    removeTab(setSchema, tabIndex)
+                  }
+                }}
               />
             )}
           </Tabs.Tab>
