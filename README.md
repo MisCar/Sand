@@ -7,6 +7,10 @@
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg">
 </h1>
 
+<p align="center">
+  <b>Currently in early development</b>
+</p>
+
 <h4 align="center">
     The next-generation FRC dashboard built with <a href="https://tauri.app">Tauri</a>, <a href="https://reactjs.org">React</a> and <a href="https://mantine.dev">Mantine</a>
 </h4>
@@ -33,7 +37,7 @@ Sand supports both light and dark mode and one of its goals is to have a good lo
 
 ### Ease of Use
 
-Sand resembles Shuffleboard so you don't have to get used to different things. Some familiar aspects include the NetworkTables tree view, the drag and drop & grid layout, 
+Sand resembles Shuffleboard so you don't have to get used to different things. Some familiar aspects include the NetworkTables tree view, the drag and drop & grid layout,
 
 <p align="center">
 <img width="577" alt="Screenshot 2022-12-24 at 23 40 00" src="https://user-images.githubusercontent.com/63877260/209451586-d7c8c2ef-d331-4361-85ea-17dbaeabd5e6.png">
