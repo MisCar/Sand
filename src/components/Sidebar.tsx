@@ -138,21 +138,26 @@ const Sidebar: React.FC<Props> = ({
                 <NTTree />
               </LazyAccordionPanel>
             </Accordion.Item>
-            <Accordion.Item value="modify">
-              <Accordion.Control>
-                <IconAndText icon="fa-solid fa-pen" text="Modify" />
-              </Accordion.Control>
-              <LazyAccordionPanel accordionState={accordionState} tab="modify">
-                {selectedWidget !== undefined && (
-                  <WidgetEditor
-                    selectedWidget={selectedWidget}
-                    schema={schema}
-                    setSchema={setSchema}
-                  />
-                )}
-                {selectedWidget !== undefined || <p>No widget selected.</p>}
-              </LazyAccordionPanel>
-            </Accordion.Item>
+            {selectedWidget !== undefined && (
+              <Accordion.Item value="modify">
+                <Accordion.Control>
+                  <IconAndText icon="fa-solid fa-pen" text="Modify" />
+                </Accordion.Control>
+                <LazyAccordionPanel
+                  accordionState={accordionState}
+                  tab="modify"
+                >
+                  {selectedWidget !== undefined && (
+                    <WidgetEditor
+                      selectedWidget={selectedWidget}
+                      schema={schema}
+                      setSchema={setSchema}
+                    />
+                  )}
+                  {selectedWidget !== undefined || <p>No widget selected.</p>}
+                </LazyAccordionPanel>
+              </Accordion.Item>
+            )}
             <Accordion.Item value="tab">
               <Accordion.Control>
                 <IconAndText icon="fa-solid fa-table-cells" text="Tab" />
