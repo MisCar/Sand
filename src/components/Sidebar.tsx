@@ -130,14 +130,16 @@ const Sidebar: React.FC<Props> = ({
                 </div>
               </LazyAccordionPanel>
             </Accordion.Item>
-            <Accordion.Item value="tree">
-              <Accordion.Control>
-                <IconAndText icon="fa-solid fa-wifi" text="NetworkTables" />
-              </Accordion.Control>
-              <LazyAccordionPanel accordionState={accordionState} tab="tree">
-                <NTTree />
-              </LazyAccordionPanel>
-            </Accordion.Item>
+            {connected && (
+              <Accordion.Item value="tree">
+                <Accordion.Control>
+                  <IconAndText icon="fa-solid fa-wifi" text="NetworkTables" />
+                </Accordion.Control>
+                <LazyAccordionPanel accordionState={accordionState} tab="tree">
+                  <NTTree />
+                </LazyAccordionPanel>
+              </Accordion.Item>
+            )}
             {selectedWidget !== undefined && (
               <Accordion.Item value="modify">
                 <Accordion.Control>
