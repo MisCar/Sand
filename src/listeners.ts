@@ -2,7 +2,12 @@
 import { fs } from "@tauri-apps/api"
 import { open, save } from "@tauri-apps/api/dialog"
 import { listen } from "@tauri-apps/api/event"
-import { createDir, readTextFile, writeTextFile } from "@tauri-apps/api/fs"
+import {
+  createDir,
+  exists,
+  readTextFile,
+  writeTextFile,
+} from "@tauri-apps/api/fs"
 import { cacheDir, join } from "@tauri-apps/api/path"
 import Schema from "./models/Schema"
 
@@ -10,6 +15,9 @@ export const getConfigDir = async () => {
   // Config dir has spaces on macOS which causes issues
   const dir = await cacheDir()
   const result = await join(dir, "Sand")
+  if (!(await exists(result))) {
+    await createDir(result)
+  }
   return result
 }
 

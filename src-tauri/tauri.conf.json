@@ -21,6 +21,7 @@
         "readFile": true,
         "writeFile": true,
         "createDir": true,
+        "exists": true,
         "scope": ["**"]
       },
       "path": {
