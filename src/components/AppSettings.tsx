@@ -27,8 +27,6 @@ const AppSettings = () => {
               ...settings,
               robotAddress: value,
             }))
-
-            NetworkTables.connect(value)
           }
         }}
       />
@@ -49,7 +47,10 @@ const AppSettings = () => {
       <Button
         style={{ margin: 10 }}
         leftIcon={<i className="fa-solid fa-save" />}
-        onClick={() => setSettings(settings)}
+        onClick={() => {
+          setSettings(settings)
+          NetworkTables.connect(settings.robotAddress ?? "localhost")
+        }}
       >
         Save
       </Button>
