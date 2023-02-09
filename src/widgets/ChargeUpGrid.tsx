@@ -1,22 +1,26 @@
 import { useMantineTheme } from "@mantine/core"
 import { useElementSize } from "@mantine/hooks"
+import { useEffect } from "react"
 import { useNTKey } from "../hooks"
-import Widget from "../models/Widget"
+import Widget, { getOrDefault } from "../models/Widget"
 import Cone from "./images/ChargeUpCone"
 import Cube from "./images/ChargeUpCube"
 
 const ChargeUpGrid: Widget = ({ source, props }) => {
   const theme = useMantineTheme()
   const { ref, width, height } = useElementSize()
-  const size = Math.min(width / 9, height / 3) * 0.9
 
-  const [infos, setInfos] = useNTKey<number[]>(
-    source,
-    [
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0,
-    ]
-  )
+  const columns: number = getOrDefault(props, ChargeUpGrid, "columns")
+
+  const size = Math.min(width / columns, height / 3) * 0.9
+
+  const [infos, setInfos] = useNTKey<number[]>(source, Array(columns).fill(0))
+
+  useEffect(() => {
+    if (infos.length !== columns * 3) {
+      setInfos(Array(columns * 3).fill(0))
+    }
+  }, [columns])
 
   const borderColor = theme.colorScheme === "dark" ? "white" : "black"
 
@@ -39,7 +43,7 @@ const ChargeUpGrid: Widget = ({ source, props }) => {
                   borderCollapse: "collapse",
                 }}
               >
-                {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((column) => {
+                {[...Array(columns).keys()].map((column) => {
                   return (
                     <td
                       key={column}
@@ -50,7 +54,9 @@ const ChargeUpGrid: Widget = ({ source, props }) => {
                         padding: 0,
                         border: "1px solid " + borderColor,
                         borderRight:
-                          ([2, 5].includes(column) ? "5px" : "1px") +
+                          (columns === 9 && [2, 5].includes(column)
+                            ? "5px"
+                            : "1px") +
                           " solid " +
                           borderColor,
                         borderCollapse: "collapse",
@@ -61,39 +67,37 @@ const ChargeUpGrid: Widget = ({ source, props }) => {
                       onClick={() => {
                         if (row !== 2) {
                           if (column % 3 === 1) {
-                            infos[9 * row + column] =
-                              1 - infos[9 * row + column]
+                            infos[columns * row + column] =
+                              1 - infos[columns * row + column]
                             setInfos([...infos])
                             return
                           }
 
-                          infos[9 * row + column] = 2 - infos[9 * row + column]
+                          infos[columns * row + column] =
+                            2 - infos[columns * row + column]
                           setInfos([...infos])
                           return
                         }
-                        infos[9 * row + column] =
-                          (infos[9 * row + column] + 1) % 3
+                        infos[columns * row + column] =
+                          (infos[columns * row + column] + 1) % 3
                         setInfos([...infos])
                       }}
                     >
                       <img
                         src={
-                          infos[9 * row + column] === 1
+                          infos[columns * row + column] === 1
                             ? Cube
-                            : infos[9 * row + column] === 2
+                            : infos[columns * row + column] === 2
                             ? Cone
                             : ""
                         }
-                        onClick={() => {
-                          infos[9 * row + column] =
-                            (infos[9 * row + column] + 1) % 3
-                          setInfos([...infos])
-                        }}
                         style={{
                           maxHeight: size,
                           maxWidth: size,
                           display:
-                            infos[9 * row + column] === 0 ? "none" : undefined,
+                            infos[columns * row + column] === 0
+                              ? "none"
+                              : undefined,
                           userSelect: "none",
                           WebkitUserSelect: "none",
                         }}
@@ -109,5 +113,14 @@ const ChargeUpGrid: Widget = ({ source, props }) => {
     </div>
   )
 }
+
+ChargeUpGrid.propsInfo = {
+  columns: {
+    type: "int",
+    default: 9,
+  },
+}
+
+ChargeUpGrid.supportedTypes = ["number[]"]
 
 export default ChargeUpGrid

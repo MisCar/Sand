@@ -30,7 +30,6 @@ const NumberTextView: Widget = ({ source, props }) => {
           if (getOrDefault(props, NumberTextView, "updateImmediately")) {
             const v = parseFloat(event.currentTarget.value)
             if (!isNaN(v)) {
-              console.log(v)
               setNtValue(v)
             }
           }

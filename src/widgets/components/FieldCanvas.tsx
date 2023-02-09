@@ -35,7 +35,6 @@ const FieldCanvas: React.FC<Props> = ({
     if (!ref.current) {
       return
     }
-    console.log("Rerendering")
     const context = ref.current.getContext("2d")
     context.clearRect(0, 0, ref.current.width, ref.current.height)
     context.globalAlpha = 1

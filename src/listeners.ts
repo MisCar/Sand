@@ -81,7 +81,6 @@ listen("import", async () => {
   if (file) {
     const text = await readTextFile(file)
     const json = JSON.parse(text)
-    console.log(json)
     const schema: Schema = {
       tabs: json.tabPane.map((tab: any) => ({
         name: tab.title,
