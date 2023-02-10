@@ -16,6 +16,7 @@ import { getDefaultFile, getSettings, restoreFile, Settings } from "./listeners"
 import { register, unregister } from "@tauri-apps/api/globalShortcut"
 import { NotificationsProvider, showNotification } from "@mantine/notifications"
 import { useNTKey } from "./hooks"
+import NTColors from "./components/NTColors"
 
 let previousSchema: Schema
 
@@ -107,7 +108,14 @@ const App = () => {
       withNormalizeCSS
     >
       <NotificationsProvider>
-        <div style={{ display: "flex", width: "100%", height: "100%" }}>
+        <NTColors />
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            height: "100%",
+          }}
+        >
           <div
             style={{
               flex: "none",

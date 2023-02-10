@@ -196,7 +196,11 @@ const TabLayout: React.FC<Props> = ({
         }
 
         return (
-          <Tabs.Panel value={tabIndex.toString()} key={tabIndex}>
+          <Tabs.Panel
+            value={tabIndex.toString()}
+            key={tabIndex}
+            style={{ backgroundColor: "var(--tab-background)" }}
+          >
             <GridLayout
               compactType={null}
               preventCollision={true}
