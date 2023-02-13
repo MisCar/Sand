@@ -85,21 +85,25 @@ const ChargeUpGrid: Widget = ({ source, props }) => {
                     >
                       <img
                         src={
-                          infos[columns * row + column] === 1
+                          infos[columns * row + column] % 3 === 1
                             ? Cube
-                            : infos[columns * row + column] === 2
+                            : infos[columns * row + column] % 3 === 2
                             ? Cone
                             : ""
                         }
                         style={{
-                          maxHeight: size,
-                          maxWidth: size,
+                          maxHeight: size - 5,
+                          maxWidth: size - 5,
                           display:
                             infos[columns * row + column] === 0
                               ? "none"
                               : undefined,
                           userSelect: "none",
                           WebkitUserSelect: "none",
+                          animation:
+                            infos[columns * row + column] >= 3
+                              ? "blink 0.75s steps(2, start) infinite"
+                              : undefined,
                         }}
                       />
                     </td>
