@@ -99,7 +99,7 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
           return (
             <Switch
               key={key}
-              style={STYLES}
+              style={{ ...STYLES, marginTop: 15 }}
               styles={{ track: { cursor: "pointer" } }}
               label={camelToTitle(key)}
               checked={currentProps[key] ?? widget.propsInfo[key].default}

@@ -22,11 +22,64 @@ const Camera: Widget = ({ source, props }) => {
     return <p>No stream found</p>
   }
 
+  const showVerticalCrosshair: boolean = getOrDefault(
+    props,
+    Camera,
+    "showVerticalCrosshair"
+  )
+  const showHorizontalCrosshair: boolean = getOrDefault(
+    props,
+    Camera,
+    "showHorizontalCrosshair"
+  )
+  const crosshairColor: string = getOrDefault(props, Camera, "crosshairColor")
+
   return (
-    <img
-      src={stream + (stream.includes("?") ? "&" : "?") + "update=" + Date.now()}
-      style={{ maxWidth: "100%", maxHeight: "100%" }}
-    />
+    <div
+      style={{
+        height: "100%",
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <img
+        src={
+          stream + (stream.includes("?") ? "&" : "?") + "update=" + Date.now()
+        }
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "relative",
+          objectFit: "contain",
+        }}
+      />
+      {showHorizontalCrosshair && (
+        <div
+          style={{
+            width: "100%",
+            height: 2.5,
+            backgroundColor: crosshairColor,
+            position: "absolute",
+            left: 0,
+            top: "50%",
+          }}
+        />
+      )}
+      {showVerticalCrosshair && (
+        <div
+          style={{
+            width: 2.5,
+            height: "100%",
+            backgroundColor: crosshairColor,
+            position: "absolute",
+            right: "50%",
+            top: 0,
+          }}
+        />
+      )}
+    </div>
   )
 }
 
@@ -39,6 +92,18 @@ Camera.propsInfo = {
   reloadRate: {
     type: "int",
     default: 1000,
+  },
+  showVerticalCrosshair: {
+    type: "boolean",
+    default: false,
+  },
+  showHorizontalCrosshair: {
+    type: "boolean",
+    default: false,
+  },
+  crosshairColor: {
+    type: "color",
+    default: "white",
   },
 }
 
