@@ -30,6 +30,7 @@ export const getDefaultFile = async () => {
 export interface Settings {
   robotAddress?: string
   themeColor?: string
+  icon?: string
 }
 
 export const getSettings = async (): Promise<Settings | undefined> => {

@@ -1,12 +1,17 @@
 import { Button, TextInput } from "@mantine/core"
 import { useEffect, useState } from "react"
-import { getSettings, setSettings, Settings } from "../listeners"
+import { getConfigDir, getSettings, setSettings, Settings } from "../listeners"
 import NetworkTables from "../thirdparty/networktables"
 
 const AppSettings = () => {
   const [settings, setCurrentSettings] = useState<Settings>()
+  const [configDir, setConfigDir] = useState<string>()
 
   useEffect(() => {
+    getConfigDir()
+      .then(setConfigDir)
+      .catch(() => {})
+
     getSettings()
       .then(setCurrentSettings)
       .catch(() => console.log("Couldn't load settings"))
@@ -16,6 +21,15 @@ const AppSettings = () => {
     <div
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
+      {configDir && (
+        <>
+          <p>App Directory</p>
+          <small>
+            <code>{configDir}</code>
+          </small>
+        </>
+      )}
+      <br />
       <TextInput
         label="Robot Address"
         icon={<i className="fa-solid fa-people-group" />}

@@ -22,14 +22,11 @@ const ChargeUpGrid: Widget = ({ source, props }) => {
     }
   }, [columns])
 
-  const borderColor = theme.colorScheme === "dark" ? "white" : "black"
-
   return (
     <div ref={ref} style={{ width: "100%", height: "100%", display: "flex" }}>
       <table
         style={{
           margin: "auto",
-          border: "1px solid " + borderColor,
           borderCollapse: "collapse",
         }}
       >
@@ -39,11 +36,14 @@ const ChargeUpGrid: Widget = ({ source, props }) => {
               <tr
                 key={row}
                 style={{
-                  border: "1px solid " + borderColor,
                   borderCollapse: "collapse",
                 }}
               >
                 {[...Array(columns).keys()].map((column) => {
+                  const borderColor =
+                    theme.colorScheme === "dark" ? "white" : "black"
+
+                  const currentValue = infos[columns * row + column]
                   return (
                     <td
                       key={column}
@@ -59,6 +59,12 @@ const ChargeUpGrid: Widget = ({ source, props }) => {
                             : "1px") +
                           " solid " +
                           borderColor,
+                        backgroundColor:
+                          row === 2
+                            ? undefined
+                            : column % 3 === 1
+                            ? "#b434eb33"
+                            : "#ffea0033",
                         borderCollapse: "collapse",
                         userSelect: "none",
                         WebkitUserSelect: "none",
@@ -66,42 +72,62 @@ const ChargeUpGrid: Widget = ({ source, props }) => {
                       }}
                       onClick={() => {
                         if (row !== 2) {
+                          // High row
                           if (column % 3 === 1) {
-                            infos[columns * row + column] =
-                              1 - infos[columns * row + column]
+                            // Cube column
+                            if (currentValue === 0) {
+                              infos[columns * row + column] = 4
+                            } else if (currentValue === 4) {
+                              infos[columns * row + column] = 1
+                            } else {
+                              infos[columns * row + column] = 0
+                            }
                             setInfos([...infos])
                             return
                           }
 
-                          infos[columns * row + column] =
-                            2 - infos[columns * row + column]
+                          // Cone column
+                          if (currentValue === 0) {
+                            infos[columns * row + column] = 5
+                          } else if (currentValue === 5) {
+                            infos[columns * row + column] = 2
+                          } else {
+                            infos[columns * row + column] = 0
+                          }
                           setInfos([...infos])
                           return
                         }
-                        infos[columns * row + column] =
-                          (infos[columns * row + column] + 1) % 3
+
+                        if (currentValue === 0) {
+                          infos[columns * row + column] = 4
+                        } else if (currentValue === 4) {
+                          infos[columns * row + column] = 5
+                        } else if (currentValue === 5) {
+                          infos[columns * row + column] = 1
+                        } else if (currentValue === 1) {
+                          infos[columns * row + column] = 2
+                        } else {
+                          infos[columns * row + column] = 0
+                        }
                         setInfos([...infos])
                       }}
                     >
                       <img
                         src={
-                          infos[columns * row + column] % 3 === 1
+                          currentValue % 3 === 1
                             ? Cube
-                            : infos[columns * row + column] % 3 === 2
+                            : currentValue % 3 === 2
                             ? Cone
                             : ""
                         }
                         style={{
                           maxHeight: size - 5,
                           maxWidth: size - 5,
-                          display:
-                            infos[columns * row + column] === 0
-                              ? "none"
-                              : undefined,
+                          display: currentValue === 0 ? "none" : undefined,
                           userSelect: "none",
                           WebkitUserSelect: "none",
                           animation:
-                            infos[columns * row + column] >= 3
+                            currentValue >= 3
                               ? "blink 0.75s steps(2, start) infinite"
                               : undefined,
                         }}

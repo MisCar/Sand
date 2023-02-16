@@ -1,8 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import {
-  useAllNTSubkeysAndValues,
-  useAllNTSubkeysAndValuesCallback,
-} from "../../hooks"
+import { useAllNTSubkeysAndValuesCallback } from "../../hooks"
 import { FieldInfo } from "../field/Fields"
 
 interface Props {
@@ -40,14 +37,34 @@ const FieldCanvas: React.FC<Props> = ({
     context.globalAlpha = 1
     context.lineWidth = ref.current.width / 300
     for (const v in values) {
+      let color: string
+      if (colors !== undefined) {
+        const parts = v.split("/")
+        color = colors[parts[parts.length - 1]] ?? "black"
+      }
+
       if (v.includes("/.")) {
         continue
       }
-      context.strokeStyle = "black"
-      if (colors !== undefined) {
-        const parts = v.split("/")
-        context.strokeStyle = colors[parts[parts.length - 1]] ?? "black"
+
+      if (values[v]?.length === 3) {
+        context.fillStyle = color
+        context.beginPath()
+
+        context.arc(
+          (values[v][0] / fieldInfo["field-size"][0]) * ref.current.width,
+          ((fieldInfo["field-size"][1] - values[v][1]) /
+            fieldInfo["field-size"][1]) *
+            ref.current.height,
+          10,
+          0,
+          2 * Math.PI
+        )
+        context.fill()
+        continue
       }
+
+      context.strokeStyle = color
       for (let i = 0; i < values[v].length - 4; i += 3) {
         context.beginPath()
         context.moveTo(

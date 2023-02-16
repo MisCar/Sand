@@ -5,6 +5,7 @@ import Mode from "../models/Mode"
 import Schema, { WidgetSelector } from "../models/Schema"
 import AppSettings from "./AppSettings"
 import ConnectionIndicator from "./ConnectionIndicator"
+import Icon from "./Icon"
 import IconAndText from "./IconAndText"
 import LazyAccordionPanel from "./LazyAccordionPanel"
 import NTTree from "./NTTree"
@@ -70,6 +71,7 @@ const Sidebar: React.FC<Props> = ({
           textAlign: "center",
         }}
       >
+        <Icon />
         <h1>Sand</h1>
         <SegmentedControl
           style={{ marginBottom: 5 }}
