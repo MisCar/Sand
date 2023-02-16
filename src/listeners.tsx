@@ -1,4 +1,5 @@
 /** Code to interact with Tauri events */
+import { showNotification } from "@mantine/notifications"
 import { fs } from "@tauri-apps/api"
 import { open, save } from "@tauri-apps/api/dialog"
 import { listen } from "@tauri-apps/api/event"
@@ -113,6 +114,12 @@ listen("save", async () => {
   const defaultFile = await getDefaultFile()
   // @ts-ignore
   await writeTextFile(defaultFile, window.getSchema())
+  showNotification({
+    title: "Successfully saved layout schema",
+    message: "Your schema has been saved to disk.",
+    color: "green",
+    icon: <i className="fa-solid fa-check" />,
+  })
 })
 
 listen("saveas", async () => {
@@ -127,4 +134,10 @@ listen("saveas", async () => {
 
   // @ts-ignore
   fs.writeTextFile(file, window.getSchema())
+  showNotification({
+    title: "Successfully saved layout schema",
+    message: "Your schema has been saved to disk.",
+    color: "green",
+    icon: <i className="fa-solid fa-check" />,
+  })
 })
