@@ -1,3 +1,4 @@
+import { useElementSize } from "@mantine/hooks"
 import { useEffect, useState } from "react"
 import { useNTKey } from "../hooks"
 import Widget, { getOrDefault } from "../models/Widget"
@@ -5,6 +6,7 @@ import Widget, { getOrDefault } from "../models/Widget"
 const Camera: Widget = ({ source, props }) => {
   const [streams] = useNTKey<string[]>(source + "/streams", [])
   const [r, setR] = useState(false)
+  const { height, width, ref } = useElementSize()
   const rerender = () => setR(!r)
 
   useEffect(() => {
@@ -34,6 +36,10 @@ const Camera: Widget = ({ source, props }) => {
   )
   const crosshairColor: string = getOrDefault(props, Camera, "crosshairColor")
 
+  const aspectRatio = getOrDefault(props, Camera, "aspectRatio")
+  const actualHeight = Math.min(width / aspectRatio, height)
+  const actualWidth = actualHeight * aspectRatio
+
   return (
     <div
       style={{
@@ -43,14 +49,15 @@ const Camera: Widget = ({ source, props }) => {
         justifyContent: "center",
         alignItems: "center",
       }}
+      ref={ref}
     >
-      <img
+      <iframe
         src={
           stream + (stream.includes("?") ? "&" : "?") + "update=" + Date.now()
         }
         style={{
-          width: "100%",
-          height: "100%",
+          width: actualWidth,
+          height: actualHeight,
           position: "relative",
           objectFit: "contain",
         }}
@@ -104,6 +111,10 @@ Camera.propsInfo = {
   crosshairColor: {
     type: "color",
     default: "white",
+  },
+  aspectRatio: {
+    type: "double",
+    default: 16 / 9,
   },
 }
 
