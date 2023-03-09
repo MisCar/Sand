@@ -5,13 +5,12 @@ const Label: Widget = ({ source, props }) => {
   const [value] = useNTKey(source)
 
   let string = value === undefined ? "" : value.toString()
-  if (props?.precision !== undefined) {
-    const precision = Math.min(100, Math.max(1, props.precision))
-    if (typeof value === "number") {
-      string = value.toPrecision(precision)
-    } else if (Array.isArray(value) && typeof value[0] === "number") {
-      string = value.map((f) => f.toPrecision(precision)).join(", ")
-    }
+
+  const precision = getOrDefault(props, Label, "precision")
+  if (typeof value === "number") {
+    string = value.toFixed(precision)
+  } else if (Array.isArray(value) && typeof value[0] === "number") {
+    string = value.map((f) => f.toFixed(precision)).join(", ")
   }
 
   if (getOrDefault(props, Label, "trim")) {
@@ -42,6 +41,7 @@ Label.propsInfo = {
   },
   precision: {
     type: "int",
+    default: 3,
   },
   trim: {
     type: "boolean",

@@ -20,14 +20,13 @@ const Graph: Widget = ({ source, props }) => {
     getOrDefault(props, Graph, "valueCount")
   )
   const theme = useMantineTheme()
+  const precision = getOrDefault(props, Graph, "precision")
 
   useEffect(() => {
     const interval = window.setInterval(() => {
       const newValue: number = NetworkTables.getValue(source, 0)
       // This could probably be smarter
-      addValue(
-        parseFloat(newValue.toFixed(getOrDefault(props, Graph, "precision")))
-      )
+      addValue(parseFloat(newValue.toFixed(precision)))
     }, 20)
     return () => window.clearInterval(interval)
   }, [source])
@@ -72,7 +71,7 @@ Graph.propsInfo = {
   },
   precision: {
     type: "int",
-    default: 6,
+    default: 3,
   },
 }
 

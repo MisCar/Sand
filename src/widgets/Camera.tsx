@@ -4,14 +4,11 @@ import { useNTKey } from "../hooks"
 import Widget, { getOrDefault } from "../models/Widget"
 
 const Camera: Widget = ({ source, props }) => {
+  const [connected, setConnected] = useState(true)
   const [streams] = useNTKey<string[]>(source + "/streams", [])
   const [r, setR] = useState(false)
   const { height, width, ref } = useElementSize()
   const rerender = () => setR(!r)
-
-  useEffect(() => {
-    setTimeout(rerender, getOrDefault(props, Camera, "reloadRate"))
-  }, [r])
 
   let stream: string | undefined = props?.stream
 
@@ -19,6 +16,29 @@ const Camera: Widget = ({ source, props }) => {
     stream = streams[0]
     stream = streams[0].substring(streams[0].indexOf("http:"))
   }
+
+  useEffect(() => {
+    const timeout = setInterval(async () => {
+      if (stream) {
+        fetch(
+          stream + (stream.includes("?") ? "&" : "?") + "update=" + Date.now()
+        )
+          .then(() => {
+            if (!connected) {
+              console.log("Rerendering image")
+              rerender()
+            }
+            setConnected(true)
+          })
+          .catch((error) => {
+            console.log("Disconnected", stream, error)
+            setConnected(false)
+          })
+      }
+    }, getOrDefault(props, Camera, "reloadRate"))
+
+    return () => clearInterval(timeout)
+  }, [r, stream])
 
   if (stream === undefined) {
     return <p>No stream found</p>
@@ -35,8 +55,19 @@ const Camera: Widget = ({ source, props }) => {
     "showHorizontalCrosshair"
   )
   const crosshairColor: string = getOrDefault(props, Camera, "crosshairColor")
+  const verticalCrosshairOffset: number = getOrDefault(
+    props,
+    Camera,
+    "verticalCrosshairOffset"
+  )
+  const horizontalCrosshairOffset: number = getOrDefault(
+    props,
+    Camera,
+    "horizontalCrosshairOffset"
+  )
 
   const aspectRatio = getOrDefault(props, Camera, "aspectRatio")
+  const baseWidth = getOrDefault(props, Camera, "baseWidth")
   const actualHeight = Math.min(width / aspectRatio, height)
   const actualWidth = actualHeight * aspectRatio
 
@@ -48,6 +79,8 @@ const Camera: Widget = ({ source, props }) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        userSelect: "none",
+        WebkitUserSelect: "none",
       }}
       ref={ref}
     >
@@ -56,10 +89,11 @@ const Camera: Widget = ({ source, props }) => {
           stream + (stream.includes("?") ? "&" : "?") + "update=" + Date.now()
         }
         style={{
-          width: actualWidth,
-          height: actualHeight,
+          width: baseWidth,
+          height: baseWidth * aspectRatio,
+          transform: `scale(${actualWidth / baseWidth})`,
           position: "relative",
-          objectFit: "contain",
+          pointerEvents: "none",
         }}
       />
       {showHorizontalCrosshair && (
@@ -70,7 +104,7 @@ const Camera: Widget = ({ source, props }) => {
             backgroundColor: crosshairColor,
             position: "absolute",
             left: 0,
-            top: "50%",
+            top: `calc(50% + ${horizontalCrosshairOffset}px)`,
           }}
         />
       )}
@@ -81,10 +115,15 @@ const Camera: Widget = ({ source, props }) => {
             height: "100%",
             backgroundColor: crosshairColor,
             position: "absolute",
-            right: "50%",
+            right: `calc(50% + ${verticalCrosshairOffset}px)`,
             top: 0,
           }}
         />
+      )}
+      {connected || (
+        <p style={{ position: "absolute", color: "red", bottom: 10 }}>
+          Disconnected
+        </p>
       )}
     </div>
   )
@@ -114,7 +153,19 @@ Camera.propsInfo = {
   },
   aspectRatio: {
     type: "double",
-    default: 16 / 9,
+    default: 4 / 3,
+  },
+  baseWidth: {
+    type: "double",
+    default: 320,
+  },
+  verticalCrosshairOffset: {
+    type: "double",
+    default: 0,
+  },
+  horizontalCrosshairOffset: {
+    type: "double",
+    default: 0,
   },
 }
 

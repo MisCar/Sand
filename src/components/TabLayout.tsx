@@ -136,6 +136,7 @@ const TabLayout: React.FC<Props> = ({
               style={{
                 display: "inline",
                 userSelect: "text",
+                WebkitUserSelect: "text",
                 outline: 0,
                 cursor: mode === Mode.Edit ? "text" : "pointer",
                 height: "100%",

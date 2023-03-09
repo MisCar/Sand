@@ -4,12 +4,22 @@ import { useNTKey } from "../hooks"
 import Widget, { getOrDefault } from "../models/Widget"
 
 const NumberTextView: Widget = ({ source, props }) => {
+  const precision = getOrDefault(props, NumberTextView, "precision")
   const [ntValue, setNtValue] = useNTKey<number>(source)
   const [value, setValue] = useState("")
 
   useEffect(() => {
-    setValue(ntValue === undefined ? "" : ntValue.toString())
+    setValue(ntValue === undefined ? "" : ntValue.toFixed(precision))
   }, [ntValue])
+
+  const update = (value: string) => {
+    const v = parseFloat(value)
+    if (!isNaN(v)) {
+      setNtValue(v)
+    } else {
+      setValue("")
+    }
+  }
 
   return (
     <Indicator
@@ -17,7 +27,8 @@ const NumberTextView: Widget = ({ source, props }) => {
       style={{ width: "90%" }}
       styles={{
         indicator: {
-          display: (ntValue ?? "").toString() === value ? "none" : undefined,
+          display:
+            (ntValue?.toFixed(precision) ?? "") === value ? "none" : undefined,
         },
       }}
     >
@@ -26,7 +37,6 @@ const NumberTextView: Widget = ({ source, props }) => {
         value={value}
         onChange={(event) => {
           setValue(event.currentTarget.value)
-
           if (getOrDefault(props, NumberTextView, "updateImmediately")) {
             const v = parseFloat(event.currentTarget.value)
             if (!isNaN(v)) {
@@ -34,14 +44,15 @@ const NumberTextView: Widget = ({ source, props }) => {
             }
           }
         }}
-        onBlur={(event) => {
-          const v = parseFloat(event.currentTarget.value)
-          if (!isNaN(v)) {
-            setNtValue(v)
-          } else {
-            setValue((ntValue ?? "").toString())
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            update(event.currentTarget.value)
+          } else if (event.key === "s") {
+            event.preventDefault()
+            update(event.currentTarget.value)
           }
         }}
+        onBlur={(event) => update(event.currentTarget.value)}
         {...props}
       />
     </Indicator>
@@ -53,7 +64,11 @@ NumberTextView.supportedTypes = ["number"]
 NumberTextView.propsInfo = {
   updateImmediately: {
     type: "boolean",
-    default: true,
+    default: false,
+  },
+  precision: {
+    type: "int",
+    default: 3,
   },
 }
 
