@@ -3,6 +3,15 @@ import { useEffect, useState } from "react"
 import { useNTKey } from "../hooks"
 import Widget, { getOrDefault } from "../models/Widget"
 
+const ORIENTATION_MAPPING: Record<string, number> = {
+  Normal: 0,
+  Right: 90,
+  Left: -90,
+  "Upside Down": 180,
+}
+
+const VERTICAL_ORIENTATIONS = ["Right", "Left"]
+
 const Camera: Widget = ({ source, props }) => {
   const [connected, setConnected] = useState(true)
   const [streams] = useNTKey<string[]>(source + "/streams", [])
@@ -66,10 +75,14 @@ const Camera: Widget = ({ source, props }) => {
     "horizontalCrosshairOffset"
   )
 
+  const orientation: string = getOrDefault(props, Camera, "orientation")
   const aspectRatio = getOrDefault(props, Camera, "aspectRatio")
   const baseWidth = getOrDefault(props, Camera, "baseWidth")
-  const actualHeight = Math.min(width / aspectRatio, height)
-  const actualWidth = actualHeight * aspectRatio
+  const rotation = ORIENTATION_MAPPING[orientation]
+  const actualWidth = VERTICAL_ORIENTATIONS.includes(orientation)
+    ? Math.min(height, width * aspectRatio)
+    : Math.min(width, height * aspectRatio)
+  const scale = actualWidth / baseWidth
 
   return (
     <div
@@ -89,11 +102,11 @@ const Camera: Widget = ({ source, props }) => {
           stream + (stream.includes("?") ? "&" : "?") + "update=" + Date.now()
         }
         style={{
-          width: baseWidth,
-          height: baseWidth * aspectRatio,
-          transform: `scale(${actualWidth / baseWidth})`,
-          position: "relative",
+          width: actualWidth / scale,
+          height: actualWidth / aspectRatio / scale,
+          transform: `scale(${scale}) rotate(${rotation}deg)`,
           pointerEvents: "none",
+          position: "absolute",
         }}
       />
       {showHorizontalCrosshair && (
@@ -104,7 +117,7 @@ const Camera: Widget = ({ source, props }) => {
             backgroundColor: crosshairColor,
             position: "absolute",
             left: 0,
-            top: `calc(50% + ${horizontalCrosshairOffset}px)`,
+            top: `calc(50% + ${horizontalCrosshairOffset * scale}px)`,
           }}
         />
       )}
@@ -115,7 +128,7 @@ const Camera: Widget = ({ source, props }) => {
             height: "100%",
             backgroundColor: crosshairColor,
             position: "absolute",
-            right: `calc(50% + ${verticalCrosshairOffset}px)`,
+            right: `calc(50% + ${verticalCrosshairOffset * scale}px)`,
             top: 0,
           }}
         />
@@ -134,6 +147,11 @@ Camera.propsInfo = {
   stream: {
     type: "string",
     placeholder: "Optional, overrides source",
+  },
+  orientation: {
+    type: "select",
+    choices: ["Normal", "Right", "Left", "Upside Down"],
+    default: "Normal",
   },
   reloadRate: {
     type: "int",
