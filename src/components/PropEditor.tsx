@@ -7,6 +7,7 @@ import {
 } from "@mantine/core"
 import React from "react"
 import Widget from "../models/Widget"
+import DoubleEditor from "./props/DoubleEditor"
 
 interface Props {
   widget: Widget
@@ -16,14 +17,14 @@ interface Props {
   setProp: (key: string, value: any) => void
 }
 
-const camelToTitle = (camel: string) => {
+export const camelToTitle = (camel: string) => {
   return (
     camel[0].toUpperCase() +
     camel.substring(1).replace(/([A-Z]+)*([A-Z][a-z])/g, "$1 $2")
   )
 }
 
-const STYLES: React.CSSProperties = {
+export const STYLES: React.CSSProperties = {
   marginTop: 10,
   width: "100%",
 }
@@ -79,20 +80,13 @@ const PropEditor: React.FC<Props> = ({ widget, currentProps, setProp }) => {
           )
         } else if (widget.propsInfo[key].type === "double") {
           return (
-            <TextInput
+            <DoubleEditor
               key={key}
-              type="number"
-              label={camelToTitle(key)}
-              style={STYLES}
-              value={currentProps[key] ?? widget.propsInfo[key].default ?? ""}
-              onChange={(event) =>
-                setProp(
-                  key,
-                  event.currentTarget.value === ""
-                    ? undefined
-                    : parseFloat(event.currentTarget.value)
-                )
+              ntKey={key}
+              currentValue={
+                currentProps[key] ?? widget.propsInfo[key].default ?? ""
               }
+              setProp={setProp}
             />
           )
         } else if (widget.propsInfo[key].type === "boolean") {
