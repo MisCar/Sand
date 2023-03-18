@@ -53,7 +53,14 @@ export const restoreFile = async (file: string) => {
   window.setSchema(text)
 }
 
-listen("open", async () => {
+export const isFocused = () => {
+  return (
+    JSON.parse(localStorage.getItem("Lock") ?? "false") ||
+    localStorage.getItem("Focus")
+  )
+}
+
+const openHandler = async () => {
   const file = (await open({
     multiple: false,
     filters: [
@@ -67,9 +74,9 @@ listen("open", async () => {
   if (file) {
     await restoreFile(file)
   }
-})
+}
 
-listen("import", async () => {
+const importHandler = async () => {
   const file = (await open({
     multiple: false,
     filters: [
@@ -106,9 +113,9 @@ listen("import", async () => {
     // @ts-ignore
     window.setSchema(JSON.stringify(schema))
   }
-})
+}
 
-listen("save", async () => {
+const saveHandler = async () => {
   const configDir = await getConfigDir()
   await createDir(configDir, { recursive: true })
   const defaultFile = await getDefaultFile()
@@ -120,9 +127,9 @@ listen("save", async () => {
     color: "green",
     icon: <i className="fa-solid fa-check" />,
   })
-})
+}
 
-listen("saveas", async () => {
+const saveasHandler = async () => {
   const file = await save({
     filters: [
       {
@@ -140,4 +147,17 @@ listen("saveas", async () => {
     color: "green",
     icon: <i className="fa-solid fa-check" />,
   })
+}
+
+listen("open", openHandler)
+listen("import", importHandler)
+listen("save", saveHandler)
+listen("saveas", saveasHandler)
+
+listen("tauri://focus", () => {
+  localStorage.setItem("Focus", "true")
+})
+
+listen("tauri://blur", () => {
+  localStorage.removeItem("Focus")
 })

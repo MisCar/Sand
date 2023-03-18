@@ -16,7 +16,13 @@ import NTColors from "./components/NTColors"
 import SoundListener from "./components/SoundListener"
 import { useNTKey } from "./hooks"
 import "./index.css"
-import { getDefaultFile, getSettings, restoreFile, Settings } from "./listeners"
+import {
+  getDefaultFile,
+  getSettings,
+  isFocused,
+  restoreFile,
+  Settings,
+} from "./listeners"
 import Schema, { WidgetSelector } from "./models/Schema"
 
 let previousSchema: Schema
@@ -70,13 +76,17 @@ const App = () => {
             shortcut.keyboard,
             shortcut.mode === "set-true"
               ? () => {
-                  NetworkTables.setValue(shortcut.ntKey, true)
+                  if (isFocused()) {
+                    NetworkTables.setValue(shortcut.ntKey, true)
+                  }
                 }
               : () => {
-                  NetworkTables.setValue(
-                    shortcut.ntKey,
-                    !NetworkTables.getValue(shortcut.ntKey, false)
-                  )
+                  if (isFocused()) {
+                    NetworkTables.setValue(
+                      shortcut.ntKey,
+                      !NetworkTables.getValue(shortcut.ntKey, false)
+                    )
+                  }
                 }
           )
         }

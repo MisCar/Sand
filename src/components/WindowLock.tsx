@@ -1,16 +1,24 @@
 import { Switch } from "@mantine/core"
+import { useLocalStorage } from "@mantine/hooks"
 import {
   appWindow,
   currentMonitor,
   LogicalPosition,
   PhysicalSize,
 } from "@tauri-apps/api/window"
-import { useState } from "react"
+import { useEffect } from "react"
 
 const DRIVERSTATION_HEIGHT = 268
 
 const WindowLock = () => {
-  const [checked, setChecked] = useState(false)
+  const [checked, setChecked] = useLocalStorage<boolean>({
+    key: "Lock",
+    defaultValue: false,
+  })
+
+  useEffect(() => {
+    setChecked(false)
+  }, [])
 
   const handler = async (lock: boolean) => {
     setChecked(lock)
