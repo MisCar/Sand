@@ -1,5 +1,5 @@
 import { ColorScheme, MantineProvider, Tuple } from "@mantine/core"
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { createRoot } from "react-dom/client"
 import Sidebar from "./components/Sidebar"
 import TabLayout from "./components/TabLayout"
@@ -7,16 +7,17 @@ import Mode from "./models/Mode"
 
 import NetworkTables from "./thirdparty/networktables"
 
-import "./index.css"
+import "@fortawesome/fontawesome-free/css/all.css"
+import { NotificationsProvider, showNotification } from "@mantine/notifications"
+import { register, unregister } from "@tauri-apps/api/globalShortcut"
 import "react-grid-layout/css/styles.css"
 import "react-resizable/css/styles.css"
-import "@fortawesome/fontawesome-free/css/all.css"
-import Schema, { WidgetSelector } from "./models/Schema"
-import { getDefaultFile, getSettings, restoreFile, Settings } from "./listeners"
-import { register, unregister } from "@tauri-apps/api/globalShortcut"
-import { NotificationsProvider, showNotification } from "@mantine/notifications"
-import { useNTKey } from "./hooks"
 import NTColors from "./components/NTColors"
+import SoundListener from "./components/SoundListener"
+import { useNTKey } from "./hooks"
+import "./index.css"
+import { getDefaultFile, getSettings, restoreFile, Settings } from "./listeners"
+import Schema, { WidgetSelector } from "./models/Schema"
 
 let previousSchema: Schema
 
@@ -109,6 +110,7 @@ const App = () => {
     >
       <NotificationsProvider>
         <NTColors />
+
         <div
           style={{
             display: "flex",
@@ -151,6 +153,7 @@ const App = () => {
             />
           </div>
         </div>
+        <SoundListener />
       </NotificationsProvider>
     </MantineProvider>
   )
