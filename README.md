@@ -5,6 +5,8 @@
     <img src="https://img.shields.io/badge/platform-windows|linux|macos-lightgray.svg">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg">
+    <br />
+    <img src="https://user-images.githubusercontent.com/63877260/226121800-d99d665e-59be-46e1-a877-bb5e37f378ea.png">
 </h1>
 
 <p align="center">
@@ -37,7 +39,7 @@ Sand supports both light and dark mode and one of its goals is to have a good lo
 
 ### Ease of Use
 
-Sand resembles Shuffleboard so you don't have to get used to different things. Some familiar aspects include the NetworkTables tree view, the drag and drop & grid layout,
+Sand resembles Shuffleboard so you don't have to get used to different things. Some familiar aspects include the NetworkTables tree view, the drag and drop & grid layout.
 
 <p align="center">
 <img width="577" alt="Screenshot 2022-12-24 at 23 40 00" src="https://user-images.githubusercontent.com/63877260/209451586-d7c8c2ef-d331-4361-85ea-17dbaeabd5e6.png">
@@ -52,6 +54,8 @@ Sand resembles Shuffleboard so you don't have to get used to different things. S
 ## Getting Started
 
 Simply get the appropriate installer for your OS from the [latest release](https://github.com/MisCar/Sand/releases). This should be a lightweight setup for the application which will automatically prompt you for updates when they are available.
+
+For more usage instructions, see [USAGE](./USAGE.md).
 
 ### Connecting to the Robot
 
