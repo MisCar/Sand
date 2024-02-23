@@ -9,6 +9,7 @@ import GalacticSearchB2021 from "./2021-galacticsearchb"
 import Slalom2021 from "./2021-slalom"
 import Field2022 from "./2022-field"
 import Field2023 from "./2023-field"
+import Field2024 from "./2024-field"
 
 export interface FieldInfo {
   game: string
@@ -131,6 +132,16 @@ const Fields: FieldInfo[] = [
     },
     "field-size": [16.5417, 8.0137],
     "image-size": [1134, 580],
+  },
+  {
+    game: "Crescendo",
+    "field-image": Field2024,
+    "field-corners": {
+      "top-left": [150, 79],
+      "bottom-right": [2961, 1476],
+    },
+    "field-size": [16.541748984, 8.21055],
+    "image-size": [3112, 1556],
   },
 ]
 

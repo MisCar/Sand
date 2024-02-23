@@ -110,6 +110,7 @@ Field.propsInfo = {
   field: {
     type: "select",
     choices: [
+      "Crescendo",
       "Charged Up",
       "Rapid React",
       "Infinite Recharge 2021",
@@ -117,7 +118,7 @@ Field.propsInfo = {
       "Destination: Deep Space",
       "FIRST Power Up",
     ],
-    default: "Charged Up",
+    default: "Crescendo",
   },
   robotWidth: {
     type: "double",
