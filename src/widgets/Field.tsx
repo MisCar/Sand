@@ -66,8 +66,8 @@ const Field: Widget = ({ source, props }) => {
             height: props?.vertical ? width : height,
             width: props?.vertical ? height : width,
             position: "relative",
-            left: props?.vertical ? width - height : 0,
-            bottom: props?.vertical ? width - height : 0,
+            left: props?.vertical && alliance ? width - height : 0,
+            bottom: props?.vertical && alliance ? width - height : 0,
             rotate: props?.vertical ? (alliance ? "90deg" : "-90deg") : "0deg",
           }}
         >
