@@ -10,6 +10,7 @@ import Slalom2021 from "./2021-slalom"
 import Field2022 from "./2022-field"
 import Field2023 from "./2023-field"
 import Field2024 from "./2024-field"
+import Field2025 from "./2025-field"
 
 export interface FieldInfo {
   game: string
@@ -142,6 +143,25 @@ const Fields: FieldInfo[] = [
     },
     "field-size": [16.541748984, 8.21055],
     "image-size": [3112, 1556],
+  },
+  {
+    game: "Reefscape",
+    "field-image": Field2025,
+    "field-corners": {
+      "top-left": [
+        421,
+        91
+      ],
+      "bottom-right": [
+        3352,
+        1437
+      ]
+    },
+    "field-size": [
+      17.548,
+      8.052
+    ],
+    "image-size" : [3773,1528]
   },
 ]
 
