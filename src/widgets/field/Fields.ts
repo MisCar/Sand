@@ -143,6 +143,25 @@ const Fields: FieldInfo[] = [
     "field-size": [16.541748984, 8.21055],
     "image-size": [3112, 1556],
   },
+  {
+    game: "Reefscape",
+    "field-image": "assets/fields/2025-field.png",
+    "field-corners": {
+      "top-left": [
+        421,
+        91
+      ],
+      "bottom-right": [
+        3352,
+        1437
+      ]
+    },
+    "field-size": [
+      17.548,
+      8.052
+    ],
+    "image-size" : [3773,1528]
+  },
 ]
 
 export default Fields
